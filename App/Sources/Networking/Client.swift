@@ -3,6 +3,7 @@ import Moya
 
 enum API {
     case login(_ code: String)
+    case letterMy
 }
 
 extension API: TargetType {
@@ -15,12 +16,16 @@ extension API: TargetType {
         switch self {
         case .login:
             return "/auth/kakao/login/token"
+        case .letterMy:
+            return "/letter/my"
         }
     }
     var method: Moya.Method {
         switch self {
         case .login:
             return .post
+        case .letterMy:
+            return .get
         }
     }
     var task: Task {
@@ -29,6 +34,8 @@ extension API: TargetType {
             return .requestParameters(parameters:
                 [ "kakaoAccessToken": code ],
                 encoding: JSONEncoding.prettyPrinted)
+        case .letterMy:
+            return .requestPlain
         }
     }
 
@@ -36,6 +43,8 @@ extension API: TargetType {
         switch self {
         case .login:
             return Header.tokenIsEmpty.header()
+        case .letterMy:
+            return Header.accessToken.header()
         }
     }
 }

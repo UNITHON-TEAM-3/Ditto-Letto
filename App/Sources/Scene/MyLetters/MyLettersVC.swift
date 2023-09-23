@@ -57,16 +57,15 @@ class MyLetterVC: BaseVC {
     
     //MARK: - bind
     override func bind() {
-        //MARK: - 지워야함
-        self.emptyView.isHidden = true
         
-        let input = MyLetterVM.Input(tableViewModelSelected: myLetterView.tableView.rx.modelSelected(HomeModel.self).asObservable(),
+        let input = MyLetterVM.Input(tableViewModelSelected: myLetterView.tableView.rx.modelSelected(LetterMyData.self).asObservable(),
                                      sendButtonTapped: sendButton.rx.tap.asObservable())
         let output = viewModel.transform(input)
         
-        viewModel.homeModel
+        viewModel.homeModels
             .do(onNext: { [weak self] list in
                 self?.emptyView.isHidden = !list.isEmpty
+                // headerView에 model 에 새로 분기되는 값 input
             })
             .bind(to: myLetterView.tableView.rx.items) { tableView, index, item in
                 guard let cell = tableView.dequeueReusableCell(withIdentifier: HomeTableViewCell.identifier, for: IndexPath(row: index, section: 0)) as? HomeTableViewCell else { return UITableViewCell() }
@@ -76,6 +75,7 @@ class MyLetterVC: BaseVC {
                 return cell
             }
             .disposed(by: disposeBag)
+        
     }
     
 }

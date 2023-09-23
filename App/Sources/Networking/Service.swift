@@ -26,4 +26,16 @@ final class Service {
             }
             .catch {[unowned self] in return .just(setNetworkError($0))}
     }
+    
+    func letterMy() -> Single<(LetterMyModel?, NetworkingResult)> {
+        return provider.rx.request(.letterMy)
+            .filterSuccessfulStatusCodes()
+            .map(LetterMyModel.self)
+            .map { return ($0, .getOk) }
+            .catch { error in
+                print(error)
+                return .just((nil, .fault))
+            }
+    }
+    
 }

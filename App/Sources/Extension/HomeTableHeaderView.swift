@@ -3,6 +3,14 @@ import SnapKit
 
 class HomeTableHeaderView: UIView {
         
+    var model: LetterMyData? {
+        didSet {
+            configureVC()
+        }
+    }
+    
+    //MARK: - Properties
+    
     private let headerTitleLabel: UILabel = {
         $0.text = "너랑 지금 정말 가까이 있나봐"
         $0.font = UIFont(name: "Ramche", size: 16)
@@ -61,6 +69,12 @@ class HomeTableHeaderView: UIView {
         lineView.snp.makeConstraints { make in
             make.leading.trailing.bottom.equalToSuperview()
             make.height.equalTo(0.5)
+        }
+    }
+    
+    private func configureVC() {
+        if let model = model {
+            
         }
     }
 }
