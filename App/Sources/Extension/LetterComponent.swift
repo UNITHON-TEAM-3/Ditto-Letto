@@ -42,7 +42,7 @@ extension UITextField {
             generalImage.removeFromSuperview()
             self.backgroundColor = UIColor(named: "headerColor")
             self.attributedPlaceholder = NSAttributedString(string: "번호를 입력해주세요.", attributes: [
-                .foregroundColor: UIColor(named: "gray2Color") ?? .gray,
+                .foregroundColor: UIColor(named: "gray2") ?? .gray,
                 .font: UIFont(name: "Ramche", size: 17) ?? .systemFont(ofSize: 17)
             ])
             self.font = UIFont(name: "Ramche", size: 17)
@@ -63,7 +63,7 @@ extension UITextField {
             self.leftViewMode = ViewMode.always
             self.backgroundColor = .white
             self.attributedPlaceholder = NSAttributedString(string: "번호를 입력해주세요.", attributes: [
-                .foregroundColor: UIColor(named: "gray2Color") ?? .gray,
+                .foregroundColor: UIColor(named: "gray2") ?? .gray,
                 .font: UIFont(name: "GS", size: 17) ?? .systemFont(ofSize: 17)
             ])
             self.font = UIFont(name: "GS", size: 17)

@@ -21,16 +21,16 @@ class NewLetterVC: BaseVC {
         $0.layer.borderWidth = 1.0
     }
     private let letterTextView = UITextView().then {
-        $0.layer.borderColor = UIColor(named: "headerColor")?.cgColor
+        $0.layer.borderColor = UIColor(named: "dark")?.cgColor
         $0.layer.borderWidth = 1.0
         $0.backgroundColor = .white
         $0.text = "전하고 싶은 말을 입력해주세요."
-        $0.textColor = UIColor(named: "gray2Color")
+        $0.textColor = UIColor(named: "gray2")
         $0.textContainerInset = UIEdgeInsets(top: 20, left: 20, bottom: 54, right: 20)
     }
     private let textCountLabel = UILabel().then {
         $0.text = "0 / 144"
-        $0.textColor = UIColor(named: "headerColor")
+        $0.textColor = UIColor(named: "dark")
     }
 
     override func addView() {
@@ -75,14 +75,14 @@ class NewLetterVC: BaseVC {
             .bind(onNext: { [self] in
                 if letterTextView.text == "전하고 싶은 말을 입력해주세요." {
                     letterTextView.text = ""
-                    letterTextView.textColor = UIColor(named: "headerColor")
+                    letterTextView.textColor = UIColor(named: "dark")
                 }
             }).disposed(by: disposeBag)
         letterTextView.rx.didEndEditing
             .bind(onNext: { [self] in
                 if letterTextView.text == "" {
                     letterTextView.text = "전하고 싶은 말을 입력해주세요."
-                    letterTextView.textColor = UIColor(named: "gray2Color")
+                    letterTextView.textColor = UIColor(named: "gray2")
                 }
             }).disposed(by: disposeBag)
         privateDiaryButton.rx.tap

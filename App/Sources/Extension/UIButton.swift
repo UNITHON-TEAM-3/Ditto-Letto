@@ -14,11 +14,11 @@ public extension UIButton {
 
     func setEnabled() {
         self.setTitleColor(.black, for: .normal)
-        self.backgroundColor = UIColor(named: "mainYelloColor") ?? .yellow
+        self.backgroundColor = UIColor(named: "main") ?? .yellow
     }
 
     func setDisabled() {
-        self.setTitleColor(UIColor(named: "gray2Color"), for: .normal)
+        self.setTitleColor(UIColor(named: "gray2"), for: .normal)
         self.backgroundColor = UIColor(named: "mainGrayColor") ?? .lightGray
     }
 
