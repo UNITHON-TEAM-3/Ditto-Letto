@@ -6,6 +6,8 @@ import RxCocoa
 
 class MyLetterVC: BaseVC {
     
+    let viewModel = MyLetterVM()
+    
     //MARK: - Properties
     lazy var myLetterView = MyLetterView()
     
@@ -18,8 +20,6 @@ class MyLetterVC: BaseVC {
     //MARK: - Life Cycles
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor(named: "bg")
-        
     }
     
     //MARK: - Set UI
@@ -41,6 +41,15 @@ class MyLetterVC: BaseVC {
         }
     }
     
-    //MARK: - Functions
+    //MARK: - bind
+    override func bind() {
+        let input = MyLetterVM.Input(tableViewItemSelected: myLetterView.tableView.rx.itemSelected.asObservable(),
+                                     tableViewModelSelected: myLetterView.tableView.rx.modelSelected(HomeModel.self).asObservable(),
+                                     sendButtonTapped: sendButton.rx.tap.asObservable())
+        let output = viewModel.transform(input)
+        
+        
+        
+    }
     
 }

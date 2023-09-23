@@ -50,7 +50,7 @@ class MyLetterView: UIView {
         layer.borderColor = UIColor.black.cgColor
     }
     
-    func addView() {
+    private func addView() {
         addSubview(redButton)
         addSubview(blueButton)
         addSubview(yelloButton)
@@ -59,7 +59,7 @@ class MyLetterView: UIView {
         addSubview(tableView)
     }
     
-    func setLayout() {
+    private func setLayout() {
         redButton.snp.makeConstraints { make in
             make.top.equalToSuperview().inset(11)
             make.leading.equalToSuperview().inset(12)

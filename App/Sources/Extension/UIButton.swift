@@ -1,11 +1,3 @@
-//
-//  UIButton.swift
-//  Ditto-Letto
-//
-//  Created by 박현준 on 2023/09/23.
-//  Copyright © 2023 com.UNITHON-Team3. All rights reserved.
-//
-
 import UIKit
 
 extension UIButton {
