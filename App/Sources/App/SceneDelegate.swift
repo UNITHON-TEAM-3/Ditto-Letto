@@ -1,4 +1,5 @@
 import UIKit
+import KakaoSDKAuth
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -6,16 +7,28 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
-        // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
-        // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let windowScence = (scene as? UIWindowScene) else { return }
         
         window = UIWindow(windowScene: windowScence)
         window?.windowScene = windowScence
 
-        window?.rootViewController = UINavigationController(rootViewController: MyLetterVC())
+        print("Token = \(Token.accessToken)")
+        
+        if Token.accessToken == nil {
+            window?.rootViewController = LoginVC()
+        } else {
+            window?.rootViewController = UINavigationController(rootViewController: MyLetterVC())
+        }
+    
         window?.makeKeyAndVisible()
+    }
+    
+    func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
+        if let url = URLContexts.first?.url {
+            if (AuthApi.isKakaoTalkLoginUrl(url)) {
+                _ = AuthController.handleOpenUrl(url: url)
+            }
+        }
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
