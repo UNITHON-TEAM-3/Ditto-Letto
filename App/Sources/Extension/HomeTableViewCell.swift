@@ -44,7 +44,7 @@ class HomeTableViewCell: BaseTC {
         
         //임시
         transportationImageView.image = UIImage(named: "airplaneIcon")
-        transportationState.image = UIImage(named: "state01")
+        transportationState.image = UIImage(named: "state05")
     }
 
     override func addView() {
@@ -56,7 +56,7 @@ class HomeTableViewCell: BaseTC {
     
     override func setLayout() {
         folderImageView.snp.makeConstraints { make in
-            make.top.equalToSuperview().inset(9)
+            make.top.equalToSuperview().inset(12)
             make.leading.equalToSuperview().inset(24)
             make.width.equalTo(57)
             make.height.equalTo(51)
@@ -68,11 +68,12 @@ class HomeTableViewCell: BaseTC {
         transportationImageView.snp.makeConstraints { make in
             make.top.equalTo(folderImageView.snp.bottom).inset(-11)
             make.leading.equalToSuperview().inset(30)
-            make.width.height.equalTo(15)
+            make.width.height.equalTo(18)
         }
         transportationState.snp.makeConstraints { make in
             make.centerY.equalTo(transportationImageView.snp.centerY)
             make.leading.equalTo(transportationImageView.snp.trailing).inset(-10)
+            make.trailing.equalToSuperview().inset(30)
             make.height.equalTo(15)
         }
     }
@@ -91,7 +92,6 @@ class HomeTableViewCell: BaseTC {
                 transportationImageView.image = UIImage(named: value.rawValue)
             }
         }
-        
         
     }
     

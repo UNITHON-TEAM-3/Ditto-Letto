@@ -19,9 +19,12 @@ class MyLetterVC: BaseVC {
     
     private let emptyView = HomeEmptyView()
     
+    lazy var tableHeaderView = HomeTableHeaderView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 95))
+    
     //MARK: - Life Cycles
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableViewSetting()
     }
     
     //MARK: - Set UI
@@ -47,10 +50,17 @@ class MyLetterVC: BaseVC {
         }
     }
     
+    private func tableViewSetting() {
+        myLetterView.tableView.delegate = self
+        myLetterView.tableView.tableHeaderView = tableHeaderView
+    }
+    
     //MARK: - bind
     override func bind() {
-        let input = MyLetterVM.Input(
-                                    tableViewModelSelected: myLetterView.tableView.rx.modelSelected(HomeModel.self).asObservable(),
+        //MARK: - 지워야함
+        self.emptyView.isHidden = true
+        
+        let input = MyLetterVM.Input(tableViewModelSelected: myLetterView.tableView.rx.modelSelected(HomeModel.self).asObservable(),
                                      sendButtonTapped: sendButton.rx.tap.asObservable())
         let output = viewModel.transform(input)
         
@@ -66,7 +76,13 @@ class MyLetterVC: BaseVC {
                 return cell
             }
             .disposed(by: disposeBag)
-        
     }
     
+}
+
+
+extension MyLetterVC : UITableViewDelegate {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 110
+    }
 }

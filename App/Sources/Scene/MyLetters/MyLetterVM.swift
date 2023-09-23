@@ -6,7 +6,7 @@ class MyLetterVM: BaseVM {
     
     let disposeBag = DisposeBag()
     
-    let homeModel = PublishSubject<[HomeModel]>()
+    let homeModel = BehaviorRelay<[HomeModel]>(value: [])
     
     //MARK: - In/Out
     struct Input {
@@ -19,6 +19,7 @@ class MyLetterVM: BaseVM {
     
     //MARK: - Translate
     func transform(_ input: Input) -> Output {
+        getLetterRequest()
         let output = Output()
         
         input.tableViewModelSelected
@@ -27,6 +28,25 @@ class MyLetterVM: BaseVM {
             }
             .disposed(by: disposeBag)
         
+        homeModel
+            .subscribe { model in
+                print(model)
+            }
+            .disposed(by: disposeBag)
+        
         return output
+    }
+    
+    //MARK: API
+    func getLetterRequest() {
+        let models = [HomeModel(limitedTime: "123123", number: "010-2326-3046", transportation: "car", type: .normal),
+                      HomeModel(limitedTime: "213123", number: "010-1234-1234", transportation: "horse", type: .password),
+                      HomeModel(limitedTime: "123123", number: "010-2326-3046", transportation: "car", type: .normal),
+                      HomeModel(limitedTime: "213123", number: "010-1234-1234", transportation: "horse", type: .password),
+                      HomeModel(limitedTime: "123123", number: "010-2326-3046", transportation: "car", type: .normal),
+                      HomeModel(limitedTime: "213123", number: "010-1234-1234", transportation: "horse", type: .password)]
+        
+        homeModel.accept(models)
+        print("append 완료")
     }
 }
