@@ -32,6 +32,10 @@ class NewLetterVC: BaseVC {
         $0.text = "0 / 144"
         $0.textColor = UIColor(named: "dark")
     }
+    private let sendButton = UIButton().then {
+        $0.setTitle("전송하기", for: .normal)
+        $0.setMainButton(color: "main")
+    }
 
     override func addView() {
         [
@@ -40,12 +44,15 @@ class NewLetterVC: BaseVC {
             separatorView,
             letterTextField,
             letterTextView,
-            textCountLabel
+            textCountLabel,
+            sendButton
         ].forEach {
             view.addSubview($0)
         }
     }
     override func configureVC() {
+        self.navigationController?.navigationBar.topItem?.title = ""
+        self.navigationController?.navigationBar.tintColor = .black
         isPrivate
             .subscribe(onNext: {
                 self.letterTextField.setTextField($0)
@@ -102,13 +109,13 @@ class NewLetterVC: BaseVC {
             $0.width.equalTo((UIScreen.main.bounds.width-40)/2)
             $0.height.equalTo(43)
             $0.leading.equalToSuperview().inset(20)
-            $0.top.equalToSuperview().inset(91)
+            $0.top.equalTo(view.safeAreaLayoutGuide).inset(15)
         }
         generalDiaryButton.snp.makeConstraints {
             $0.height.equalTo(43)
             $0.leading.equalTo(privateDiaryButton.snp.trailing).offset(0)
             $0.trailing.equalToSuperview().inset(20)
-            $0.top.equalToSuperview().inset(91)
+            $0.top.equalTo(view.safeAreaLayoutGuide).inset(15)
         }
         separatorView.snp.makeConstraints {
             $0.horizontalEdges.equalToSuperview().inset(20)
@@ -123,12 +130,17 @@ class NewLetterVC: BaseVC {
         letterTextView.snp.makeConstraints {
             $0.horizontalEdges.equalToSuperview().inset(20)
             $0.top.equalTo(letterTextField.snp.bottom).offset(0)
-            $0.bottom.equalToSuperview().inset(124)
         }
         textCountLabel.snp.makeConstraints {
             $0.left.equalToSuperview().inset(40)
             $0.height.equalTo(16)
             $0.bottom.equalTo(letterTextView.snp.bottom).inset(22)
+        }
+        sendButton.snp.makeConstraints {
+            $0.horizontalEdges.equalToSuperview().inset(20)
+            $0.top.equalTo(letterTextView.snp.bottom).offset(12)
+            $0.height.equalTo(55)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(50)
         }
     }
 }

@@ -4,8 +4,8 @@ import SnapKit
 
 extension UIView {
     func setSeparatorView() {
-        self.backgroundColor = UIColor(named: "mainYelloColor")
-        self.layer.borderColor = UIColor(named: "headerColor")?.cgColor
+        self.backgroundColor = UIColor(named: "main")
+        self.layer.borderColor = UIColor(named: "dark")?.cgColor
         self.layer.borderWidth = 1.0
     }
 }
@@ -40,9 +40,9 @@ extension UITextField {
                 $0.centerY.equalToSuperview()
             }
             generalImage.removeFromSuperview()
-            self.backgroundColor = UIColor(named: "headerColor")
+            self.backgroundColor = UIColor(named: "dark")
             self.attributedPlaceholder = NSAttributedString(string: "번호를 입력해주세요.", attributes: [
-                .foregroundColor: UIColor(named: "gray2") ?? .gray,
+                .foregroundColor: UIColor(named: "gray2Color") ?? .gray,
                 .font: UIFont(name: "Ramche", size: 17) ?? .systemFont(ofSize: 17)
             ])
             self.font = UIFont(name: "Ramche", size: 17)

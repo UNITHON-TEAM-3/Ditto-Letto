@@ -19,7 +19,7 @@ public extension UIButton {
 
     func setDisabled() {
         self.setTitleColor(UIColor(named: "gray2"), for: .normal)
-        self.backgroundColor = UIColor(named: "mainGrayColor") ?? .lightGray
+        self.backgroundColor = UIColor(named: "gray1") ?? .lightGray
     }
 
     func setMainButton(color: String) {
