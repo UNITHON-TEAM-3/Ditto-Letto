@@ -81,3 +81,16 @@ extension UITextView {
         }
     }
 }
+
+extension UILabel {
+    func setCount(_ isPrivate: Bool) {
+        self.text = "0"
+        if isPrivate {
+            self.textColor = .white
+            self.font = UIFont(name: "Ramche", size: 12)
+        } else {
+            self.textColor = .black
+            self.font = UIFont(name: "GS", size: 12) ?? .systemFont(ofSize: 12)
+        }
+    }
+}

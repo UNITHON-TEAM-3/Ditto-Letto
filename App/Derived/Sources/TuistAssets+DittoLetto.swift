@@ -22,7 +22,6 @@ public enum DittoLettoAsset {
     public static let dark = DittoLettoColors(name: "dark")
     public static let gray1 = DittoLettoColors(name: "gray1")
     public static let gray2 = DittoLettoColors(name: "gray2")
-    public static let gray2Color = DittoLettoColors(name: "gray2Color")
     public static let main = DittoLettoColors(name: "main")
     public static let third = DittoLettoColors(name: "third")
   }

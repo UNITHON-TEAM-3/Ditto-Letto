@@ -6,6 +6,10 @@ import Then
 
 class NewLetterVC: BaseVC {
     private var isPrivate = BehaviorRelay<Bool>(value: true)
+    private let countViewModel = GetCountVM()
+    private let letterViewModel = NewLetterVM()
+    private let getCount = BehaviorRelay<Void>(value: ())
+    private let type = PublishRelay<String>()
 
     private let privateDiaryButton = UIButton().then {
         $0.selectTypeButton(title: "암호 편지")
@@ -36,8 +40,20 @@ class NewLetterVC: BaseVC {
         $0.setTitle("전송하기", for: .normal)
         $0.setMainButton(color: "main")
     }
+    private let sendCountLabel = UILabel().then {
+        $0.text = ""
+    }
+    private let receiveCountLabel = UILabel().then {
+        $0.text = ""
+    }
 
     override func addView() {
+        [
+            sendCountLabel,
+            receiveCountLabel
+        ].forEach {
+            letterTextField.addSubview($0)
+        }
         [
             privateDiaryButton,
             generalDiaryButton,
@@ -50,6 +66,36 @@ class NewLetterVC: BaseVC {
             view.addSubview($0)
         }
     }
+    override func bind() {
+        letterTextField.rx.text.orEmpty
+            .subscribe(onNext: { [self] in
+                if $0.count == 11 {
+                    let input = GetCountVM.Input(
+                        getCount: getCount.asDriver(),
+                        phoeNumber: letterTextField.rx.text.orEmpty.asDriver()
+                    )
+                    let output = countViewModel.transform(input)
+
+                    output.countData
+                        .subscribe(onNext: { data in
+                            self.sendCountLabel.text = "\(data.toCount)"
+                            self.receiveCountLabel.text = "\(data.fromCount)"
+                        }).disposed(by: disposeBag)
+                }
+            }).disposed(by: disposeBag)
+
+        let input = NewLetterVM.Input(
+            text: letterTextView.rx.text.orEmpty.asDriver(),
+            type: type.asDriver(onErrorJustReturn: ""),
+            phone: letterTextField.rx.text.orEmpty.asDriver(),
+            buttonTapped: sendButton.rx.tap.asSignal()
+        )
+        let output = letterViewModel.transform(input)
+        output.postResult.asObservable()
+            .subscribe(onNext: { res in
+                print(res)
+            }).disposed(by: disposeBag)
+    }
     override func configureVC() {
         self.navigationController?.navigationBar.topItem?.title = ""
         self.navigationController?.navigationBar.tintColor = .black
@@ -57,11 +103,15 @@ class NewLetterVC: BaseVC {
             .subscribe(onNext: {
                 self.letterTextField.setTextField($0)
                 self.letterTextView.setTextView($0)
+                self.sendCountLabel.setCount($0)
+                self.receiveCountLabel.setCount($0)
                 if $0 == true {
+                    self.type.accept("CODE")
                     self.privateDiaryButton.setEnabled()
                     self.generalDiaryButton.setDisabled()
                     self.textCountLabel.font = UIFont(name: "Ramche", size: 12)
                 } else {
+                    self.type.accept("BASIC")
                     self.generalDiaryButton.setEnabled()
                     self.privateDiaryButton.setDisabled()
                     self.textCountLabel.font = UIFont(name: "GS", size: 12)
@@ -126,6 +176,14 @@ class NewLetterVC: BaseVC {
             $0.horizontalEdges.equalToSuperview().inset(20)
             $0.top.equalTo(separatorView.snp.bottom).offset(0)
             $0.height.equalTo(76)
+        }
+        sendCountLabel.snp.makeConstraints {
+            $0.top.equalToSuperview().inset(17)
+            $0.right.equalToSuperview().inset(16)
+        }
+        receiveCountLabel.snp.makeConstraints {
+            $0.bottom.equalToSuperview().inset(17)
+            $0.right.equalToSuperview().inset(16)
         }
         letterTextView.snp.makeConstraints {
             $0.horizontalEdges.equalToSuperview().inset(20)
