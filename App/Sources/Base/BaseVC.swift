@@ -7,7 +7,7 @@ class BaseVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor(named: "bg")
+        view.backgroundColor = UIColor(named: "bg") ?? .clear
         addView()
         setLayout()
         configureVC()
