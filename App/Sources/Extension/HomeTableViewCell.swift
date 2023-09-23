@@ -43,7 +43,7 @@ class HomeTableViewCell: BaseTC {
     
     private let transportationState = UIImageView()
     
-    var model: LetterMyData? {
+    var model: BoxLetterData? {
         didSet {
             configureVC()
         }
@@ -52,10 +52,7 @@ class HomeTableViewCell: BaseTC {
     //MARK: - Lifecycle
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
-        //임시
-        transportationImageView.image = UIImage(named: "airplaneIcon")
-        transportationState.image = UIImage(named: "state05")
+
     }
 
     override func addView() {
@@ -102,7 +99,7 @@ class HomeTableViewCell: BaseTC {
         }
         
         // 도착 완료 시
-        if model.arrivedAt {
+        if model.arrived {
             transportationImageView.image = nil
             transportationState.image = nil
         } else {
@@ -114,17 +111,17 @@ class HomeTableViewCell: BaseTC {
             }
             
             if model.mediumType == TransportationType.airplane.rawValue {
-                transportationState.image = UIImage(named: "airplane")
+                transportationImageView.image = UIImage(named: "airplaneIcon")
             } else if model.mediumType == TransportationType.car.rawValue {
-                transportationState.image = UIImage(named: "car")
+                transportationImageView.image = UIImage(named: "carIcon")
             } else if model.mediumType == TransportationType.bicycle.rawValue {
-                transportationState.image = UIImage(named: "bike")
+                transportationImageView.image = UIImage(named: "bikeIcon")
             } else if model.mediumType == TransportationType.horse.rawValue {
-                transportationState.image = UIImage(named: "horse")
+                transportationImageView.image = UIImage(named: "horseIcon")
             } else if model.mediumType == TransportationType.running.rawValue {
-                transportationState.image = UIImage(named: "running")
+                transportationImageView.image = UIImage(named: "runningIcon")
             } else if model.mediumType == TransportationType.walk.rawValue {
-                transportationState.image = UIImage(named: "walk")
+                transportationState.image = UIImage(named: "walkIcon")
             }
         }
     }

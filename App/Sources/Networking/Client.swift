@@ -44,7 +44,8 @@ extension API: TargetType {
         case .login:
             return Header.tokenIsEmpty.header()
         case .letterMy:
-            return Header.accessToken.header()
+            guard let token = Token.accessToken else { return ["Contect-Type": "application/json"] }
+            return ["Authorization": "Bearer " + token, "Contect-Type": "application/json"]
         }
     }
 }

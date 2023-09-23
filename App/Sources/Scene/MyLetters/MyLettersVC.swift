@@ -58,24 +58,33 @@ class MyLetterVC: BaseVC {
 
     private func tableViewSetting() {
         myLetterView.tableView.delegate = self
-        myLetterView.tableView.tableHeaderView = tableHeaderView
     }
 
     // MARK: - bind
     override func bind() {
-        // MARK: - 지워야함
-        self.emptyView.isHidden = true
 
-        let input = MyLetterVM.Input(tableViewModelSelected: myLetterView.tableView.rx.modelSelected(LetterMyData.self).asObservable(),
+        let input = MyLetterVM.Input(tableViewModelSelected: myLetterView.tableView.rx.modelSelected(BoxLetterData.self).asObservable(),
                                      sendButtonTapped: sendButton.rx.tap.asObservable())
         let output = viewModel.transform(input)
 
-        viewModel.homeModels
+        viewModel.inBoxLetters
+            .bind { [weak self] data in
+                if data.isEmpty {
+                    self?.myLetterView.tableView.tableHeaderView = nil
+                } else {
+                    self?.tableHeaderView.model = data.first
+                    self?.myLetterView.tableView.tableHeaderView = self?.tableHeaderView
+                    self?.tableHeaderView.model = data.first
+                }
+            }
+            .disposed(by: disposeBag)
+        
+        viewModel.outBoxLetters
             .do(onNext: { [weak self] list in
                 self?.emptyView.isHidden = !list.isEmpty
-                // headerView에 model 에 새로 분기되는 값 input
             })
             .bind(to: myLetterView.tableView.rx.items) { tableView, index, item in
+                // headerView에 model 에 새로 분기되는 값 input
                 guard let cell = tableView.dequeueReusableCell(
                     withIdentifier: HomeTableViewCell.identifier,
                     for: IndexPath(row: index, section: 0)) as?

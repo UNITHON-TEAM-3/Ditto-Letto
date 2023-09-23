@@ -6,12 +6,13 @@ class MyLetterVM: BaseVM {
     
     let disposeBag = DisposeBag()
     
-    let homeModels = BehaviorRelay<[LetterMyData]>(value: [])
+    let inBoxLetters = BehaviorRelay<[BoxLetterData]>(value: [])
+    let outBoxLetters = BehaviorRelay<[BoxLetterData]>(value: [])
     let api = Service()
     
     //MARK: - In/Out
     struct Input {
-        let tableViewModelSelected: Observable<LetterMyData>
+        let tableViewModelSelected: Observable<BoxLetterData>
         let sendButtonTapped: Observable<Void>
     }
     struct Output {
@@ -28,7 +29,7 @@ class MyLetterVM: BaseVM {
                 guard let model = model.element else { return }
                 
                 // 도착 상태 true
-                if model.arrivedAt {
+                if model.arrived {
                     // 보관함으로 이동
                     
                 // 도착 상태 false
@@ -49,7 +50,8 @@ class MyLetterVM: BaseVM {
                 guard let model = model else { return }
                 
                 if networkResult == .getOk {
-                    self?.homeModels.accept(model.dataList)
+                    self?.inBoxLetters.accept(model.data.inBoxLetters)
+                    self?.outBoxLetters.accept(model.data.outBoxLetters)
                 }
             }
             .disposed(by: disposeBag)
