@@ -9,7 +9,7 @@ class HomeTableHeaderView: UIView {
         }
     }
     
-    //MARK: - Properties
+    // MARK: - Properties
     
     private let headerTitleLabel: UILabel = {
         $0.text = "너랑 지금 정말 가까이 있나봐"
@@ -26,7 +26,7 @@ class HomeTableHeaderView: UIView {
         return $0
     }(UIView())
     
-    //MARK: - Life Cycles
+    // MARK: - Life Cycles
     override init(frame: CGRect) {
         super.init(frame: frame)
         addView()
@@ -42,7 +42,7 @@ class HomeTableHeaderView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    //MARK: - Set UI
+    // MARK: - Set UI
     private func addView() {
         addSubview(headerTitleLabel)
         addSubview(transportationImageView)

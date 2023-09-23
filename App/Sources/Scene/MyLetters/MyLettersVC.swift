@@ -67,34 +67,33 @@ class MyLetterVC: BaseVC {
                                      sendButtonTapped: sendButton.rx.tap.asObservable())
         let output = viewModel.transform(input)
 
-        viewModel.inBoxLetters
+        output.letterMyData
             .bind { [weak self] data in
-                if data.isEmpty {
+                if data.inBoxLetters.isEmpty {
                     self?.myLetterView.tableView.tableHeaderView = nil
                 } else {
-                    self?.tableHeaderView.model = data.first
+                    self?.tableHeaderView.model = data.inBoxLetters.first
                     self?.myLetterView.tableView.tableHeaderView = self?.tableHeaderView
-                    self?.tableHeaderView.model = data.first
                 }
             }
             .disposed(by: disposeBag)
         
-        viewModel.outBoxLetters
-            .do(onNext: { [weak self] list in
-                self?.emptyView.isHidden = !list.isEmpty
+        output.letterMyData
+            .do(onNext: { [weak self] data in
+                self?.emptyView.isHidden = !data.outBoxLetters.isEmpty
             })
-            .bind(to: myLetterView.tableView.rx.items) { tableView, index, item in
-                // headerView에 model 에 새로 분기되는 값 input
-                guard let cell = tableView.dequeueReusableCell(
-                    withIdentifier: HomeTableViewCell.identifier,
-                    for: IndexPath(row: index, section: 0)) as?
-                        HomeTableViewCell else { return UITableViewCell() }
-                cell.selectionStyle = .none
-                cell.model = item
-
-                return cell
-            }
-            .disposed(by: disposeBag)
+                .map { $0.outBoxLetters }
+                .bind(to: myLetterView.tableView.rx.items) { tableView, index, item in
+                    // headerView에 model 에 새로 분기되는 값 input
+                    guard let cell = tableView.dequeueReusableCell(
+                        withIdentifier: HomeTableViewCell.identifier,
+                        for: IndexPath(row: index, section: 0)) as? HomeTableViewCell else { return UITableViewCell() }
+                    cell.selectionStyle = .none
+                    cell.model = item
+                    
+                    return cell
+                }
+                .disposed(by: disposeBag)
         
     }
 

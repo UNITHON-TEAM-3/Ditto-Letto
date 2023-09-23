@@ -4,7 +4,7 @@ import SnapKit
 
 class MyLetterCircleView: UIView {
     
-    //MARK: - Life Cycles
+    // MARK: - Life Cycles
     init(backgroundColor: String) {
         super.init(frame: .zero)
         self.backgroundColor = UIColor(named: backgroundColor)

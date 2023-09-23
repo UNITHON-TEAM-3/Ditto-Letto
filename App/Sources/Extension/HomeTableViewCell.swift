@@ -49,7 +49,7 @@ class HomeTableViewCell: BaseTC {
         }
     }
     
-    //MARK: - Lifecycle
+    // MARK: - Lifecycle
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
@@ -125,5 +125,4 @@ class HomeTableViewCell: BaseTC {
             }
         }
     }
-
 }

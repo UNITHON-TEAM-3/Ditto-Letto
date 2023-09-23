@@ -3,24 +3,22 @@ import RxSwift
 import RxCocoa
 
 class MyLetterVM: BaseVM {
-    
     let disposeBag = DisposeBag()
     
-    let inBoxLetters = BehaviorRelay<[BoxLetterData]>(value: [])
-    let outBoxLetters = BehaviorRelay<[BoxLetterData]>(value: [])
-    let api = Service()
     
-    //MARK: - In/Out
+    
+    // MARK: - In/Out
     struct Input {
         let tableViewModelSelected: Observable<BoxLetterData>
         let sendButtonTapped: Observable<Void>
     }
     struct Output {
-        let nextViewController = PublishRelay<BaseVC>()
+        let letterMyData = PublishRelay<LetterMyData>()
     }
     
-    //MARK: - Translate
+    // MARK: - Translate
     func transform(_ input: Input) -> Output {
+        let api = Service()
         let output = Output()
         
         input.tableViewModelSelected
@@ -50,8 +48,7 @@ class MyLetterVM: BaseVM {
                 guard let model = model else { return }
                 
                 if networkResult == .getOk {
-                    self?.inBoxLetters.accept(model.data.inBoxLetters)
-                    self?.outBoxLetters.accept(model.data.outBoxLetters)
+                    output.letterMyData.accept(model.data)
                 }
             }
             .disposed(by: disposeBag)

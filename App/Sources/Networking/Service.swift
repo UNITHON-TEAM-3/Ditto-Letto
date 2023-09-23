@@ -18,7 +18,6 @@ final class Service {
     
     func login(_ code: String) -> Single<NetworkingResult> {
         return provider.rx.request(.login(code))
-            .filterSuccessfulStatusCodes()
             .map(TokenModel.self)
             .map { response -> NetworkingResult in
                 Token.accessToken = response.data.accessToken
@@ -29,7 +28,6 @@ final class Service {
     
     func letterMy() -> Single<(LetterMyModel?, NetworkingResult)> {
         return provider.rx.request(.letterMy)
-            .filterSuccessfulStatusCodes()
             .map(LetterMyModel.self)
             .map { return ($0, .getOk) }
             .catch { error in
