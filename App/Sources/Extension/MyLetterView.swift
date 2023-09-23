@@ -3,7 +3,7 @@ import SnapKit
 
 class MyLetterView: UIView {
     
-    //MARK: - Properties
+    // MARK: - Properties
     private let redButton = MyLetterCircleView(backgroundColor: "bg")
     private let blueButton = MyLetterCircleView(backgroundColor: "third")
     private let yelloButton = MyLetterCircleView(backgroundColor: "main")
@@ -29,7 +29,7 @@ class MyLetterView: UIView {
         return $0
     }(UITableView())
     
-    //MARK: - Life Cycles
+    // MARK: - Life Cycles
     init() {
         super.init(frame: .zero)
         setView()

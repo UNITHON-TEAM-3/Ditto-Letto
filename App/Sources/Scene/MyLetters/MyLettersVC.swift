@@ -58,33 +58,43 @@ class MyLetterVC: BaseVC {
 
     private func tableViewSetting() {
         myLetterView.tableView.delegate = self
-        myLetterView.tableView.tableHeaderView = tableHeaderView
     }
 
     // MARK: - bind
     override func bind() {
-        // MARK: - 지워야함
-        self.emptyView.isHidden = true
 
-        let input = MyLetterVM.Input(tableViewModelSelected: myLetterView.tableView.rx.modelSelected(HomeModel.self).asObservable(),
+        let input = MyLetterVM.Input(tableViewModelSelected: myLetterView.tableView.rx.modelSelected(BoxLetterData.self).asObservable(),
                                      sendButtonTapped: sendButton.rx.tap.asObservable())
         let output = viewModel.transform(input)
 
-        viewModel.homeModel
-            .do(onNext: { [weak self] list in
-                self?.emptyView.isHidden = !list.isEmpty
-            })
-            .bind(to: myLetterView.tableView.rx.items) { tableView, index, item in
-                guard let cell = tableView.dequeueReusableCell(
-                    withIdentifier: HomeTableViewCell.identifier,
-                    for: IndexPath(row: index, section: 0)) as?
-                        HomeTableViewCell else { return UITableViewCell() }
-                cell.selectionStyle = .none
-                cell.model = item
-
-                return cell
+        output.letterMyData
+            .bind { [weak self] data in
+                if data.inBoxLetters.isEmpty {
+                    self?.myLetterView.tableView.tableHeaderView = nil
+                } else {
+                    self?.tableHeaderView.model = data.inBoxLetters.first
+                    self?.myLetterView.tableView.tableHeaderView = self?.tableHeaderView
+                }
             }
             .disposed(by: disposeBag)
+        
+        output.letterMyData
+            .do(onNext: { [weak self] data in
+                self?.emptyView.isHidden = !data.outBoxLetters.isEmpty
+            })
+                .map { $0.outBoxLetters }
+                .bind(to: myLetterView.tableView.rx.items) { tableView, index, item in
+                    // headerView에 model 에 새로 분기되는 값 input
+                    guard let cell = tableView.dequeueReusableCell(
+                        withIdentifier: HomeTableViewCell.identifier,
+                        for: IndexPath(row: index, section: 0)) as? HomeTableViewCell else { return UITableViewCell() }
+                    cell.selectionStyle = .none
+                    cell.model = item
+                    
+                    return cell
+                }
+                .disposed(by: disposeBag)
+        
     }
 
 }

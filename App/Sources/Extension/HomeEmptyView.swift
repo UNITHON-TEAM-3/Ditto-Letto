@@ -3,7 +3,7 @@ import SnapKit
 
 class HomeEmptyView: UIView {
     
-    //MARK: - Properties
+    // MARK: - Properties
     private let tungLabel: UILabel = {
         $0.text = "텅!"
         $0.font = UIFont(name: "Ramche", size: 25)
@@ -26,7 +26,7 @@ class HomeEmptyView: UIView {
         return $0
     }(UILabel())
     
-    //MARK: - Life Cycles
+    // MARK: - Life Cycles
     init() {
         super.init(frame: .zero)
         addView()
@@ -37,7 +37,7 @@ class HomeEmptyView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    //MARK: - Set UI
+    // MARK: - Set UI
     
     private func addView() {
         addSubview(tungLabel)

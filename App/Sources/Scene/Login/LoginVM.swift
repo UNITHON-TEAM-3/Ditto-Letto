@@ -11,7 +11,7 @@ class LoginVM: BaseVM {
     
     let result = PublishRelay<Bool>()
     
-    //MARK: - In/Out
+    // MARK: - In/Out
     struct Input {
         let loginButtonTapped: Observable<Void>
     }
@@ -19,7 +19,7 @@ class LoginVM: BaseVM {
         
     }
     
-    //MARK: - Transform
+    // MARK: - Transform
     func transform(_ input: Input) -> Output {
         let output = Output()
         
@@ -32,7 +32,7 @@ class LoginVM: BaseVM {
         return output
     }
     
-    //MARK: - API
+    // MARK: - API
         func requestKakaoLogin() {
             if (UserApi.isKakaoTalkLoginAvailable()) {
                 loginWithApp()
