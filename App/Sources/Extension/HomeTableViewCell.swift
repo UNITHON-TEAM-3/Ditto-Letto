@@ -6,6 +6,15 @@ enum MessageType: CaseIterable {
     case password
 }
 
+enum TransportationType: String, CaseIterable {
+    case airplane = "airplane"
+    case car = "car"
+    case bike = "bike"
+    case horse = "horse"
+    case running = "running"
+    case walk = "walk"
+}
+
 class HomeTableViewCell: BaseTC {
 
     static let identifier = "HomeTableViewCell"
@@ -23,7 +32,7 @@ class HomeTableViewCell: BaseTC {
     
     private let transportationState = UIImageView()
     
-    var type: MessageType? {
+    var model: HomeModel? {
         didSet {
             configureVC()
         }
@@ -69,14 +78,21 @@ class HomeTableViewCell: BaseTC {
     }
     
     override func configureVC() {
-        switch type {
+        guard let model = model else { return }
+        switch model.type {
         case .normal:
             return folderImageView.image = UIImage(named: "redFolder")
         case .password:
             return folderImageView.image = UIImage(named: "yellowFolder")
-        case .none:
-            break
         }
+        
+        TransportationType.allCases.forEach { value in
+            if model.transportation == value.rawValue {
+                transportationImageView.image = UIImage(named: value.rawValue)
+            }
+        }
+        
+        
     }
     
 }

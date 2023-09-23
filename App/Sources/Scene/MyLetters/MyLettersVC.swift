@@ -17,6 +17,8 @@ class MyLetterVC: BaseVC {
         return $0
     }(UIButton())
     
+    private let emptyView = HomeEmptyView()
+    
     //MARK: - Life Cycles
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,6 +28,7 @@ class MyLetterVC: BaseVC {
     override func addView() {
         view.addSubview(myLetterView)
         view.addSubview(sendButton)
+        view.addSubview(emptyView)
     }
     
     override func setLayout() {
@@ -39,16 +42,30 @@ class MyLetterVC: BaseVC {
             make.leading.trailing.equalToSuperview().inset(21)
             make.height.equalTo(60)
         }
+        emptyView.snp.makeConstraints { make in
+            make.edges.equalTo(myLetterView.tableView.snp.edges)
+        }
     }
     
     //MARK: - bind
     override func bind() {
-        let input = MyLetterVM.Input(tableViewItemSelected: myLetterView.tableView.rx.itemSelected.asObservable(),
-                                     tableViewModelSelected: myLetterView.tableView.rx.modelSelected(HomeModel.self).asObservable(),
+        let input = MyLetterVM.Input(
+                                    tableViewModelSelected: myLetterView.tableView.rx.modelSelected(HomeModel.self).asObservable(),
                                      sendButtonTapped: sendButton.rx.tap.asObservable())
         let output = viewModel.transform(input)
         
-        
+        viewModel.homeModel
+            .do(onNext: { [weak self] list in
+                self?.emptyView.isHidden = !list.isEmpty
+            })
+            .bind(to: myLetterView.tableView.rx.items) { tableView, index, item in
+                guard let cell = tableView.dequeueReusableCell(withIdentifier: HomeTableViewCell.identifier, for: IndexPath(row: index, section: 0)) as? HomeTableViewCell else { return UITableViewCell() }
+                cell.selectionStyle = .none
+                cell.model = item
+                
+                return cell
+            }
+            .disposed(by: disposeBag)
         
     }
     

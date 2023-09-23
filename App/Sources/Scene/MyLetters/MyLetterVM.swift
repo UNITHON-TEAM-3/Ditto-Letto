@@ -6,10 +6,10 @@ class MyLetterVM: BaseVM {
     
     let disposeBag = DisposeBag()
     
+    let homeModel = PublishSubject<[HomeModel]>()
     
     //MARK: - In/Out
     struct Input {
-        let tableViewItemSelected: Observable<IndexPath>
         let tableViewModelSelected: Observable<HomeModel>
         let sendButtonTapped: Observable<Void>
     }
