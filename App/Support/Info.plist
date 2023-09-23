@@ -14,6 +14,7 @@
 	</array>
 	<key>UIAppFonts</key>
 	<array>
+		<string>GS.otf</string>
 		<string>Ramche.otf</string>
 		<string>독립서체_윤봉길_GS.otf</string>
 	</array>

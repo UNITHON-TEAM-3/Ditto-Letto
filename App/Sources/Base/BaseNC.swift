@@ -3,7 +3,7 @@ import UIKit
 class BaseNC: UINavigationController {
     private var backButtonImage: UIImage? {
         return UIImage(systemName: "chevron.backward")!
-            .withAlignmentRectInsets(UIEdgeInsets(top: 0.0, left: -12.0, bottom: 0.0, right: 0.0))
+            .withAlignmentRectInsets(UIEdgeInsets(top: -10.0, left: 20.0, bottom: 0.0, right: 0.0))
     }
 
     private var backButtonAppearance: UIBarButtonItemAppearance {
