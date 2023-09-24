@@ -9,7 +9,6 @@ class NewLetterVC: BaseVC {
     private let countViewModel = GetCountVM()
     private let letterViewModel = NewLetterVM()
     private let getCount = BehaviorRelay<Void>(value: ())
-    private let type = PublishRelay<String>()
 
     private let privateDiaryButton = UIButton().then {
         $0.selectTypeButton(title: "암호 편지")
@@ -83,18 +82,7 @@ class NewLetterVC: BaseVC {
                         }).disposed(by: disposeBag)
                 }
             }).disposed(by: disposeBag)
-
-        let input = NewLetterVM.Input(
-            text: letterTextView.rx.text.orEmpty.asDriver(),
-            type: type.asDriver(onErrorJustReturn: ""),
-            phone: letterTextField.rx.text.orEmpty.asDriver(),
-            buttonTapped: sendButton.rx.tap.asSignal()
-        )
-        let output = letterViewModel.transform(input)
-        output.postResult.asObservable()
-            .subscribe(onNext: { res in
-                print(res)
-            }).disposed(by: disposeBag)
+    
     }
     override func configureVC() {
         self.navigationController?.navigationBar.topItem?.title = ""
@@ -106,12 +94,10 @@ class NewLetterVC: BaseVC {
                 self.sendCountLabel.setCount($0)
                 self.receiveCountLabel.setCount($0)
                 if $0 == true {
-                    self.type.accept("CODE")
                     self.privateDiaryButton.setEnabled()
                     self.generalDiaryButton.setDisabled()
                     self.textCountLabel.font = UIFont(name: "Ramche", size: 12)
                 } else {
-                    self.type.accept("BASIC")
                     self.generalDiaryButton.setEnabled()
                     self.privateDiaryButton.setDisabled()
                     self.textCountLabel.font = UIFont(name: "GS", size: 12)

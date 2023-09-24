@@ -44,4 +44,22 @@ final class Service {
             }
             .catch {[unowned self] in return .just(setNetworkError($0))}
     }
+
+    func fetchDetailLetter(_ id: Int) -> Single<(DetailLetterModel?, NetworkingResult)> {
+        return provider.rx.request(.fetchDetailLetter(id))
+            .map(DetailLetterModel.self)
+            .map { return ($0, .getOk) }
+            .catch { error in
+                print(error)
+                return .just((nil, .fault))
+            }
+    }
+
+    func deleteLetter(_ id: Int) -> Single<NetworkingResult> {
+        return provider.rx.request(.deleteLetter(id))
+            .map { _ -> NetworkingResult in
+                return .createOk
+            }
+            .catch {[unowned self] in return .just(setNetworkError($0))}
+    }
 }

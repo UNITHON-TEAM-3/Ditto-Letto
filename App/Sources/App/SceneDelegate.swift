@@ -7,18 +7,18 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScence = (scene as? UIWindowScene) else { return }
-        
+
         window = UIWindow(windowScene: windowScence)
         window?.windowScene = windowScence
 
         print("Token = \(Token.accessToken)")
-        
+
         if Token.accessToken == nil {
             window?.rootViewController = LoginVC()
         } else {
             window?.rootViewController = UINavigationController(rootViewController: MyLetterVC())
         }
-    
+
         window?.makeKeyAndVisible()
     }
     

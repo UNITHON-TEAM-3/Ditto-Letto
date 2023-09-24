@@ -24,7 +24,7 @@ public extension UIButton {
 
     func setMainButton(color: String) {
         setTitleColor(.black, for: .normal)
-        titleLabel?.font = UIFont(name: "Ramche", size: 16)
+        titleLabel?.font = UIFont(name: "Ramche", size: 17)
         backgroundColor = UIColor(named: color)
         layer.borderColor = UIColor.black.cgColor
         layer.borderWidth = 1
