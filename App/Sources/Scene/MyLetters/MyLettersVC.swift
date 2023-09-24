@@ -30,7 +30,6 @@ class MyLetterVC: BaseVC {
     // MARK: - Life Cycles
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableViewSetting()
     }
 
     // MARK: - Set UI
@@ -56,15 +55,13 @@ class MyLetterVC: BaseVC {
         }
     }
 
-    private func tableViewSetting() {
-        myLetterView.tableView.delegate = self
-    }
-
     // MARK: - bind
     override func bind() {
-
-        let input = MyLetterVM.Input(tableViewModelSelected: myLetterView.tableView.rx.modelSelected(BoxLetterData.self).asObservable(),
-                                     sendButtonTapped: sendButton.rx.tap.asObservable())
+        myLetterView.tableView.delegate = self
+        
+        let input = MyLetterVM.Input(
+            tableViewModelSelected: myLetterView.tableView.rx.itemSelected.asObservable(),
+            sendButtonTapped: sendButton.rx.tap.asObservable())
         let output = viewModel.transform(input)
 
         output.letterMyData
@@ -94,6 +91,21 @@ class MyLetterVC: BaseVC {
                     return cell
                 }
                 .disposed(by: disposeBag)
+        
+        output.isArrived
+            .bind { [weak self] bool in
+                if bool {
+                    // 보관함으로 이동
+//                    let keepRoomVC = BaseVC()
+                    let keepRoomVC = LoadingLetterVC()
+                    self?.navigationController?.pushViewController(keepRoomVC, animated: true)
+                } else {
+                    // 전송중으로 이동
+                    let loadingVC = LoadingLetterVC()
+                    self?.navigationController?.pushViewController(loadingVC, animated: true)
+                }
+            }
+            .disposed(by: disposeBag)
         
     }
 
