@@ -43,12 +43,12 @@ class MyLetterVC: BaseVC {
         myLetterView.snp.makeConstraints { make in
             make.top.equalToSuperview().inset(70)
             make.leading.trailing.equalToSuperview().inset(20)
-            make.bottom.equalTo(sendButton.snp.top).inset(-18)
+            make.bottom.equalToSuperview().inset(126)
         }
         sendButton.snp.makeConstraints { make in
-            make.bottom.equalTo(view.safeAreaLayoutGuide).inset(17)
-            make.leading.trailing.equalToSuperview().inset(21)
-            make.height.equalTo(60)
+            make.leading.trailing.equalToSuperview().inset(20)
+            make.height.equalTo(55)
+            make.top.equalTo(myLetterView.snp.bottom).offset(20)
         }
         emptyView.snp.makeConstraints { make in
             make.edges.equalTo(myLetterView.tableView.snp.edges)
