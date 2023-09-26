@@ -20,11 +20,11 @@ public enum DittoLettoFontFamily {
     public static let regular = DittoLettoFontConvertible(name: "Ramche", family: "Ramche", path: "Ramche.otf")
     public static let all: [DittoLettoFontConvertible] = [regular]
   }
-  public enum YunBongGil {
-    public static let regular = DittoLettoFontConvertible(name: "YUN-BONG-GIL", family: "YUN-BONG-GIL", path: "독립서체_윤봉길_GS.otf")
+  public enum YoonDongJu2 {
+    public static let regular = DittoLettoFontConvertible(name: "YOON-DONG-JU2", family: "YOON-DONG-JU2", path: "독립서체_윤동주_서시_GS.otf")
     public static let all: [DittoLettoFontConvertible] = [regular]
   }
-  public static let allCustomFonts: [DittoLettoFontConvertible] = [Ramche.all, YunBongGil.all].flatMap { $0 }
+  public static let allCustomFonts: [DittoLettoFontConvertible] = [Ramche.all, YoonDongJu2.all].flatMap { $0 }
   public static func registerAllCustomFonts() {
     allCustomFonts.forEach { $0.register() }
   }

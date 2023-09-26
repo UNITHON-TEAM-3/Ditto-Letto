@@ -10,12 +10,12 @@ class LoadingLetterVC: BaseVC {
     // MARK: - Properties
     private let sendingLabel: UILabel = {
         $0.text = "편지 전송 중"
-        $0.font = UIFont(name: "Ramche", size: 22)
+        $0.font = DittoLettoFontFamily.Ramche.regular.font(size: 22)
         return $0
     }(UILabel())
     private let runningLabel: UILabel = {
         $0.text = "서로의 거리만큼 달려가고 있어요!"
-        $0.font = UIFont(name: "Ramche", size: 16)
+        $0.font = DittoLettoFontFamily.Ramche.regular.font(size: 16)
         return $0
     }(UILabel())
     private let transportationImageView = UIImageView()

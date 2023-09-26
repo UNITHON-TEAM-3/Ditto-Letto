@@ -12,7 +12,7 @@ class KeepingLetterView: UIView {
 
     private let titleNumberLabel: UILabel = {
         $0.text = "010-1234-5673"
-        $0.font = UIFont(name: "Ramche", size: 20)
+        $0.font = DittoLettoFontFamily.Ramche.regular.font(size: 20)
         return $0
     }(UILabel())
 
@@ -28,7 +28,7 @@ class KeepingLetterView: UIView {
 
     private let messageNumLabel: UILabel = {
         $0.text = "12"
-        $0.font = UIFont(name: "Ramche", size: 13)
+        $0.font = DittoLettoFontFamily.Ramche.regular.font(size: 13)
         return $0
     }(UILabel())
 

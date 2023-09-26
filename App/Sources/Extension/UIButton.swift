@@ -3,7 +3,7 @@ import UIKit
 public extension UIButton {
     func selectTypeButton(title: String) {
         self.clipsToBounds = true
-        self.titleLabel?.font = UIFont(name: "Ramche", size: 17)
+        self.titleLabel?.font = DittoLettoFontFamily.Ramche.regular.font(size: 17)
         self.setTitle("\(title)", for: .normal)
         self.layer.borderColor = UIColor.black.cgColor
         self.layer.borderWidth = 1.0
@@ -24,7 +24,7 @@ public extension UIButton {
 
     func setMainButton(color: String) {
         setTitleColor(.black, for: .normal)
-        titleLabel?.font = UIFont(name: "Ramche", size: 17)
+        titleLabel?.font = DittoLettoFontFamily.Ramche.regular.font(size: 17)
         backgroundColor = UIColor(named: color)
         layer.borderColor = UIColor.black.cgColor
         layer.borderWidth = 1

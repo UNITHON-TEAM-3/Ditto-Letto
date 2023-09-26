@@ -33,7 +33,7 @@ class HomeTableViewCell: BaseTC {
 
     private let phoneNumberLabel: UILabel = {
         $0.text = "010-2326-3046"
-        $0.font = UIFont(name: "Ramche", size: 17)
+        $0.font = DittoLettoFontFamily.Ramche.regular.font(size: 17)
         return $0
     }(UILabel())
 
@@ -85,9 +85,9 @@ class HomeTableViewCell: BaseTC {
 
     override func configureVC() {
         guard let model = model else { return }
-    
+
         phoneNumberLabel.text = model.phoneNumber
-        
+
         if model.type == MessageType.normal.rawValue {
             return folderImageView.image = UIImage(named: "redFolder")
         }
@@ -106,7 +106,7 @@ class HomeTableViewCell: BaseTC {
                     transportationState.image = UIImage(named: "state0\(value.rawValue)")
                 }
             }
-            
+
             if model.mediumType == TransportationType.airplane.rawValue {
                 transportationImageView.image = UIImage(named: "airplaneIcon")
             } else if model.mediumType == TransportationType.car.rawValue {

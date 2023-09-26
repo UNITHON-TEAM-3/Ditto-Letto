@@ -9,7 +9,7 @@ class MyLetterView: UIView {
 
     private let title: UILabel = {
         $0.text = "나의 편지함"
-        $0.font = UIFont(name: "Ramche", size: 15)
+        $0.font = DittoLettoFontFamily.Ramche.regular.font(size: 15)
         return $0
     }(UILabel())
 

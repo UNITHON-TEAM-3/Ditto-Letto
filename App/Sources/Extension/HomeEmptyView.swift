@@ -5,7 +5,7 @@ class HomeEmptyView: UIView {
     // MARK: - Properties
     private let tungLabel: UILabel = {
         $0.text = "텅!"
-        $0.font = UIFont(name: "Ramche", size: 25)
+        $0.font = DittoLettoFontFamily.Ramche.regular.font(size: 25)
         return $0
     }(UILabel())
 
@@ -19,7 +19,7 @@ class HomeEmptyView: UIView {
             나에게 마음을 전달할 수 있도록\n
             편지를 보내볼까요?
         """
-        $0.font = UIFont(name: "Ramche", size: 18)
+        $0.font = DittoLettoFontFamily.Ramche.regular.font(size: 18)
         $0.textAlignment = .center
         $0.numberOfLines = 0
         return $0

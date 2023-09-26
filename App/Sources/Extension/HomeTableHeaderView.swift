@@ -10,7 +10,7 @@ class HomeTableHeaderView: UIView {
 
     private let headerTitleLabel: UILabel = {
         $0.text = "너랑 지금 정말 가까이 있나봐"
-        $0.font = UIFont(name: "Ramche", size: 16)
+        $0.font = DittoLettoFontFamily.Ramche.regular.font(size: 16)
         return $0
     }(UILabel())
 
@@ -78,7 +78,7 @@ class HomeTableHeaderView: UIView {
                 transportationState.image = UIImage(named: "state0\(value.rawValue)")
             }
         }
-    
+
         if model.mediumType == TransportationType.airplane.rawValue {
             transportationImageView.image = UIImage(named: "airplaneIcon")
         } else if model.mediumType == TransportationType.car.rawValue {

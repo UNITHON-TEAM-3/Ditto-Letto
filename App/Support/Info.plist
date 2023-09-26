@@ -16,7 +16,6 @@
 	<array>
 		<string>독립서체_윤동주_서시_GS.otf</string>
 		<string>Ramche.otf</string>
-		<string>독립서체_윤봉길_GS.otf</string>
 	</array>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>

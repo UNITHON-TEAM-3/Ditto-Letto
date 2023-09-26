@@ -44,9 +44,9 @@ extension UITextField {
             self.backgroundColor = UIColor(named: "dark")
             self.attributedPlaceholder = NSAttributedString(string: "번호를 입력해주세요.", attributes: [
                 .foregroundColor: UIColor(named: "gray2Color") ?? .gray,
-                .font: UIFont(name: "Ramche", size: 17) ?? .systemFont(ofSize: 17)
+                .font: DittoLettoFontFamily.Ramche.regular.font(size: 17)
             ])
-            self.font = UIFont(name: "Ramche", size: 17)
+            self.font = DittoLettoFontFamily.Ramche.regular.font(size: 17)
             self.textColor = .white
             self.rightView = UIView(frame: CGRect(x: 0, y: 0, width: 68, height: 50))
             self.rightViewMode = .always
@@ -65,9 +65,9 @@ extension UITextField {
             self.backgroundColor = .white
             self.attributedPlaceholder = NSAttributedString(string: "번호를 입력해주세요.", attributes: [
                 .foregroundColor: UIColor(named: "gray2") ?? .gray,
-                .font: UIFont(name: "독립서체_윤동주_서시_GS", size: 17) ?? .systemFont(ofSize: 17)
+                .font: DittoLettoFontFamily.YoonDongJu2.regular.font(size: 17)
             ])
-            self.font = UIFont(name: "독립서체_윤동주_서시_GS", size: 17)
+            self.font = DittoLettoFontFamily.YoonDongJu2.regular.font(size: 17)
             self.textColor = .black
         }
     }
@@ -76,9 +76,9 @@ extension UITextField {
 extension UITextView {
     func setTextView(_ isPrivate: Bool) {
         if isPrivate {
-            self.font = UIFont(name: "Ramche", size: 18)
+            self.font = DittoLettoFontFamily.Ramche.regular.font(size: 18)
         } else {
-            self.font = UIFont(name: "독립서체_윤동주_서시_GS", size: 18) ?? .systemFont(ofSize: 18)
+            self.font = DittoLettoFontFamily.YoonDongJu2.regular.font(size: 18)
         }
     }
 }
@@ -88,10 +88,10 @@ extension UILabel {
         self.text = "0"
         if isPrivate {
             self.textColor = .white
-            self.font = UIFont(name: "Ramche", size: 12)
+            self.font = DittoLettoFontFamily.Ramche.regular.font(size: 12)
         } else {
             self.textColor = .black
-            self.font = UIFont(name: "독립서체_윤동주_서시_GS", size: 12) ?? .systemFont(ofSize: 12)
+            self.font = DittoLettoFontFamily.YoonDongJu2.regular.font(size: 12)
         }
     }
 }

@@ -15,7 +15,7 @@ extension API: TargetType {
         let url = URL(string: "https://port-0-pro-4fju66f2clmvatsvw.sel5.cloudtype.app") ?? URL(string: "")!
         return url
     }
-    
+
     var path: String {
         switch self {
         case .login:

@@ -28,19 +28,19 @@ class DetailLetterVC: BaseVC {
     private let distanceLabel = UILabel().then {
         $0.text = "전송거리"
         $0.textColor = UIColor(named: "dark")
-        $0.font = UIFont(name: "Ramche", size: 12)
+        $0.font = DittoLettoFontFamily.Ramche.regular.font(size: 12)
     }
     private let transportImage = UIImageView().then {
         $0.image = UIImage(named: "")
     }
     private let dateLabel = UILabel().then {
         $0.textColor = UIColor(named: "dark")
-        $0.font = UIFont(name: "Ramche", size: 12)
+        $0.font = DittoLettoFontFamily.Ramche.regular.font(size: 12)
     }
     private let deleteButton = UIButton().then {
         $0.setTitle("삭제하기", for: .normal)
         $0.setTitleColor(UIColor(named: "dark"), for: .normal)
-        $0.titleLabel?.font = UIFont(name: "Ramche", size: 16)
+        $0.titleLabel?.font = DittoLettoFontFamily.Ramche.regular.font(size: 16)
         $0.backgroundColor = .white
         $0.layer.borderColor = UIColor(named: "gray2")?.cgColor
         $0.layer.borderWidth = 1

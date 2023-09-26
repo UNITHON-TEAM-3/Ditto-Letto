@@ -111,12 +111,12 @@ class NewLetterVC: BaseVC {
                     self.type.accept("CODE")
                     self.privateDiaryButton.setEnabled()
                     self.generalDiaryButton.setDisabled()
-                    self.textCountLabel.font = UIFont(name: "Ramche", size: 12)
+                    self.textCountLabel.font = DittoLettoFontFamily.Ramche.regular.font(size: 12)
                 } else {
                     self.type.accept("BASIC")
                     self.generalDiaryButton.setEnabled()
                     self.privateDiaryButton.setDisabled()
-                    self.textCountLabel.font = UIFont(name: "독립서체_윤동주_서시_GS", size: 12)
+                    self.textCountLabel.font = DittoLettoFontFamily.YoonDongJu2.regular.font(size: 12)
                 }
             }).disposed(by: disposeBag)
         letterTextView.rx.text.orEmpty

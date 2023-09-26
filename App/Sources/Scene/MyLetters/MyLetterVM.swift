@@ -26,7 +26,7 @@ class MyLetterVM: BaseVM {
                 guard let model = model else { return }
 
                 if networkResult == .getOk {
-                    output.letterMyData.accept(model.data) 
+                    output.letterMyData.accept(model.data)
                 }
             }.disposed(by: disposeBag)
 
@@ -34,7 +34,7 @@ class MyLetterVM: BaseVM {
             .zip(input.tableViewModelSelected, output.letterMyData)
             .subscribe { indexPath, dataList in
                 let data = dataList.outBoxLetters[indexPath.row]
-
+                
                 if data.arrived {
                     output.isArrived.accept(true)
                 } else {
