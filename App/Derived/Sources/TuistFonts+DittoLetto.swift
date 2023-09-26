@@ -3,7 +3,7 @@
 // swiftformat:disable all
 // Generated using tuist — https://github.com/tuist/tuist
 
-#if os(OSX)
+#if os(macOS)
   import AppKit.NSFont
 #elseif os(iOS) || os(tvOS) || os(watchOS)
   import UIKit.UIFont
@@ -25,7 +25,7 @@ public enum DittoLettoFontFamily {
     public static let all: [DittoLettoFontConvertible] = [regular]
   }
   public enum YunBongGil {
-    public static let regular = DittoLettoFontConvertible(name: "YUN-BONG-GIL", family: "YUN-BONG-GIL", path: "독립서체_윤봉길_GS.otf")
+    public static let regular = DittoLettoFontConvertible(name: "YUN-BONG-GIL", family: "YUN-BONG-GIL", path: "독립서체_윤봉길_GS.otf")
     public static let all: [DittoLettoFontConvertible] = [regular]
   }
   public static let allCustomFonts: [DittoLettoFontConvertible] = [Ramche.all, YoonDongJu1.all, YunBongGil.all].flatMap { $0 }
@@ -42,7 +42,7 @@ public struct DittoLettoFontConvertible {
   public let family: String
   public let path: String
 
-  #if os(OSX)
+  #if os(macOS)
   public typealias Font = NSFont
   #elseif os(iOS) || os(tvOS) || os(watchOS)
   public typealias Font = UIFont
@@ -73,7 +73,7 @@ public extension DittoLettoFontConvertible.Font {
     if !UIFont.fontNames(forFamilyName: font.family).contains(font.name) {
       font.register()
     }
-    #elseif os(OSX)
+    #elseif os(macOS)
     if let url = font.url, CTFontManagerGetScopeForURL(url as CFURL) == .none {
       font.register()
     }

@@ -7,6 +7,7 @@ enum API {
     case postNewLetter(_ text: String, _ type: String, _ targetPhoneNumber: String)
     case fetchDetailLetter(_ id: Int)
     case deleteLetter(_ id: Int)
+    case letterMy
 }
 
 extension API: TargetType {
@@ -25,13 +26,15 @@ extension API: TargetType {
             return "/letter"
         case let .fetchDetailLetter(id), let .deleteLetter(id):
             return "/letter/\(id)"
+        case .letterMy:
+            return "/letter/my"
         }
     }
     var method: Moya.Method {
         switch self {
         case .login, .postNewLetter:
             return .post
-        case .getCount, .fetchDetailLetter:
+        case .getCount, .fetchDetailLetter, .letterMy:
             return .get
         case .deleteLetter:
             return .delete
@@ -68,7 +71,7 @@ extension API: TargetType {
         switch self {
         case .login:
             return Header.tokenIsEmpty.header()
-        case .getCount, .postNewLetter, .fetchDetailLetter, .deleteLetter:
+        case .getCount, .postNewLetter, .fetchDetailLetter, .deleteLetter, .letterMy:
             guard let token = Token.accessToken else { return ["Contect-Type": "application/json"] }
                         return ["Authorization": "Bearer " + token, "Contect-Type": "application/json"]
         }

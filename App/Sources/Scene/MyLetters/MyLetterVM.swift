@@ -4,48 +4,44 @@ import RxCocoa
 
 class MyLetterVM: BaseVM {
     let disposeBag = DisposeBag()
-    let homeModel = BehaviorRelay<[HomeModel]>(value: [])
 
     // MARK: - In/Out
     struct Input {
-        let tableViewModelSelected: Observable<HomeModel>
+        let tableViewModelSelected: Observable<IndexPath>
         let sendButtonTapped: Observable<Void>
     }
 
     struct Output {
-
+        let letterMyData = PublishRelay<LetterMyData>()
+        let isArrived = PublishRelay<Bool>()
     }
 
     // MARK: - Translate
     func transform(_ input: Input) -> Output {
-        getLetterRequest()
+        let api = Service()
         let output = Output()
 
-        input.tableViewModelSelected
-            .subscribe(onDisposed: {
-                // 분기처리: 조회로 연결 & 전송 중
-            }).disposed(by: disposeBag)
+        api.letterMy()
+            .subscribe { [weak self] model, networkResult in
+                guard let model = model else { return }
 
-        homeModel
-            .subscribe { model in
-                print(model)
+                if networkResult == .getOk {
+                    output.letterMyData.accept(model.data) 
+                }
+            }.disposed(by: disposeBag)
+
+        Observable
+            .zip(input.tableViewModelSelected, output.letterMyData)
+            .subscribe { indexPath, dataList in
+                let data = dataList.outBoxLetters[indexPath.row]
+
+                if data.arrived {
+                    output.isArrived.accept(true)
+                } else {
+                    output.isArrived.accept(false)
+                }
             }.disposed(by: disposeBag)
 
         return output
-    }
-
-    // MARK: API
-    func getLetterRequest() {
-        let models = [
-            HomeModel(limitedTime: "123123", number: "010-2326-3046", transportation: "car", type: .normal),
-            HomeModel(limitedTime: "213123", number: "010-1234-1234", transportation: "horse", type: .password),
-            HomeModel(limitedTime: "123123", number: "010-2326-3046", transportation: "car", type: .normal),
-            HomeModel(limitedTime: "213123", number: "010-1234-1234", transportation: "horse", type: .password),
-            HomeModel(limitedTime: "123123", number: "010-2326-3046", transportation: "car", type: .normal),
-            HomeModel(limitedTime: "213123", number: "010-1234-1234", transportation: "horse", type: .password)
-        ]
-
-        homeModel.accept(models)
-        print("append 완료")
     }
 }

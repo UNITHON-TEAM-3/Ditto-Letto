@@ -1,18 +1,29 @@
 import UIKit
 import SnapKit
 
-enum MessageType: CaseIterable {
-    case normal
-    case password
+enum MessageType: String, CaseIterable {
+    case normal = "BASIC"
+    case password = "CODE"
 }
 
 enum TransportationType: String, CaseIterable {
-    case airplane = "airplane"
-    case car = "car"
-    case bike = "bike"
-    case horse = "horse"
-    case running = "running"
-    case walk = "walk"
+    case airplane = "PLAIN"
+    case car = "CAR"
+    case bicycle = "BICYCLE"
+    case horse = "HORSE"
+    case running = "RUN"
+    case walk = "WALK"
+}
+
+enum ProgressType: Int, CaseIterable {
+    case type1 = 1
+    case type2 = 2
+    case type3 = 3
+    case type4 = 4
+    case type5 = 5
+    case type6 = 6
+    case type7 = 7
+    
 }
 
 class HomeTableViewCell: BaseTC {
@@ -31,7 +42,7 @@ class HomeTableViewCell: BaseTC {
 
     private let transportationState = UIImageView()
 
-    var model: HomeModel? {
+    var model: BoxLetterData? {
         didSet {
             configureVC()
         }
@@ -40,10 +51,6 @@ class HomeTableViewCell: BaseTC {
     // MARK: - Lifecycle
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-
-        // 임시
-        transportationImageView.image = UIImage(named: "airplaneIcon")
-        transportationState.image = UIImage(named: "state05")
     }
 
     override func addView() {
@@ -79,16 +86,40 @@ class HomeTableViewCell: BaseTC {
 
     override func configureVC() {
         guard let model = model else { return }
-        switch model.type {
-        case .normal:
+    
+        phoneNumberLabel.text = model.phoneNumber
+        
+        if model.type == MessageType.normal.rawValue {
             return folderImageView.image = UIImage(named: "redFolder")
-        case .password:
+        }
+        if model.type == MessageType.password.rawValue {
             return folderImageView.image = UIImage(named: "yellowFolder")
         }
 
-        TransportationType.allCases.forEach { value in
-            if model.transportation == value.rawValue {
-                transportationImageView.image = UIImage(named: value.rawValue)
+        // 도착 완료 시
+        if model.arrived {
+            transportationImageView.image = nil
+            transportationState.image = nil
+        } else {
+            // 도착까지 시간이 남았을 시
+            ProgressType.allCases.forEach { value in
+                if model.progressLevel == value.rawValue {
+                    transportationState.image = UIImage(named: "state0\(value.rawValue)")
+                }
+            }
+            
+            if model.mediumType == TransportationType.airplane.rawValue {
+                transportationImageView.image = UIImage(named: "airplaneIcon")
+            } else if model.mediumType == TransportationType.car.rawValue {
+                transportationImageView.image = UIImage(named: "carIcon")
+            } else if model.mediumType == TransportationType.bicycle.rawValue {
+                transportationImageView.image = UIImage(named: "bikeIcon")
+            } else if model.mediumType == TransportationType.horse.rawValue {
+                transportationImageView.image = UIImage(named: "horseIcon")
+            } else if model.mediumType == TransportationType.running.rawValue {
+                transportationImageView.image = UIImage(named: "runningIcon")
+            } else if model.mediumType == TransportationType.walk.rawValue {
+                transportationState.image = UIImage(named: "walkIcon")
             }
         }
     }

@@ -2,6 +2,12 @@ import UIKit
 import SnapKit
 
 class HomeTableHeaderView: UIView {
+    var model: BoxLetterData? {
+        didSet {
+            configureVC()
+        }
+    }
+
     private let headerTitleLabel: UILabel = {
         $0.text = "너랑 지금 정말 가까이 있나봐"
         $0.font = UIFont(name: "Ramche", size: 16)
@@ -60,5 +66,32 @@ class HomeTableHeaderView: UIView {
             make.leading.trailing.bottom.equalToSuperview()
             make.height.equalTo(0.5)
         }
+    }
+    
+    private func configureVC() {
+        guard let model = model else { return }
+    
+        headerTitleLabel.text = model.previewText
+        // 도착까지 시간이 남았을 시
+        ProgressType.allCases.forEach { value in
+            if model.progressLevel == value.rawValue {
+                transportationState.image = UIImage(named: "state0\(value.rawValue)")
+            }
+        }
+        
+        if model.mediumType == TransportationType.airplane.rawValue {
+            transportationImageView.image = UIImage(named: "airplaneIcon")
+        } else if model.mediumType == TransportationType.car.rawValue {
+            transportationImageView.image = UIImage(named: "carIcon")
+        } else if model.mediumType == TransportationType.bicycle.rawValue {
+            transportationImageView.image = UIImage(named: "bikeIcon")
+        } else if model.mediumType == TransportationType.horse.rawValue {
+            transportationImageView.image = UIImage(named: "horseIcon")
+        } else if model.mediumType == TransportationType.running.rawValue {
+            transportationImageView.image = UIImage(named: "runningIcon")
+        } else if model.mediumType == TransportationType.walk.rawValue {
+            transportationState.image = UIImage(named: "walkIcon")
+        }
+        
     }
 }
