@@ -11,7 +11,7 @@ class NewLetterVM: BaseVM {
         let phone: Driver<String>
         let buttonTapped: Signal<Void>
     }
-    
+
     struct Output {
         let postResult: PublishRelay<Bool>
     }
@@ -27,7 +27,7 @@ class NewLetterVM: BaseVM {
                 api.postNewLetter(text, type, phone)
             }.subscribe(onNext: { res in
                 switch res {
-                case .getOk:
+                case .createOk:
                     postResult.accept(true)
                 default:
                     postResult.accept(false)

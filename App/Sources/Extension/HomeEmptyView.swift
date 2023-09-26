@@ -2,19 +2,18 @@ import UIKit
 import SnapKit
 
 class HomeEmptyView: UIView {
-    
-    //MARK: - Properties
+    // MARK: - Properties
     private let tungLabel: UILabel = {
         $0.text = "텅!"
         $0.font = UIFont(name: "Ramche", size: 25)
         return $0
     }(UILabel())
-    
+
     private let tungImageView: UIImageView = {
         $0.image = UIImage(named: "emptyFolder")
         return $0
     }(UIImageView())
-    
+
     private let questionLabel: UILabel = {
         $0.text = """
             나에게 마음을 전달할 수 있도록\n
@@ -25,26 +24,26 @@ class HomeEmptyView: UIView {
         $0.numberOfLines = 0
         return $0
     }(UILabel())
-    
-    //MARK: - Life Cycles
+
+    // MARK: - Life Cycles
     init() {
         super.init(frame: .zero)
         addView()
         setLayout()
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    //MARK: - Set UI
-    
+
+    // MARK: - Set UI
+
     private func addView() {
         addSubview(tungLabel)
         addSubview(tungImageView)
         addSubview(questionLabel)
     }
-    
+
     private func setLayout() {
         tungImageView.snp.makeConstraints { make in
             make.center.equalToSuperview()

@@ -11,6 +11,7 @@ extension UIView {
 }
 
 extension UITextField {
+    // swiftlint:disable function_body_length
     func setTextField(_ isPrivate: Bool) {
         let profile = UIImageView().then {
             $0.image = UIImage(named: "ProfileImage")
@@ -64,9 +65,9 @@ extension UITextField {
             self.backgroundColor = .white
             self.attributedPlaceholder = NSAttributedString(string: "번호를 입력해주세요.", attributes: [
                 .foregroundColor: UIColor(named: "gray2") ?? .gray,
-                .font: UIFont(name: "GS", size: 17) ?? .systemFont(ofSize: 17)
+                .font: UIFont(name: "독립서체_윤동주_서시_GS", size: 17) ?? .systemFont(ofSize: 17)
             ])
-            self.font = UIFont(name: "GS", size: 17)
+            self.font = UIFont(name: "독립서체_윤동주_서시_GS", size: 17)
             self.textColor = .black
         }
     }
@@ -77,7 +78,7 @@ extension UITextView {
         if isPrivate {
             self.font = UIFont(name: "Ramche", size: 18)
         } else {
-            self.font = UIFont(name: "GS", size: 18) ?? .systemFont(ofSize: 18)
+            self.font = UIFont(name: "독립서체_윤동주_서시_GS", size: 18) ?? .systemFont(ofSize: 18)
         }
     }
 }
@@ -90,7 +91,7 @@ extension UILabel {
             self.font = UIFont(name: "Ramche", size: 12)
         } else {
             self.textColor = .black
-            self.font = UIFont(name: "GS", size: 12) ?? .systemFont(ofSize: 12)
+            self.font = UIFont(name: "독립서체_윤동주_서시_GS", size: 12) ?? .systemFont(ofSize: 12)
         }
     }
 }

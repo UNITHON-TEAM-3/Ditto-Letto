@@ -60,19 +60,24 @@ class DetailLetterVC: BaseVC {
     }
 
     func setAlert() {
-        let alret = UIAlertController(title: "편지를 정말 삭제하시겠어요?", message: "삭제하실 경우, 해당 편지는 다시 확인 및 복원하실 수 없어요.", preferredStyle: .alert)
-        let yes = UIAlertAction(title: "네", style: .default, handler: { _ in
+        let alert = UIAlertController(
+            title: "편지를 정말 삭제하시겠어요?",
+            message: "삭제하실 경우, 해당 편지는 다시 확인 및 복원하실 수 없어요.",
+            preferredStyle: .alert
+        )
+        let yesButton = UIAlertAction(title: "네", style: .default, handler: { _ in
             let input = DeleteLetterVM.Input(id: self.letterID.asDriver())
             let output = self.deleteLetterViewModel.transform(input)
             output.deleteResult.asObservable()
                 .subscribe(onNext: { [self] in
-                    print($0.self)
+                    if $0.self {
+                        print("successfully deleted")
+                    }
                 }).disposed(by: self.disposeBag)
         })
-        let no = UIAlertAction(title: "아니오", style: .destructive, handler: { _ in
+        let noButton = UIAlertAction(title: "아니오", style: .destructive, handler: { _ in
             self.dismiss(animated: true)
         })
-        
     }
     override func addView() {
         [

@@ -18,31 +18,30 @@ enum TransportationType: String, CaseIterable {
 class HomeTableViewCell: BaseTC {
 
     static let identifier = "HomeTableViewCell"
-    
-    //MARK: - Properties
+    // MARK: - Properties
     private let folderImageView = UIImageView()
-    
+
     private let phoneNumberLabel: UILabel = {
         $0.text = "010-2326-3046"
         $0.font = UIFont(name: "Ramche", size: 17)
         return $0
     }(UILabel())
-    
+
     private let transportationImageView = UIImageView()
-    
+
     private let transportationState = UIImageView()
-    
+
     var model: HomeModel? {
         didSet {
             configureVC()
         }
     }
-    
-    //MARK: - Lifecycle
+
+    // MARK: - Lifecycle
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
-        //임시
+
+        // 임시
         transportationImageView.image = UIImage(named: "airplaneIcon")
         transportationState.image = UIImage(named: "state05")
     }
@@ -53,7 +52,7 @@ class HomeTableViewCell: BaseTC {
         addSubview(transportationImageView)
         addSubview(transportationState)
     }
-    
+
     override func setLayout() {
         folderImageView.snp.makeConstraints { make in
             make.top.equalToSuperview().inset(12)
@@ -77,7 +76,7 @@ class HomeTableViewCell: BaseTC {
             make.height.equalTo(15)
         }
     }
-    
+
     override func configureVC() {
         guard let model = model else { return }
         switch model.type {
@@ -86,13 +85,11 @@ class HomeTableViewCell: BaseTC {
         case .password:
             return folderImageView.image = UIImage(named: "yellowFolder")
         }
-        
+
         TransportationType.allCases.forEach { value in
             if model.transportation == value.rawValue {
                 transportationImageView.image = UIImage(named: value.rawValue)
             }
         }
-        
     }
-    
 }

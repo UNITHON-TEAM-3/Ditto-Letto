@@ -9,7 +9,7 @@ class MyLetterVC: BaseVC {
 
     // MARK: - Properties
     lazy var myLetterView = MyLetterView()
-    
+
     private let sendButton: UIButton = {
         $0.setTitle("편지 보내기", for: .normal)
         $0.setMainButton(color: "main")
@@ -66,8 +66,10 @@ class MyLetterVC: BaseVC {
         // MARK: - 지워야함
         self.emptyView.isHidden = true
 
-        let input = MyLetterVM.Input(tableViewModelSelected: myLetterView.tableView.rx.modelSelected(HomeModel.self).asObservable(),
-                                     sendButtonTapped: sendButton.rx.tap.asObservable())
+        let input = MyLetterVM.Input(
+            tableViewModelSelected: myLetterView.tableView.rx.modelSelected(HomeModel.self).asObservable(),
+            sendButtonTapped: sendButton.rx.tap.asObservable()
+        )
         let output = viewModel.transform(input)
 
         viewModel.homeModel
@@ -83,8 +85,7 @@ class MyLetterVC: BaseVC {
                 cell.model = item
 
                 return cell
-            }
-            .disposed(by: disposeBag)
+            }.disposed(by: disposeBag)
     }
 
 }

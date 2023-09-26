@@ -9,6 +9,7 @@ class NewLetterVC: BaseVC {
     private let countViewModel = GetCountVM()
     private let letterViewModel = NewLetterVM()
     private let getCount = BehaviorRelay<Void>(value: ())
+    private let type = PublishRelay<String>()
 
     private let privateDiaryButton = UIButton().then {
         $0.selectTypeButton(title: "암호 편지")
@@ -82,8 +83,21 @@ class NewLetterVC: BaseVC {
                         }).disposed(by: disposeBag)
                 }
             }).disposed(by: disposeBag)
-    
+
+        let input = NewLetterVM.Input(
+            text: letterTextView.rx.text.orEmpty.asDriver(),
+            type: type.asDriver(onErrorJustReturn: ""),
+            phone: letterTextField.rx.text.orEmpty.asDriver(),
+            buttonTapped: sendButton.rx.tap.asSignal()
+        )
+        let output = letterViewModel.transform(input)
+        output.postResult.asObservable()
+            .subscribe(onNext: { res in
+                print(res)
+            }).disposed(by: disposeBag)
     }
+
+    // swiftlint:disable function_body_length
     override func configureVC() {
         self.navigationController?.navigationBar.topItem?.title = ""
         self.navigationController?.navigationBar.tintColor = .black
@@ -94,13 +108,15 @@ class NewLetterVC: BaseVC {
                 self.sendCountLabel.setCount($0)
                 self.receiveCountLabel.setCount($0)
                 if $0 == true {
+                    self.type.accept("CODE")
                     self.privateDiaryButton.setEnabled()
                     self.generalDiaryButton.setDisabled()
                     self.textCountLabel.font = UIFont(name: "Ramche", size: 12)
                 } else {
+                    self.type.accept("BASIC")
                     self.generalDiaryButton.setEnabled()
                     self.privateDiaryButton.setDisabled()
-                    self.textCountLabel.font = UIFont(name: "GS", size: 12)
+                    self.textCountLabel.font = UIFont(name: "독립서체_윤동주_서시_GS", size: 12)
                 }
             }).disposed(by: disposeBag)
         letterTextView.rx.text.orEmpty
@@ -155,12 +171,12 @@ class NewLetterVC: BaseVC {
         }
         separatorView.snp.makeConstraints {
             $0.horizontalEdges.equalToSuperview().inset(20)
-            $0.top.equalTo(privateDiaryButton.snp.bottom).offset(0)
+            $0.top.equalTo(privateDiaryButton.snp.bottom)
             $0.height.equalTo(9)
         }
         letterTextField.snp.makeConstraints {
             $0.horizontalEdges.equalToSuperview().inset(20)
-            $0.top.equalTo(separatorView.snp.bottom).offset(0)
+            $0.top.equalTo(separatorView.snp.bottom)
             $0.height.equalTo(76)
         }
         sendCountLabel.snp.makeConstraints {
@@ -174,6 +190,7 @@ class NewLetterVC: BaseVC {
         letterTextView.snp.makeConstraints {
             $0.horizontalEdges.equalToSuperview().inset(20)
             $0.top.equalTo(letterTextField.snp.bottom).offset(0)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(120)
         }
         textCountLabel.snp.makeConstraints {
             $0.left.equalToSuperview().inset(40)
@@ -181,10 +198,9 @@ class NewLetterVC: BaseVC {
             $0.bottom.equalTo(letterTextView.snp.bottom).inset(22)
         }
         sendButton.snp.makeConstraints {
-            $0.horizontalEdges.equalToSuperview().inset(20)
-            $0.top.equalTo(letterTextView.snp.bottom).offset(12)
+            $0.left.right.equalToSuperview().inset(20)
+            $0.top.equalTo(letterTextView.snp.bottom).offset(14)
             $0.height.equalTo(55)
-            $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(50)
         }
     }
 }
