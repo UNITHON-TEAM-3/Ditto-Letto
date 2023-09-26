@@ -15,7 +15,7 @@ extension API: TargetType {
         let url = URL(string: "https://port-0-pro-4fju66f2clmvatsvw.sel5.cloudtype.app") ?? URL(string: "")!
         return url
     }
-
+    
     var path: String {
         switch self {
         case .login:
@@ -44,8 +44,8 @@ extension API: TargetType {
         switch self {
         case .login(let code):
             return .requestParameters(parameters:
-                [ "kakaoAccessToken": code ],
-                encoding: JSONEncoding.prettyPrinted)
+                                        [ "kakaoAccessToken": code ],
+                                      encoding: JSONEncoding.prettyPrinted)
         case .getCount(let phone):
             return .requestParameters(
                 parameters: [
@@ -73,7 +73,7 @@ extension API: TargetType {
             return Header.tokenIsEmpty.header()
         case .getCount, .postNewLetter, .fetchDetailLetter, .deleteLetter, .letterMy:
             guard let token = Token.accessToken else { return ["Contect-Type": "application/json"] }
-                        return ["Authorization": "Bearer " + token, "Contect-Type": "application/json"]
+            return ["Authorization": "Bearer " + token, "Contect-Type": "application/json"]
         }
     }
 }

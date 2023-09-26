@@ -41,7 +41,7 @@ class MyLetterVC: BaseVC {
 
     override func setLayout() {
         myLetterView.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide).inset(14)
+            make.top.equalToSuperview().inset(70)
             make.leading.trailing.equalToSuperview().inset(20)
             make.bottom.equalTo(sendButton.snp.top).inset(-18)
         }
@@ -74,7 +74,7 @@ class MyLetterVC: BaseVC {
                 }
             }
             .disposed(by: disposeBag)
-        
+
         output.letterMyData
             .do(onNext: { [weak self] data in
                 self?.emptyView.isHidden = !data.outBoxLetters.isEmpty

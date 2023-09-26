@@ -23,7 +23,6 @@ enum ProgressType: Int, CaseIterable {
     case type5 = 5
     case type6 = 6
     case type7 = 7
-    
 }
 
 class HomeTableViewCell: BaseTC {

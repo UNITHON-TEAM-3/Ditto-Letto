@@ -2,37 +2,36 @@ import UIKit
 import SnapKit
 
 class KeepingLetterView: UIView {
-    
-    //MARK: - Properties
+    // MARK: - Properties
     private let topStatusBarView: UIView = {
         $0.backgroundColor = UIColor(named: "dark")
         return $0
     }(UIView())
-    
+
     private let fileImageView = UIImageView()
-    
+
     private let titleNumberLabel: UILabel = {
         $0.text = "010-1234-5673"
         $0.font = UIFont(name: "Ramche", size: 20)
         return $0
     }(UILabel())
-    
+
     private let lineView: UIView = {
         $0.backgroundColor = UIColor(named: "gray2")
         return $0
     }(UIView())
-    
+
     private let messageImageView: UIImageView = {
         $0.image = UIImage(named: "message")
         return $0
     }(UIImageView())
-    
+
     private let messageNumLabel: UILabel = {
         $0.text = "12"
         $0.font = UIFont(name: "Ramche", size: 13)
         return $0
     }(UILabel())
-    
+
     // MARK: - Life Cycles
     init() {
         super.init(frame: .zero)
@@ -40,12 +39,12 @@ class KeepingLetterView: UIView {
         addView()
         setLayout()
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    //MARK: - Set UI
+
+    // MARK: - Set UI
     private func setView() {
         addSubview(topStatusBarView)
         addSubview(fileImageView)
@@ -54,7 +53,7 @@ class KeepingLetterView: UIView {
         addSubview(messageImageView)
         addSubview(messageNumLabel)
     }
-    
+
     private func addView() {
         topStatusBarView.snp.makeConstraints { make in
             make.top.equalToSuperview()
@@ -86,10 +85,7 @@ class KeepingLetterView: UIView {
             make.width.equalTo(0.6)
         }
     }
-    
+
     private func setLayout() {
-        
-        
     }
-    
 }

@@ -67,10 +67,10 @@ class HomeTableHeaderView: UIView {
             make.height.equalTo(0.5)
         }
     }
-    
+
     private func configureVC() {
         guard let model = model else { return }
-    
+
         headerTitleLabel.text = model.previewText
         // 도착까지 시간이 남았을 시
         ProgressType.allCases.forEach { value in
@@ -78,7 +78,7 @@ class HomeTableHeaderView: UIView {
                 transportationState.image = UIImage(named: "state0\(value.rawValue)")
             }
         }
-        
+    
         if model.mediumType == TransportationType.airplane.rawValue {
             transportationImageView.image = UIImage(named: "airplaneIcon")
         } else if model.mediumType == TransportationType.car.rawValue {
@@ -92,6 +92,5 @@ class HomeTableHeaderView: UIView {
         } else if model.mediumType == TransportationType.walk.rawValue {
             transportationState.image = UIImage(named: "walkIcon")
         }
-        
     }
 }
