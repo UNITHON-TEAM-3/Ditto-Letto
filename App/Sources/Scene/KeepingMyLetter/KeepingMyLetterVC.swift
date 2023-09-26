@@ -4,7 +4,7 @@ import SnapKit
 import RxSwift
 import RxCocoa
 
-class KeepingMyLetter: BaseVC {
+class KeepingMyLetterVC: BaseVC {
     let keepingLetterView = KeepingLetterView()
     lazy var myLetterView = MyLetterView()
 

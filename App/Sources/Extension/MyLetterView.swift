@@ -14,13 +14,13 @@ class MyLetterView: UIView {
     }(UILabel())
 
     private let line: UIImageView = {
-        $0.image = UIImage(named: "twoLine")
+        $0.image = DittoLettoAsset.Image.twoLine.image
         return $0
     }(UIImageView())
 
     let tableView: UITableView = {
         $0.backgroundColor = .white
-        $0.layer.borderColor = UIColor(named: "gray2")?.cgColor
+        $0.layer.borderColor = DittoLettoAsset.Color.gray2.color.cgColor
         $0.layer.borderWidth = 1
         $0.separatorInset.left = 0
         $0.register(HomeTableViewCell.self, forCellReuseIdentifier: HomeTableViewCell.identifier)
@@ -42,7 +42,7 @@ class MyLetterView: UIView {
 
     // MARK: - Set UI
     private func setView() {
-        backgroundColor = UIColor(named: "gray1")
+        backgroundColor = DittoLettoAsset.Color.gray1.color
         layer.borderWidth = 1
         layer.borderColor = UIColor.black.cgColor
     }

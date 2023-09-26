@@ -17,32 +17,35 @@ class DetailLetterVC: BaseVC {
     private let letterTextField = UITextField().then {
         $0.layer.borderColor = UIColor.black.cgColor
         $0.layer.borderWidth = 1.0
+        $0.isEnabled = false
     }
     private let letterTextView = UITextView().then {
-        $0.layer.borderColor = UIColor(named: "dark")?.cgColor
+        $0.layer.borderColor = DittoLettoAsset.Color.dark.color.cgColor
         $0.layer.borderWidth = 1.0
         $0.backgroundColor = .white
-        $0.textColor = UIColor(named: "dark")
+        $0.textColor = DittoLettoAsset.Color.dark.color
         $0.textContainerInset = UIEdgeInsets(top: 20, left: 20, bottom: 54, right: 20)
+        $0.isEditable = false
+        $0.isSelectable = false
     }
     private let distanceLabel = UILabel().then {
         $0.text = "전송거리"
-        $0.textColor = UIColor(named: "dark")
+        $0.textColor = DittoLettoAsset.Color.dark.color
         $0.font = DittoLettoFontFamily.Ramche.regular.font(size: 12)
     }
     private let transportImage = UIImageView().then {
-        $0.image = UIImage(named: "")
+        $0.backgroundColor = .clear
     }
     private let dateLabel = UILabel().then {
-        $0.textColor = UIColor(named: "dark")
+        $0.textColor = DittoLettoAsset.Color.dark.color
         $0.font = DittoLettoFontFamily.Ramche.regular.font(size: 12)
     }
     private let deleteButton = UIButton().then {
         $0.setTitle("삭제하기", for: .normal)
-        $0.setTitleColor(UIColor(named: "dark"), for: .normal)
+        $0.setTitleColor(DittoLettoAsset.Color.dark.color, for: .normal)
         $0.titleLabel?.font = DittoLettoFontFamily.Ramche.regular.font(size: 16)
         $0.backgroundColor = .white
-        $0.layer.borderColor = UIColor(named: "gray2")?.cgColor
+        $0.layer.borderColor = DittoLettoAsset.Color.gray2.color.cgColor
         $0.layer.borderWidth = 1
         $0.layer.shadowOpacity = 0.2
         $0.layer.shadowOffset = CGSize(width: 0, height: 2)
@@ -108,25 +111,23 @@ class DetailLetterVC: BaseVC {
                 self.type.accept(data.type)
                 switch data.mediumType {
                 case "WALK":
-                    transportImage.image = UIImage(named: "walkIcon")
+                    transportImage.image = DittoLettoAsset.Image.walkIcon.image
                 case "RUN":
-                    transportImage.image = UIImage(named: "runningIcon")
+                    transportImage.image = DittoLettoAsset.Image.runningIcon.image
                 case "BICYCLE":
-                    transportImage.image = UIImage(named: "bikeIcon")
+                    transportImage.image = DittoLettoAsset.Image.bikeIcon.image
                 case "HORSE":
-                    transportImage.image = UIImage(named: "horseIcon")
+                    transportImage.image = DittoLettoAsset.Image.horseIcon.image
                 case "CAR":
-                    transportImage.image = UIImage(named: "carIcon")
+                    transportImage.image = DittoLettoAsset.Image.carIcon.image
                 case "PLAIN":
-                    transportImage.image = UIImage(named: "airplaneIcon")
+                    transportImage.image = DittoLettoAsset.Image.airplaneIcon.image
                 default:
                     print("falied")
                 }
             }).disposed(by: disposeBag)
     }
     override func configureVC() {
-        letterTextField.isEnabled = false
-        letterTextView.isEditable = false
         self.navigationController?.navigationBar.topItem?.title = ""
         self.navigationController?.navigationBar.tintColor = .black
     }

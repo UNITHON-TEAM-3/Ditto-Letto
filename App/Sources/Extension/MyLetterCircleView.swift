@@ -5,7 +5,7 @@ class MyLetterCircleView: UIView {
     // MARK: - Life Cycles
     init(backgroundColor: String) {
         super.init(frame: .zero)
-        self.backgroundColor = UIColor(named: backgroundColor)
+        self.backgroundColor = DittoLettoAsset.Color.bg.color
         setView()
     }
 
@@ -16,7 +16,7 @@ class MyLetterCircleView: UIView {
     // MARK: - Set UI
     private func setView() {
         layer.borderWidth = 0.8
-        layer.borderColor = UIColor(named: "gray2")?.cgColor
+        layer.borderColor = DittoLettoAsset.Color.gray2.color.cgColor
         layer.cornerRadius = 6
     }
 }

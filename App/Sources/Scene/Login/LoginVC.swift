@@ -8,13 +8,13 @@ class LoginVC: BaseVC {
 
     // MARK: - Properties
     private let dittoImageView: UIImageView = {
-        $0.image = UIImage(named: "loginImage")
+        $0.image = DittoLettoAsset.Image.loginImage.image
         $0.contentMode = .scaleAspectFit
         return $0
     }(UIImageView())
 
     private let kakaoButton: UIButton = {
-        $0.setImage(UIImage(named: "kakaoButton"), for: .normal)
+        $0.setImage(DittoLettoAsset.Image.kakaoButton.image, for: .normal)
         return $0
     }(UIButton())
 

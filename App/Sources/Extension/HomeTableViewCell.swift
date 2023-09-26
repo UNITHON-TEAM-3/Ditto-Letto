@@ -89,10 +89,10 @@ class HomeTableViewCell: BaseTC {
         phoneNumberLabel.text = model.phoneNumber
 
         if model.type == MessageType.normal.rawValue {
-            return folderImageView.image = UIImage(named: "redFolder")
+            return folderImageView.image = DittoLettoAsset.Image.redFolder.image
         }
         if model.type == MessageType.password.rawValue {
-            return folderImageView.image = UIImage(named: "yellowFolder")
+            return folderImageView.image = DittoLettoAsset.Image.yellowFolder.image
         }
 
         // 도착 완료 시
@@ -108,17 +108,17 @@ class HomeTableViewCell: BaseTC {
             }
 
             if model.mediumType == TransportationType.airplane.rawValue {
-                transportationImageView.image = UIImage(named: "airplaneIcon")
+                transportationImageView.image = DittoLettoAsset.Image.airplaneIcon.image
             } else if model.mediumType == TransportationType.car.rawValue {
-                transportationImageView.image = UIImage(named: "carIcon")
+                transportationImageView.image = DittoLettoAsset.Image.carIcon.image
             } else if model.mediumType == TransportationType.bicycle.rawValue {
-                transportationImageView.image = UIImage(named: "bikeIcon")
+                transportationImageView.image = DittoLettoAsset.Image.bikeIcon.image
             } else if model.mediumType == TransportationType.horse.rawValue {
-                transportationImageView.image = UIImage(named: "horseIcon")
+                transportationImageView.image = DittoLettoAsset.Image.horseIcon.image
             } else if model.mediumType == TransportationType.running.rawValue {
-                transportationImageView.image = UIImage(named: "runningIcon")
+                transportationImageView.image = DittoLettoAsset.Image.runningIcon.image
             } else if model.mediumType == TransportationType.walk.rawValue {
-                transportationState.image = UIImage(named: "walkIcon")
+                transportationState.image = DittoLettoAsset.Image.walkIcon.image
             }
         }
     }

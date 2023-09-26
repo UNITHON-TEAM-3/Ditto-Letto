@@ -19,7 +19,7 @@ class HomeTableHeaderView: UIView {
     private let transportationState = UIImageView()
 
     private let lineView: UIView = {
-        $0.backgroundColor = UIColor(named: "gray2")
+        $0.backgroundColor = DittoLettoAsset.Color.gray2.color
         return $0
     }(UIView())
 
@@ -30,8 +30,8 @@ class HomeTableHeaderView: UIView {
         setLayout()
 
         // 임시
-        transportationImageView.image = UIImage(named: "horseIcon")
-        transportationState.image = UIImage(named: "state03")
+        transportationImageView.image = DittoLettoAsset.Image.horseIcon.image
+        transportationState.image = DittoLettoAsset.Image.state03.image
     }
 
     required init?(coder: NSCoder) {
@@ -80,17 +80,17 @@ class HomeTableHeaderView: UIView {
         }
 
         if model.mediumType == TransportationType.airplane.rawValue {
-            transportationImageView.image = UIImage(named: "airplaneIcon")
+            transportationImageView.image = DittoLettoAsset.Image.airplaneIcon.image
         } else if model.mediumType == TransportationType.car.rawValue {
-            transportationImageView.image = UIImage(named: "carIcon")
+            transportationImageView.image = DittoLettoAsset.Image.carIcon.image
         } else if model.mediumType == TransportationType.bicycle.rawValue {
-            transportationImageView.image = UIImage(named: "bikeIcon")
+            transportationImageView.image = DittoLettoAsset.Image.bikeIcon.image
         } else if model.mediumType == TransportationType.horse.rawValue {
-            transportationImageView.image = UIImage(named: "horseIcon")
+            transportationImageView.image = DittoLettoAsset.Image.horseIcon.image
         } else if model.mediumType == TransportationType.running.rawValue {
-            transportationImageView.image = UIImage(named: "runningIcon")
+            transportationImageView.image = DittoLettoAsset.Image.runningIcon.image
         } else if model.mediumType == TransportationType.walk.rawValue {
-            transportationState.image = UIImage(named: "walkIcon")
+            transportationState.image = DittoLettoAsset.Image.walkIcon.image
         }
     }
 }

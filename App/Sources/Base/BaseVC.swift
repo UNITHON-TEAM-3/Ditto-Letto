@@ -7,7 +7,7 @@ class BaseVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor(named: "bg") ?? .clear
+        view.backgroundColor = DittoLettoAsset.Color.bg.color
         addView()
         setLayout()
         configureVC()

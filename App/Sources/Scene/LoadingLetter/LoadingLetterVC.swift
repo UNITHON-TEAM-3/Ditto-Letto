@@ -101,8 +101,8 @@ class LoadingLetterVC: BaseVC {
         let output = viewModel.transform(input)
 
         // 임시
-        transportationImageView.image = UIImage(named: "car")
-        transportationState.image = UIImage(named: "state01")
-        windyImageView.image = UIImage(named: "windly")
+        transportationImageView.image = DittoLettoAsset.Image.car.image
+        transportationState.image = DittoLettoAsset.Image.state01.image
+        windyImageView.image = DittoLettoAsset.Image.windly.image
     }
 }

@@ -14,19 +14,19 @@ public extension UIButton {
 
     func setEnabled() {
         self.setTitleColor(.black, for: .normal)
-        self.backgroundColor = UIColor(named: "main") ?? .yellow
+        self.backgroundColor = DittoLettoAsset.Color.main.color
     }
 
     func setDisabled() {
-        self.setTitleColor(UIColor(named: "gray2"), for: .normal)
-        self.backgroundColor = UIColor(named: "gray1") ?? .lightGray
+        self.setTitleColor(DittoLettoAsset.Color.gray2.color, for: .normal)
+        self.backgroundColor = DittoLettoAsset.Color.gray1.color
     }
 
     func setMainButton(color: String) {
-        setTitleColor(.black, for: .normal)
+        setTitleColor(DittoLettoAsset.Color.dark.color, for: .normal)
         titleLabel?.font = DittoLettoFontFamily.Ramche.regular.font(size: 17)
         backgroundColor = UIColor(named: color)
-        layer.borderColor = UIColor.black.cgColor
+        layer.borderColor = DittoLettoAsset.Color.dark.color.cgColor
         layer.borderWidth = 1
         layer.shadowOpacity = 0.2
         layer.shadowOffset = CGSize(width: 0, height: 2)

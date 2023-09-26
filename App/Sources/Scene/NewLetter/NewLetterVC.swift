@@ -5,11 +5,12 @@ import SnapKit
 import Then
 
 class NewLetterVC: BaseVC {
-    private var isPrivate = BehaviorRelay<Bool>(value: true)
+    private let isPrivate = BehaviorRelay<Bool>(value: true)
+    private let isReadyToSend = PublishRelay<Bool>()
     private let countViewModel = GetCountVM()
     private let letterViewModel = NewLetterVM()
     private let getCount = BehaviorRelay<Void>(value: ())
-    private let type = PublishRelay<String>()
+    private let type = BehaviorRelay<String>(value: "CODE")
 
     private let privateDiaryButton = UIButton().then {
         $0.selectTypeButton(title: "암호 편지")
@@ -25,16 +26,18 @@ class NewLetterVC: BaseVC {
         $0.layer.borderWidth = 1.0
     }
     private let letterTextView = UITextView().then {
-        $0.layer.borderColor = UIColor(named: "dark")?.cgColor
+        $0.layer.borderColor = DittoLettoAsset.Color.dark.color.cgColor
         $0.layer.borderWidth = 1.0
         $0.backgroundColor = .white
         $0.text = "전하고 싶은 말을 입력해주세요."
-        $0.textColor = UIColor(named: "gray2")
+        $0.textColor = DittoLettoAsset.Color.gray2.color
         $0.textContainerInset = UIEdgeInsets(top: 20, left: 20, bottom: 54, right: 20)
+        $0.autocorrectionType = .no
+        $0.setLineAndLetterSpacing()
     }
     private let textCountLabel = UILabel().then {
         $0.text = "0 / 144"
-        $0.textColor = UIColor(named: "dark")
+        $0.textColor = DittoLettoAsset.Color.dark.color
     }
     private let sendButton = UIButton().then {
         $0.setTitle("전송하기", for: .normal)
@@ -42,9 +45,11 @@ class NewLetterVC: BaseVC {
     }
     private let sendCountLabel = UILabel().then {
         $0.text = ""
+        $0.textAlignment = .left
     }
     private let receiveCountLabel = UILabel().then {
         $0.text = ""
+        $0.textAlignment = .left
     }
 
     override func addView() {
@@ -75,11 +80,15 @@ class NewLetterVC: BaseVC {
                         phoeNumber: letterTextField.rx.text.orEmpty.asDriver()
                     )
                     let output = countViewModel.transform(input)
-
                     output.countData
-                        .subscribe(onNext: { data in
-                            self.sendCountLabel.text = "\(data.toCount)"
-                            self.receiveCountLabel.text = "\(data.fromCount)"
+                        .subscribe(onNext: { [self] data in
+                            if type.value == "CODE" {
+                                self.sendCountLabel.text = "\(data.fromCount)"
+                                self.receiveCountLabel.text = "\(data.toCount)"
+                            } else {
+                                self.sendCountLabel.text = "\(data.toCount)"
+                                self.receiveCountLabel.text = "\(data.fromCount)"
+                            }
                         }).disposed(by: disposeBag)
                 }
             }).disposed(by: disposeBag)
@@ -101,22 +110,42 @@ class NewLetterVC: BaseVC {
     override func configureVC() {
         self.navigationController?.navigationBar.topItem?.title = ""
         self.navigationController?.navigationBar.tintColor = .black
+
         isPrivate
-            .subscribe(onNext: {
-                self.letterTextField.setTextField($0)
-                self.letterTextView.setTextView($0)
-                self.sendCountLabel.setCount($0)
-                self.receiveCountLabel.setCount($0)
+            .subscribe(onNext: { [self] in
+                letterTextField.setTextField($0)
+                letterTextView.setTextView($0)
+                sendCountLabel.setCount($0)
+                receiveCountLabel.setCount($0)
+
                 if $0 == true {
-                    self.type.accept("CODE")
-                    self.privateDiaryButton.setEnabled()
-                    self.generalDiaryButton.setDisabled()
-                    self.textCountLabel.font = DittoLettoFontFamily.Ramche.regular.font(size: 12)
+                    type.accept("CODE")
+                    privateDiaryButton.setEnabled()
+                    generalDiaryButton.setDisabled()
+                    textCountLabel.font = DittoLettoFontFamily.Ramche.regular.font(size: 12)
+
+                    sendCountLabel.snp.updateConstraints {
+                        $0.top.equalToSuperview().inset(17)
+                        $0.right.equalToSuperview().inset(16)
+                    }
+                    receiveCountLabel.snp.updateConstraints {
+                        $0.bottom.equalToSuperview().inset(17)
+                        $0.right.equalToSuperview().inset(16)
+                    }
                 } else {
-                    self.type.accept("BASIC")
-                    self.generalDiaryButton.setEnabled()
-                    self.privateDiaryButton.setDisabled()
-                    self.textCountLabel.font = DittoLettoFontFamily.YoonDongJu2.regular.font(size: 12)
+                    type.accept("BASIC")
+                    generalDiaryButton.setEnabled()
+                    privateDiaryButton.setDisabled()
+                    textCountLabel.font = DittoLettoFontFamily.YoonDongJu2.regular.font(size: 12)
+
+                    sendCountLabel.snp.updateConstraints {
+                        $0.top.equalToSuperview().inset(15)
+                        $0.right.equalToSuperview().inset(19)
+                    }
+                    receiveCountLabel.snp.updateConstraints {
+                        $0.bottom.equalToSuperview().inset(14)
+                        $0.right.equalToSuperview().inset(19)
+                    }
                 }
             }).disposed(by: disposeBag)
         letterTextView.rx.text.orEmpty
@@ -134,14 +163,14 @@ class NewLetterVC: BaseVC {
             .bind(onNext: { [self] in
                 if letterTextView.text == "전하고 싶은 말을 입력해주세요." {
                     letterTextView.text = ""
-                    letterTextView.textColor = UIColor(named: "dark")
+                    letterTextView.textColor = DittoLettoAsset.Color.dark.color
                 }
             }).disposed(by: disposeBag)
         letterTextView.rx.didEndEditing
             .bind(onNext: { [self] in
                 if letterTextView.text == "" {
                     letterTextView.text = "전하고 싶은 말을 입력해주세요."
-                    letterTextView.textColor = UIColor(named: "gray2")
+                    letterTextView.textColor = DittoLettoAsset.Color.gray2.color
                 }
             }).disposed(by: disposeBag)
         privateDiaryButton.rx.tap

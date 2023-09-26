@@ -10,7 +10,7 @@ class HomeEmptyView: UIView {
     }(UILabel())
 
     private let tungImageView: UIImageView = {
-        $0.image = UIImage(named: "emptyFolder")
+        $0.image = DittoLettoAsset.Image.emptyFolder.image
         return $0
     }(UIImageView())
 
