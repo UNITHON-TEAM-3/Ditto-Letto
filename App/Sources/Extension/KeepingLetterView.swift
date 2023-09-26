@@ -3,7 +3,7 @@ import SnapKit
 
 class KeepingLetterView: UIView {
     
-    //MARK: - Properties
+    // MARK: - Properties
     private let topStatusBarView: UIView = {
         $0.backgroundColor = UIColor(named: "dark")
         return $0
@@ -36,6 +36,7 @@ class KeepingLetterView: UIView {
     // MARK: - Life Cycles
     init() {
         super.init(frame: .zero)
+        backgroundColor = .white
         setView()
         addView()
         setLayout()
@@ -45,8 +46,9 @@ class KeepingLetterView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    //MARK: - Set UI
+    // MARK: - Set UI
     private func setView() {
+        fileImageView.image = UIImage(named: "redFolder")
         addSubview(topStatusBarView)
         addSubview(fileImageView)
         addSubview(titleNumberLabel)
@@ -62,14 +64,14 @@ class KeepingLetterView: UIView {
             make.height.equalTo(10)
         }
         fileImageView.snp.makeConstraints { make in
-            make.top.equalTo(topStatusBarView.snp.bottom).inset(-12)
+            make.top.equalTo(topStatusBarView.snp.bottom).inset(-15)
             make.leading.equalToSuperview().inset(15)
             make.width.equalTo(45)
             make.height.equalTo(40)
         }
         titleNumberLabel.snp.makeConstraints { make in
             make.centerY.equalTo(fileImageView.snp.centerY)
-            make.leading.equalTo(fileImageView.snp.trailing).inset(-17)
+            make.leading.equalTo(fileImageView.snp.trailing).inset(-24)
         }
         messageImageView.snp.makeConstraints { make in
             make.top.equalTo(topStatusBarView.snp.bottom).inset(-18)

@@ -30,7 +30,7 @@ class KeepingMyLetter: BaseVC {
         }
         
         myLetterView.snp.makeConstraints { make in
-            make.top.equalTo(keepingLetterView.snp.bottom).inset(13)
+            make.top.equalTo(keepingLetterView.snp.bottom).inset(-13)
             make.leading.trailing.equalToSuperview().inset(20)
             make.bottom.equalTo(view.safeAreaLayoutGuide).inset(20)
         }

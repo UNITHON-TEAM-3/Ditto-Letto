@@ -32,6 +32,10 @@ class MyLetterVC: BaseVC {
         super.viewDidLoad()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+    }
+    
     // MARK: - Set UI
     override func addView() {
         view.addSubview(myLetterView)
@@ -41,7 +45,7 @@ class MyLetterVC: BaseVC {
 
     override func setLayout() {
         myLetterView.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide).inset(14)
+            make.top.equalToSuperview().inset(70)
             make.leading.trailing.equalToSuperview().inset(20)
             make.bottom.equalTo(sendButton.snp.top).inset(-18)
         }
@@ -54,6 +58,7 @@ class MyLetterVC: BaseVC {
             make.edges.equalTo(myLetterView.tableView.snp.edges)
         }
     }
+
 
     // MARK: - bind
     override func bind() {
