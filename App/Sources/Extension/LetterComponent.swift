@@ -106,7 +106,6 @@ extension UITextView {
 
 extension UILabel {
     func setCount(_ isPrivate: Bool) {
-        self.text = "0"
         if isPrivate {
             self.textColor = .white
             self.font = DittoLettoFontFamily.Ramche.regular.font(size: 12)

@@ -6,7 +6,7 @@ import Then
 
 class DetailLetterVC: BaseVC {
     private var letterID = BehaviorRelay<Int>(value: 0)
-    private var type = PublishRelay<String>()
+    private let isPrivate = BehaviorRelay<Bool>(value: true)
     private var getDetail = BehaviorRelay<Void>(value: ())
     private let deleteLetterViewModel = DeleteLetterVM()
     private let fetchDetailLetterViewModel = FetchDetailLetterVM()
@@ -38,7 +38,6 @@ class DetailLetterVC: BaseVC {
     }
     private let dateLabel = UILabel().then {
         $0.textColor = DittoLettoAsset.Color.dark.color
-        $0.font = DittoLettoFontFamily.Ramche.regular.font(size: 12)
     }
     private let deleteButton = UIButton().then {
         $0.setTitle("삭제하기", for: .normal)
@@ -62,26 +61,6 @@ class DetailLetterVC: BaseVC {
         $0.text = ""
     }
 
-    func setAlert() {
-        let alert = UIAlertController(
-            title: "편지를 정말 삭제하시겠어요?",
-            message: "삭제하실 경우, 해당 편지는 다시 확인 및 복원하실 수 없어요.",
-            preferredStyle: .alert
-        )
-        let yesButton = UIAlertAction(title: "네", style: .default, handler: { _ in
-            let input = DeleteLetterVM.Input(id: self.letterID.asDriver())
-            let output = self.deleteLetterViewModel.transform(input)
-            output.deleteResult.asObservable()
-                .subscribe(onNext: { [self] in
-                    if $0.self {
-                        print("successfully deleted")
-                    }
-                }).disposed(by: self.disposeBag)
-        })
-        let noButton = UIAlertAction(title: "아니오", style: .destructive, handler: { _ in
-            self.dismiss(animated: true)
-        })
-    }
     override func addView() {
         [
             sendCountLabel,
@@ -93,22 +72,67 @@ class DetailLetterVC: BaseVC {
             separatorView,
             letterTextField,
             letterTextView,
-            distanceLabel,
-            transportImage,
-            dateLabel,
             deleteButton,
             replyButton
         ].forEach {
             view.addSubview($0)
         }
+        [
+            distanceLabel,
+            transportImage,
+            dateLabel
+        ].forEach {
+            letterTextView.addSubview($0)
+        }
     }
+
+    // swiftlint:disable function_body_length
+    // swiftlint:disable cyclomatic_complexity
     override func bind() {
         let input = FetchDetailLetterVM.Input(getDetail: getDetail.asDriver(), id: letterID.asDriver())
         let output = fetchDetailLetterViewModel.transform(input)
 
         output.detailLetter.asObservable()
             .subscribe(onNext: { [self] data in
-                self.type.accept(data.type)
+                letterTextField.text = data.from
+                letterTextView.text = data.text
+                dateLabel.text = data.sentAt
+
+                switch data.type {
+                case "CODE":
+                    letterTextField.setTextField(true)
+                    letterTextView.setTextView(true)
+                    sendCountLabel.text = "\(data.fromCount)"
+                    receiveCountLabel.text = "\(data.toCount)"
+                    sendCountLabel.setCount(true)
+                    receiveCountLabel.setCount(true)
+                    sendCountLabel.snp.updateConstraints {
+                        $0.top.equalToSuperview().inset(17)
+                        $0.right.equalToSuperview().inset(16)
+                    }
+                    receiveCountLabel.snp.updateConstraints {
+                        $0.bottom.equalToSuperview().inset(17)
+                        $0.right.equalToSuperview().inset(16)
+                    }
+                case "BASIC":
+                    letterTextField.setTextField(false)
+                    letterTextView.setTextView(false)
+                    sendCountLabel.text = "\(data.toCount)"
+                    receiveCountLabel.text = "\(data.fromCount)"
+                    sendCountLabel.setCount(false)
+                    receiveCountLabel.setCount(false)
+                    sendCountLabel.snp.updateConstraints {
+                        $0.top.equalToSuperview().inset(15)
+                        $0.right.equalToSuperview().inset(19)
+                    }
+                    receiveCountLabel.snp.updateConstraints {
+                        $0.bottom.equalToSuperview().inset(14)
+                        $0.right.equalToSuperview().inset(19)
+                    }
+                default:
+                    print("load failed")
+                }
+
                 switch data.mediumType {
                 case "WALK":
                     transportImage.image = DittoLettoAsset.Image.walkIcon.image
@@ -127,9 +151,35 @@ class DetailLetterVC: BaseVC {
                 }
             }).disposed(by: disposeBag)
     }
+    // swiftlint:enable cyclomatic_complexity
     override func configureVC() {
         self.navigationController?.navigationBar.topItem?.title = ""
         self.navigationController?.navigationBar.tintColor = .black
+
+        let alert = UIAlertController(
+            title: "편지를 정말 삭제하시겠어요?",
+            message: "삭제하실 경우, 해당 편지는 다시 확인 및 복원하실 수 없어요.",
+            preferredStyle: .alert
+        )
+        let yesButton = UIAlertAction(title: "네", style: .destructive, handler: { _ in
+            let input = DeleteLetterVM.Input(id: self.letterID.asDriver())
+            let output = self.deleteLetterViewModel.transform(input)
+            output.deleteResult.asObservable()
+                .subscribe(onNext: { res in
+                    if res {
+                        print("successfully deleted")
+                    }
+                }).disposed(by: self.disposeBag)
+        })
+        let noButton = UIAlertAction(title: "아니오", style: .default, handler: { _ in
+            self.dismiss(animated: true)
+        })
+        [yesButton, noButton].forEach { alert.addAction($0) }
+
+        self.deleteButton.rx.tap
+            .subscribe(onNext: {
+                self.present(alert, animated: true, completion: nil)
+            }).disposed(by: disposeBag)
     }
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.letterTextView.resignFirstResponder()
@@ -137,7 +187,7 @@ class DetailLetterVC: BaseVC {
     override func setLayout() {
         separatorView.snp.makeConstraints {
             $0.horizontalEdges.equalToSuperview().inset(20)
-            $0.top.equalTo(view.safeAreaLayoutGuide).inset(15)
+            $0.top.equalToSuperview().inset(110)
             $0.height.equalTo(9)
         }
         letterTextField.snp.makeConstraints {
@@ -156,6 +206,33 @@ class DetailLetterVC: BaseVC {
         letterTextView.snp.makeConstraints {
             $0.horizontalEdges.equalToSuperview().inset(20)
             $0.top.equalTo(letterTextField.snp.bottom).offset(0)
+            $0.bottom.equalToSuperview().inset(146)
+        }
+        distanceLabel.snp.makeConstraints {
+            $0.left.equalToSuperview().inset(20)
+            $0.bottom.equalToSuperview().inset(26)
+            $0.width.equalTo(42)
+            $0.height.equalTo(16)
+        }
+        transportImage.snp.makeConstraints {
+            $0.left.equalTo(distanceLabel.snp.right).offset(10)
+            $0.bottom.equalToSuperview().inset(22)
+            $0.width.height.equalTo(20)
+        }
+        dateLabel.snp.makeConstraints {
+            $0.left.equalTo(transportImage.snp.right).offset(50)
+            $0.bottom.equalToSuperview().inset(24)
+            $0.width.equalTo(70)
+        }
+        deleteButton.snp.makeConstraints {
+            $0.width.equalTo((UIScreen.main.bounds.width-50)/2)
+            $0.left.equalToSuperview().inset(20)
+            $0.top.equalTo(letterTextView.snp.bottom).inset(16)
+        }
+        replyButton.snp.makeConstraints {
+            $0.width.equalTo((UIScreen.main.bounds.width-50)/2)
+            $0.right.equalToSuperview().inset(20)
+            $0.top.equalTo(letterTextView.snp.bottom).inset(16)
         }
     }
 }

@@ -27,7 +27,7 @@ class NewLetterVM: BaseVM {
                 api.postNewLetter(text, type, phone)
             }.subscribe(onNext: { res in
                 switch res {
-                case .createOk:
+                case .getOk:
                     postResult.accept(true)
                 default:
                     postResult.accept(false)

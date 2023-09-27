@@ -6,7 +6,6 @@ import Then
 
 class NewLetterVC: BaseVC {
     private let isPrivate = BehaviorRelay<Bool>(value: true)
-    private let isReadyToSend = PublishRelay<Bool>()
     private let countViewModel = GetCountVM()
     private let letterViewModel = NewLetterVM()
     private let getCount = BehaviorRelay<Void>(value: ())
@@ -104,7 +103,9 @@ class NewLetterVC: BaseVC {
         let output = letterViewModel.transform(input)
         output.postResult.asObservable()
             .subscribe(onNext: { res in
-                print(res)
+                if res {
+                    self.navigationController?.popViewController(animated: true)
+                }
             }).disposed(by: disposeBag)
     }
 
@@ -165,7 +166,7 @@ class NewLetterVC: BaseVC {
                 if $0.count > 144 {
                     letterTextView.text = String($0[..<$0.index($0.startIndex, offsetBy: 144)])
                     letterTextView.resignFirstResponder()
-                } else if $0.count > 0 && $0.count < 144  {
+                } else if $0.count > 0 && $0.count < 144 {
                     sendButton.backgroundColor = DittoLettoAsset.Color.main.color
                 }
                 if letterTextView.text == "전하고 싶은 말을 입력해주세요." {

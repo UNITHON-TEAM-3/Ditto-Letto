@@ -39,7 +39,7 @@ final class Service {
     func postNewLetter(_ text: String, _ type: String, _ targetPhoneNumber: String) -> Single<NetworkingResult> {
         return provider.rx.request(.postNewLetter(text, type, targetPhoneNumber))
             .map { _ -> NetworkingResult in
-                return .createOk
+                return .getOk
             }
             .catch {[unowned self] in return .just(setNetworkError($0))}
     }
@@ -57,7 +57,7 @@ final class Service {
     func deleteLetter(_ id: Int) -> Single<NetworkingResult> {
         return provider.rx.request(.deleteLetter(id))
             .map { _ -> NetworkingResult in
-                return .createOk
+                return .deleteOk
             }
             .catch {[unowned self] in return .just(setNetworkError($0))}
     }
