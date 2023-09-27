@@ -5,7 +5,7 @@ class MyLetterCircleView: UIView {
     // MARK: - Life Cycles
     init(backgroundColor: String) {
         super.init(frame: .zero)
-        self.backgroundColor = DittoLettoAsset.Color.bg.color
+        self.backgroundColor = UIColor(named: "\(backgroundColor)")
         setView()
     }
 
