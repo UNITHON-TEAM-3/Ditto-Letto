@@ -8,13 +8,13 @@ class LoginVC: BaseVC {
 
     // MARK: - Properties
     private let dittoImageView: UIImageView = {
-        $0.image = UIImage(named: "loginImage")
+        $0.image = DittoLettoAsset.Image.loginImage.image
         $0.contentMode = .scaleAspectFit
         return $0
     }(UIImageView())
 
     private let kakaoButton: UIButton = {
-        $0.setImage(UIImage(named: "kakaoButton"), for: .normal)
+        $0.setImage(DittoLettoAsset.Image.kakaoButton.image, for: .normal)
         return $0
     }(UIButton())
 
@@ -32,12 +32,13 @@ class LoginVC: BaseVC {
 
     override func setLayout() {
         dittoImageView.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide).inset(130)
-            make.leading.trailing.equalToSuperview().inset(20)
+            make.top.equalToSuperview().inset(178)
+            make.bottom.equalToSuperview().inset(310)
+            make.horizontalEdges.equalToSuperview().inset(22)
         }
         kakaoButton.snp.makeConstraints { make in
-            make.bottom.equalTo(view.safeAreaLayoutGuide).inset(50)
-            make.leading.trailing.equalToSuperview().inset(20)
+            make.bottom.equalToSuperview().inset(78)
+            make.horizontalEdges.equalToSuperview().inset(20)
             make.height.equalTo(50)
         }
     }

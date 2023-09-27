@@ -4,35 +4,32 @@ import RxCocoa
 
 class MyLetterVM: BaseVM {
     let disposeBag = DisposeBag()
-    
-    
-    
+
     // MARK: - In/Out
     struct Input {
         let tableViewModelSelected: Observable<IndexPath>
         let sendButtonTapped: Observable<Void>
     }
+
     struct Output {
         let letterMyData = PublishRelay<LetterMyData>()
         let isArrived = PublishRelay<Bool>()
     }
-    
+
     // MARK: - Translate
     func transform(_ input: Input) -> Output {
         let api = Service()
         let output = Output()
-        
+
         api.letterMy()
             .subscribe { [weak self] model, networkResult in
                 guard let model = model else { return }
-                
+
                 if networkResult == .getOk {
                     output.letterMyData.accept(model.data)
-                    
                 }
-            }
-            .disposed(by: disposeBag)
-        
+            }.disposed(by: disposeBag)
+
         Observable
             .zip(input.tableViewModelSelected, output.letterMyData)
             .subscribe { indexPath, dataList in
@@ -43,9 +40,8 @@ class MyLetterVM: BaseVM {
                 } else {
                     output.isArrived.accept(false)
                 }
-            }
-            .disposed(by: disposeBag)
-        
+            }.disposed(by: disposeBag)
+
         return output
     }
 }

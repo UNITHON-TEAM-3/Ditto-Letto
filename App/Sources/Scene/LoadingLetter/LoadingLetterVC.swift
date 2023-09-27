@@ -10,27 +10,22 @@ class LoadingLetterVC: BaseVC {
     // MARK: - Properties
     private let sendingLabel: UILabel = {
         $0.text = "편지 전송 중"
-        $0.font = UIFont(name: "Ramche", size: 22)
+        $0.font = DittoLettoFontFamily.Ramche.regular.font(size: 22)
         return $0
     }(UILabel())
-    
     private let runningLabel: UILabel = {
         $0.text = "서로의 거리만큼 달려가고 있어요!"
-        $0.font = UIFont(name: "Ramche", size: 16)
+        $0.font = DittoLettoFontFamily.Ramche.regular.font(size: 16)
         return $0
     }(UILabel())
-    
     private let transportationImageView = UIImageView()
-    
     private let windyImageView = UIImageView()
-    
     private let transportationState = UIImageView()
-    
+
     // MARK: - Life Cycles
     override func viewDidLoad() {
         super.viewDidLoad()
         configureBar()
-        
     }
 
     // MARK: - Set UI
@@ -66,9 +61,8 @@ class LoadingLetterVC: BaseVC {
             make.leading.trailing.equalToSuperview().inset(20)
             make.height.equalTo(40)
         }
-        
     }
-    
+
     func configureBar() {
         let backButton = UIImage(systemName: "chevron.backward")?.withTintColor(.black, renderingMode: .alwaysOriginal)
         let delButton = UIImage(systemName: "xmark")?.withTintColor(.black, renderingMode: .alwaysOriginal)
@@ -77,42 +71,38 @@ class LoadingLetterVC: BaseVC {
         let menuButton = UIBarButtonItem(image: delButton, style: .plain, target: self, action: nil)
         self.navigationItem.leftBarButtonItem = notiButton
         self.navigationItem.rightBarButtonItem = menuButton
-        
-        notiButton.rx
-            .tap
+
+        notiButton.rx.tap
             .bind { [weak self] _ in
                 self?.navigationController?.popViewController(animated: true)
-            }
-            .disposed(by: disposeBag)
-        
-        menuButton.rx
-            .tap
+            }.disposed(by: disposeBag)
+
+        menuButton.rx.tap
             .bind { [ weak self] _ in
-                //alert View
+                // alert View
                 let yesAlert = UIAlertAction(title: "네", style: .default) { _ in
                     self?.navigationController?.popViewController(animated: true)
                 }
                 let noAlert = UIAlertAction(title: "아니오", style: .cancel)
-                let alertController = UIAlertController(title: "전송을 취소 하시겠어요?", message: "취소하신 경우, 작성해주신 내용이 저장 및 전송되지 않아요.", preferredStyle: .alert)
+                let alertController = UIAlertController(
+                    title: "전송을 취소 하시겠어요?",
+                    message: "취소하신 경우, 작성해주신 내용이 저장 및 전송되지 않아요.",
+                    preferredStyle: .alert
+                )
                 alertController.addAction(yesAlert)
                 alertController.addAction(noAlert)
                 self?.present(alertController, animated: true)
-            }
-            .disposed(by: disposeBag)
+            }.disposed(by: disposeBag)
     }
-
 
     // MARK: - bind
     override func bind() {
         let input = LoadingLetterVM.Input()
         let output = viewModel.transform(input)
 
-        //임시
-        transportationImageView.image = UIImage(named: "car")
-        transportationState.image = UIImage(named: "state01")
-        windyImageView.image = UIImage(named: "windly")
-        
+        // 임시
+        transportationImageView.image = DittoLettoAsset.Image.car.image
+        transportationState.image = DittoLettoAsset.Image.state01.image
+        windyImageView.image = DittoLettoAsset.Image.windly.image
     }
-
 }
-

@@ -2,60 +2,62 @@ import UIKit
 import SnapKit
 
 class KeepingLetterView: UIView {
-    
-    //MARK: - Properties
+    // MARK: - Properties
     private let topStatusBarView: UIView = {
-        $0.backgroundColor = UIColor(named: "dark")
+        $0.backgroundColor = DittoLettoAsset.Color.dark.color
         return $0
     }(UIView())
-    
+
     private let fileImageView = UIImageView()
-    
+
     private let titleNumberLabel: UILabel = {
         $0.text = "010-1234-5673"
-        $0.font = UIFont(name: "Ramche", size: 20)
+        $0.font = DittoLettoFontFamily.Ramche.regular.font(size: 20)
         return $0
     }(UILabel())
-    
+
     private let lineView: UIView = {
-        $0.backgroundColor = UIColor(named: "gray2")
+        $0.backgroundColor = DittoLettoAsset.Color.gray2.color
         return $0
     }(UIView())
-    
+
     private let messageImageView: UIImageView = {
-        $0.image = UIImage(named: "message")
+        $0.image = DittoLettoAsset.Image.message.image
         return $0
     }(UIImageView())
-    
+
     private let messageNumLabel: UILabel = {
         $0.text = "12"
-        $0.font = UIFont(name: "Ramche", size: 13)
+        $0.font = DittoLettoFontFamily.Ramche.regular.font(size: 13)
         return $0
     }(UILabel())
-    
+
     // MARK: - Life Cycles
     init() {
         super.init(frame: .zero)
-        setView()
         addView()
         setLayout()
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    //MARK: - Set UI
-    private func setView() {
-        addSubview(topStatusBarView)
-        addSubview(fileImageView)
-        addSubview(titleNumberLabel)
-        addSubview(lineView)
-        addSubview(messageImageView)
-        addSubview(messageNumLabel)
-    }
-    
+
+    // MARK: - Set UI
     private func addView() {
+        [
+            topStatusBarView,
+            fileImageView,
+            titleNumberLabel,
+            lineView,
+            messageImageView,
+            messageNumLabel
+        ].forEach {
+            self.addSubview($0)
+        }
+    }
+
+    private func setLayout() {
         topStatusBarView.snp.makeConstraints { make in
             make.top.equalToSuperview()
             make.leading.trailing.equalToSuperview()
@@ -86,10 +88,4 @@ class KeepingLetterView: UIView {
             make.width.equalTo(0.6)
         }
     }
-    
-    private func setLayout() {
-        
-        
-    }
-    
 }

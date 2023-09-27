@@ -3,7 +3,7 @@
 // swiftformat:disable all
 // Generated using tuist — https://github.com/tuist/tuist
 
-#if os(macOS)
+#if os(OSX)
   import AppKit.NSFont
 #elseif os(iOS) || os(tvOS) || os(watchOS)
   import UIKit.UIFont
@@ -20,15 +20,11 @@ public enum DittoLettoFontFamily {
     public static let regular = DittoLettoFontConvertible(name: "Ramche", family: "Ramche", path: "Ramche.otf")
     public static let all: [DittoLettoFontConvertible] = [regular]
   }
-  public enum YoonDongJu1 {
-    public static let regular = DittoLettoFontConvertible(name: "YOON-DONG-JU1", family: "YOON-DONG-JU1", path: "GS.otf")
+  public enum YoonDongJu2 {
+    public static let regular = DittoLettoFontConvertible(name: "YOON-DONG-JU2", family: "YOON-DONG-JU2", path: "독립서체_윤동주_서시_GS.otf")
     public static let all: [DittoLettoFontConvertible] = [regular]
   }
-  public enum YunBongGil {
-    public static let regular = DittoLettoFontConvertible(name: "YUN-BONG-GIL", family: "YUN-BONG-GIL", path: "독립서체_윤봉길_GS.otf")
-    public static let all: [DittoLettoFontConvertible] = [regular]
-  }
-  public static let allCustomFonts: [DittoLettoFontConvertible] = [Ramche.all, YoonDongJu1.all, YunBongGil.all].flatMap { $0 }
+  public static let allCustomFonts: [DittoLettoFontConvertible] = [Ramche.all, YoonDongJu2.all].flatMap { $0 }
   public static func registerAllCustomFonts() {
     allCustomFonts.forEach { $0.register() }
   }
@@ -42,7 +38,7 @@ public struct DittoLettoFontConvertible {
   public let family: String
   public let path: String
 
-  #if os(macOS)
+  #if os(OSX)
   public typealias Font = NSFont
   #elseif os(iOS) || os(tvOS) || os(watchOS)
   public typealias Font = UIFont
@@ -73,7 +69,7 @@ public extension DittoLettoFontConvertible.Font {
     if !UIFont.fontNames(forFamilyName: font.family).contains(font.name) {
       font.register()
     }
-    #elseif os(macOS)
+    #elseif os(OSX)
     if let url = font.url, CTFontManagerGetScopeForURL(url as CFURL) == .none {
       font.register()
     }

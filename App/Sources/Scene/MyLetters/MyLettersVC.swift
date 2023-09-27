@@ -9,7 +9,7 @@ class MyLetterVC: BaseVC {
 
     // MARK: - Properties
     lazy var myLetterView = MyLetterView()
-    
+
     private let sendButton: UIButton = {
         $0.setTitle("편지 보내기", for: .normal)
         $0.setMainButton(color: "main")
@@ -41,14 +41,14 @@ class MyLetterVC: BaseVC {
 
     override func setLayout() {
         myLetterView.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide).inset(14)
+            make.top.equalToSuperview().inset(70)
             make.leading.trailing.equalToSuperview().inset(20)
-            make.bottom.equalTo(sendButton.snp.top).inset(-18)
+            make.bottom.equalToSuperview().inset(126)
         }
         sendButton.snp.makeConstraints { make in
-            make.bottom.equalTo(view.safeAreaLayoutGuide).inset(17)
-            make.leading.trailing.equalToSuperview().inset(21)
-            make.height.equalTo(60)
+            make.leading.trailing.equalToSuperview().inset(20)
+            make.height.equalTo(55)
+            make.top.equalTo(myLetterView.snp.bottom).offset(20)
         }
         emptyView.snp.makeConstraints { make in
             make.edges.equalTo(myLetterView.tableView.snp.edges)
@@ -58,7 +58,7 @@ class MyLetterVC: BaseVC {
     // MARK: - bind
     override func bind() {
         myLetterView.tableView.delegate = self
-        
+
         let input = MyLetterVM.Input(
             tableViewModelSelected: myLetterView.tableView.rx.itemSelected.asObservable(),
             sendButtonTapped: sendButton.rx.tap.asObservable())
@@ -74,29 +74,28 @@ class MyLetterVC: BaseVC {
                 }
             }
             .disposed(by: disposeBag)
-        
+
         output.letterMyData
             .do(onNext: { [weak self] data in
                 self?.emptyView.isHidden = !data.outBoxLetters.isEmpty
             })
-                .map { $0.outBoxLetters }
-                .bind(to: myLetterView.tableView.rx.items) { tableView, index, item in
-                    // headerView에 model 에 새로 분기되는 값 input
-                    guard let cell = tableView.dequeueReusableCell(
+            .map { $0.outBoxLetters }
+            .bind(to: myLetterView.tableView.rx.items) { tableView, index, item in
+                // headerView에 model 에 새로 분기되는 값 input
+                guard let cell = tableView.dequeueReusableCell(
                         withIdentifier: HomeTableViewCell.identifier,
-                        for: IndexPath(row: index, section: 0)) as? HomeTableViewCell else { return UITableViewCell() }
-                    cell.selectionStyle = .none
-                    cell.model = item
-                    
-                    return cell
-                }
-                .disposed(by: disposeBag)
-        
+                        for: IndexPath(row: index, section: 0)
+                    ) as? HomeTableViewCell else { return UITableViewCell() }
+                cell.selectionStyle = .none
+                cell.model = item
+
+                return cell
+            }.disposed(by: disposeBag)
+
         output.isArrived
             .bind { [weak self] bool in
                 if bool {
                     // 보관함으로 이동
-//                    let keepRoomVC = BaseVC()
                     let keepRoomVC = LoadingLetterVC()
                     self?.navigationController?.pushViewController(keepRoomVC, animated: true)
                 } else {
@@ -104,11 +103,8 @@ class MyLetterVC: BaseVC {
                     let loadingVC = LoadingLetterVC()
                     self?.navigationController?.pushViewController(loadingVC, animated: true)
                 }
-            }
-            .disposed(by: disposeBag)
-        
+            }.disposed(by: disposeBag)
     }
-
 }
 
 extension MyLetterVC: UITableViewDelegate {

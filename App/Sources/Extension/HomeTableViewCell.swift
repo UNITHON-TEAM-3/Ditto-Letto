@@ -23,36 +23,33 @@ enum ProgressType: Int, CaseIterable {
     case type5 = 5
     case type6 = 6
     case type7 = 7
-    
 }
 
 class HomeTableViewCell: BaseTC {
 
     static let identifier = "HomeTableViewCell"
-    
-    //MARK: - Properties
+    // MARK: - Properties
     private let folderImageView = UIImageView()
-    
+
     private let phoneNumberLabel: UILabel = {
         $0.text = "010-2326-3046"
-        $0.font = UIFont(name: "Ramche", size: 17)
+        $0.font = DittoLettoFontFamily.Ramche.regular.font(size: 17)
         return $0
     }(UILabel())
-    
+
     private let transportationImageView = UIImageView()
-    
+
     private let transportationState = UIImageView()
-    
+
     var model: BoxLetterData? {
         didSet {
             configureVC()
         }
     }
-    
+
     // MARK: - Lifecycle
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-
     }
 
     override func addView() {
@@ -61,7 +58,7 @@ class HomeTableViewCell: BaseTC {
         addSubview(transportationImageView)
         addSubview(transportationState)
     }
-    
+
     override func setLayout() {
         folderImageView.snp.makeConstraints { make in
             make.top.equalToSuperview().inset(12)
@@ -85,19 +82,19 @@ class HomeTableViewCell: BaseTC {
             make.height.equalTo(15)
         }
     }
-    
+
     override func configureVC() {
         guard let model = model else { return }
-    
+
         phoneNumberLabel.text = model.phoneNumber
-        
+
         if model.type == MessageType.normal.rawValue {
-            return folderImageView.image = UIImage(named: "redFolder")
+            return folderImageView.image = DittoLettoAsset.Image.redFolder.image
         }
         if model.type == MessageType.password.rawValue {
-            return folderImageView.image = UIImage(named: "yellowFolder")
+            return folderImageView.image = DittoLettoAsset.Image.yellowFolder.image
         }
-        
+
         // 도착 완료 시
         if model.arrived {
             transportationImageView.image = nil
@@ -109,19 +106,19 @@ class HomeTableViewCell: BaseTC {
                     transportationState.image = UIImage(named: "state0\(value.rawValue)")
                 }
             }
-            
+
             if model.mediumType == TransportationType.airplane.rawValue {
-                transportationImageView.image = UIImage(named: "airplaneIcon")
+                transportationImageView.image = DittoLettoAsset.Image.airplaneIcon.image
             } else if model.mediumType == TransportationType.car.rawValue {
-                transportationImageView.image = UIImage(named: "carIcon")
+                transportationImageView.image = DittoLettoAsset.Image.carIcon.image
             } else if model.mediumType == TransportationType.bicycle.rawValue {
-                transportationImageView.image = UIImage(named: "bikeIcon")
+                transportationImageView.image = DittoLettoAsset.Image.bikeIcon.image
             } else if model.mediumType == TransportationType.horse.rawValue {
-                transportationImageView.image = UIImage(named: "horseIcon")
+                transportationImageView.image = DittoLettoAsset.Image.horseIcon.image
             } else if model.mediumType == TransportationType.running.rawValue {
-                transportationImageView.image = UIImage(named: "runningIcon")
+                transportationImageView.image = DittoLettoAsset.Image.runningIcon.image
             } else if model.mediumType == TransportationType.walk.rawValue {
-                transportationState.image = UIImage(named: "walkIcon")
+                transportationState.image = DittoLettoAsset.Image.walkIcon.image
             }
         }
     }
