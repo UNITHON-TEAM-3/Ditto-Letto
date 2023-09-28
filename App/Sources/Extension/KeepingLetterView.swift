@@ -7,35 +7,31 @@ class KeepingLetterView: UIView {
         $0.backgroundColor = DittoLettoAsset.Color.dark.color
         return $0
     }(UIView())
-    
     private let statusBarFirstDetailView: UIView = {
         $0.backgroundColor = DittoLettoAsset.Color.gray1.color
         return $0
     }(UIView())
-    
     private let statusBarSecondDetailView: UIView = {
         $0.backgroundColor = DittoLettoAsset.Color.gray1.color
         return $0
     }(UIView())
-
-    private let fileImageView = UIImageView()
-
+    private let fileImageView: UIImageView = {
+        $0.image = UIImage(named: "redFolder")
+        return $0
+    }(UIImageView())
     private let titleNumberLabel: UILabel = {
         $0.text = "010-1234-5673"
         $0.font = DittoLettoFontFamily.Ramche.regular.font(size: 20)
         return $0
     }(UILabel())
-
     private let lineView: UIView = {
         $0.backgroundColor = DittoLettoAsset.Color.gray2.color
         return $0
     }(UIView())
-
     private let messageImageView: UIImageView = {
         $0.image = DittoLettoAsset.Image.message.image
         return $0
     }(UIImageView())
-
     private let messageNumLabel: UILabel = {
         $0.text = "12"
         $0.font = DittoLettoFontFamily.Ramche.regular.font(size: 13)
@@ -45,19 +41,16 @@ class KeepingLetterView: UIView {
     // MARK: - Life Cycles
     init() {
         super.init(frame: .zero)
+        backgroundColor = .white
         addView()
         setLayout()
     }
-
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
     // MARK: - Set UI
     private func addView() {
-        backgroundColor = .white
-        fileImageView.image = UIImage(named: "redFolder") // 임시
-        
         [
             topStatusBarView,
             fileImageView,
@@ -71,7 +64,6 @@ class KeepingLetterView: UIView {
         topStatusBarView.addSubview(statusBarFirstDetailView)
         topStatusBarView.addSubview(statusBarSecondDetailView)
     }
-
     private func setLayout() {
         topStatusBarView.snp.makeConstraints { make in
             make.top.equalToSuperview()

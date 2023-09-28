@@ -34,7 +34,6 @@ class MyLetterVM: BaseVM {
             .combineLatest(input.tableViewModelSelected, output.letterMyData)
             .subscribe { indexPath, dataList in
                 let data = dataList.outBoxLetters[indexPath.row]
-                
                 if data.arrived {
                     output.isArrived.accept(true)
                 } else {

@@ -41,23 +41,17 @@ class LoginVM: BaseVM {
 
     func loginWithWeb() {
         UserApi.shared.loginWithKakaoAccount {(oauthToken, error) in
-            // Validation
             if let error = error {
                 print(error)
                 return
             }
-
-            // 유저 정보
             UserApi.shared.me() { [weak self] (user, error) in
-                // Validation
                 if let error = error {
                     print(error)
                     return
                 }
-
                 guard let accessToken = oauthToken?.accessToken,
                       let self = self else { return }
-
                 self.api.login(accessToken)
                     .subscribe { res in
                         switch res {
@@ -73,22 +67,17 @@ class LoginVM: BaseVM {
 
     func loginWithApp() {
         UserApi.shared.loginWithKakaoTalk {(oauthToken, error) in
-            // Validation
             if let error = error {
                 print(error)
                 return
             }
-
-            // 유저 정보
             UserApi.shared.me() { [weak self] (user, error) in
                 if let error = error {
                     print(error)
                     return
                 }
-
                 guard let accessToken = oauthToken?.accessToken,
                       let self = self else { return }
-
                 self.api.login(accessToken)
                     .subscribe { res in
                         switch res {

@@ -7,17 +7,19 @@ class HomeTableHeaderView: UIView {
             configureVC()
         }
     }
-
     private let headerTitleLabel: UILabel = {
         $0.text = "너랑 지금 정말 가까이 있나봐"
         $0.font = DittoLettoFontFamily.Ramche.regular.font(size: 16)
         return $0
     }(UILabel())
-
-    private let transportationImageView = UIImageView()
-
-    private let transportationState = UIImageView()
-
+    private let transportationImageView: UIImageView = {
+        $0.image = DittoLettoAsset.Image.horseIcon.image
+        return $0
+    }(UIImageView())
+    private let transportationState: UIImageView = {
+        $0.image = DittoLettoAsset.Image.state03.image
+        return $0
+    }(UIImageView())
     private let lineView: UIView = {
         $0.backgroundColor = DittoLettoAsset.Color.gray2.color
         return $0
@@ -28,10 +30,6 @@ class HomeTableHeaderView: UIView {
         super.init(frame: frame)
         addView()
         setLayout()
-
-        // 임시
-        transportationImageView.image = DittoLettoAsset.Image.horseIcon.image
-        transportationState.image = DittoLettoAsset.Image.state03.image
     }
 
     required init?(coder: NSCoder) {
@@ -45,7 +43,6 @@ class HomeTableHeaderView: UIView {
         addSubview(transportationState)
         addSubview(lineView)
     }
-
     private func setLayout() {
         headerTitleLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().inset(20)
@@ -67,7 +64,6 @@ class HomeTableHeaderView: UIView {
             make.height.equalTo(0.5)
         }
     }
-
     private func configureVC() {
         guard let model = model else { return }
 

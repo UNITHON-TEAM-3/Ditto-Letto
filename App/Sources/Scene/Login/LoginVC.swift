@@ -12,7 +12,6 @@ class LoginVC: BaseVC {
         $0.contentMode = .scaleAspectFit
         return $0
     }(UIImageView())
-
     private let kakaoButton: UIButton = {
         $0.setImage(DittoLettoAsset.Image.kakaoButton.image, for: .normal)
         return $0
@@ -29,7 +28,6 @@ class LoginVC: BaseVC {
         view.addSubview(dittoImageView)
         view.addSubview(kakaoButton)
     }
-
     override func setLayout() {
         dittoImageView.snp.makeConstraints { make in
             make.top.equalToSuperview().inset(178)
@@ -42,7 +40,6 @@ class LoginVC: BaseVC {
             make.height.equalTo(50)
         }
     }
-
     override func bind() {
         let input = LoginVM.Input(loginButtonTapped: kakaoButton.rx.tap.asObservable())
         let output = viewModel.transform(input)

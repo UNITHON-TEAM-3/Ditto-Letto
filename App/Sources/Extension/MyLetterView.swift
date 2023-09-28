@@ -6,25 +6,22 @@ class MyLetterView: UIView {
     private let redButton = MyLetterCircleView(backgroundColor: "bg")
     private let blueButton = MyLetterCircleView(backgroundColor: "third")
     private let yelloButton = MyLetterCircleView(backgroundColor: "main")
-
     private let title: UILabel = {
         $0.text = "나의 편지함"
         $0.font = DittoLettoFontFamily.Ramche.regular.font(size: 15)
         return $0
     }(UILabel())
-
     private let line: UIImageView = {
         $0.image = DittoLettoAsset.Image.twoLine.image
         return $0
     }(UIImageView())
-
     let tableView: UITableView = {
         $0.backgroundColor = .white
         $0.layer.borderColor = DittoLettoAsset.Color.gray2.color.cgColor
         $0.layer.borderWidth = 1
         $0.separatorInset.left = 0
         $0.register(HomeTableViewCell.self, forCellReuseIdentifier: HomeTableViewCell.identifier)
-        $0.bounces = false
+        $0.rowHeight = 110
         return $0
     }(UITableView())
 
@@ -35,7 +32,6 @@ class MyLetterView: UIView {
         addView()
         setLayout()
     }
-
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -46,7 +42,6 @@ class MyLetterView: UIView {
         layer.borderWidth = 1
         layer.borderColor = UIColor.black.cgColor
     }
-
     private func addView() {
         addSubview(redButton)
         addSubview(blueButton)
@@ -55,7 +50,6 @@ class MyLetterView: UIView {
         addSubview(line)
         addSubview(tableView)
     }
-
     private func setLayout() {
         redButton.snp.makeConstraints { make in
             make.top.equalToSuperview().inset(11)

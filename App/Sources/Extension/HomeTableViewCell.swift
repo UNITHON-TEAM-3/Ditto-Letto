@@ -30,17 +30,13 @@ class HomeTableViewCell: BaseTC {
     static let identifier = "HomeTableViewCell"
     // MARK: - Properties
     private let folderImageView = UIImageView()
-
     private let phoneNumberLabel: UILabel = {
         $0.text = "010-2326-3046"
         $0.font = DittoLettoFontFamily.Ramche.regular.font(size: 17)
         return $0
     }(UILabel())
-
     private let transportationImageView = UIImageView()
-
     private let transportationState = UIImageView()
-
     var model: BoxLetterData? {
         didSet {
             configureVC()
@@ -51,14 +47,12 @@ class HomeTableViewCell: BaseTC {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
     }
-
     override func addView() {
         addSubview(folderImageView)
         addSubview(phoneNumberLabel)
         addSubview(transportationImageView)
         addSubview(transportationState)
     }
-
     override func setLayout() {
         folderImageView.snp.makeConstraints { make in
             make.top.equalToSuperview().inset(12)
@@ -82,7 +76,6 @@ class HomeTableViewCell: BaseTC {
             make.height.equalTo(15)
         }
     }
-
     override func configureVC() {
         guard let model = model else { return }
 

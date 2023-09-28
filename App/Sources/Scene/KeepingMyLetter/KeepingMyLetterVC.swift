@@ -18,7 +18,6 @@ class KeepingMyLetterVC: BaseVC {
         view.addSubview(keepingLetterView)
         view.addSubview(myLetterView)
     }
-
     override func setLayout() {
         keepingLetterView.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide).inset(14)
@@ -31,15 +30,11 @@ class KeepingMyLetterVC: BaseVC {
             make.bottom.equalTo(view.safeAreaLayoutGuide).inset(20)
         }
     }
-
     override func configureVC() {
         self.navigationController?.navigationBar.topItem?.title = ""
         self.navigationController?.navigationBar.tintColor = .black
     }
-    
     // MARK: - Bind
     override func bind() {
-        
     }
-    
 }
