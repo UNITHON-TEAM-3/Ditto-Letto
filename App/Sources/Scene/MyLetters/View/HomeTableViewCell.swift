@@ -1,32 +1,7 @@
 import UIKit
 import SnapKit
 
-enum MessageType: String, CaseIterable {
-    case normal = "BASIC"
-    case password = "CODE"
-}
-
-enum TransportationType: String, CaseIterable {
-    case airplane = "PLAIN"
-    case car = "CAR"
-    case bicycle = "BICYCLE"
-    case horse = "HORSE"
-    case running = "RUN"
-    case walk = "WALK"
-}
-
-enum ProgressType: Int, CaseIterable {
-    case type1 = 1
-    case type2 = 2
-    case type3 = 3
-    case type4 = 4
-    case type5 = 5
-    case type6 = 6
-    case type7 = 7
-}
-
 class HomeTableViewCell: BaseTC {
-
     static let identifier = "HomeTableViewCell"
     // MARK: - Properties
     private let folderImageView = UIImageView()
