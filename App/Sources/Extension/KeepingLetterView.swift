@@ -7,6 +7,16 @@ class KeepingLetterView: UIView {
         $0.backgroundColor = DittoLettoAsset.Color.dark.color
         return $0
     }(UIView())
+    
+    private let statusBarFirstDetailView: UIView = {
+        $0.backgroundColor = DittoLettoAsset.Color.gray1.color
+        return $0
+    }(UIView())
+    
+    private let statusBarSecondDetailView: UIView = {
+        $0.backgroundColor = DittoLettoAsset.Color.gray1.color
+        return $0
+    }(UIView())
 
     private let fileImageView = UIImageView()
 
@@ -45,6 +55,9 @@ class KeepingLetterView: UIView {
 
     // MARK: - Set UI
     private func addView() {
+        backgroundColor = .white
+        fileImageView.image = UIImage(named: "redFolder") // 임시
+        
         [
             topStatusBarView,
             fileImageView,
@@ -55,16 +68,30 @@ class KeepingLetterView: UIView {
         ].forEach {
             self.addSubview($0)
         }
+        topStatusBarView.addSubview(statusBarFirstDetailView)
+        topStatusBarView.addSubview(statusBarSecondDetailView)
     }
 
     private func setLayout() {
         topStatusBarView.snp.makeConstraints { make in
             make.top.equalToSuperview()
             make.leading.trailing.equalToSuperview()
-            make.height.equalTo(10)
+            make.height.equalTo(16)
+        }
+        statusBarFirstDetailView.snp.makeConstraints { make in
+            make.top.bottom.equalToSuperview().inset(3)
+            make.trailing.equalToSuperview().inset(10)
+            make.centerY.equalToSuperview()
+            make.width.equalTo(10)
+        }
+        statusBarSecondDetailView.snp.makeConstraints { make in
+            make.top.bottom.equalToSuperview().inset(6)
+            make.trailing.equalTo(statusBarFirstDetailView.snp.leading).inset(-5)
+            make.centerY.equalToSuperview()
+            make.width.equalTo(10)
         }
         fileImageView.snp.makeConstraints { make in
-            make.top.equalTo(topStatusBarView.snp.bottom).inset(-12)
+            make.top.equalTo(topStatusBarView.snp.bottom).inset(-14)
             make.leading.equalToSuperview().inset(15)
             make.width.equalTo(45)
             make.height.equalTo(40)
@@ -74,7 +101,7 @@ class KeepingLetterView: UIView {
             make.leading.equalTo(fileImageView.snp.trailing).inset(-17)
         }
         messageImageView.snp.makeConstraints { make in
-            make.top.equalTo(topStatusBarView.snp.bottom).inset(-18)
+            make.top.equalTo(topStatusBarView.snp.bottom).inset(-20)
             make.trailing.equalToSuperview().inset(24)
             make.width.equalTo(20)
             make.height.equalTo(16)
@@ -84,7 +111,9 @@ class KeepingLetterView: UIView {
             make.centerX.equalTo(messageImageView.snp.centerX)
         }
         lineView.snp.makeConstraints { make in
-            make.top.bottom.equalToSuperview()
+            make.top.equalTo(topStatusBarView.snp.bottom)
+            make.bottom.equalToSuperview()
+            make.trailing.equalTo(messageImageView.snp.leading).inset(-24)
             make.width.equalTo(0.6)
         }
     }

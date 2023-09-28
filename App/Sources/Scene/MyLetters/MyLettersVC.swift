@@ -20,13 +20,6 @@ class MyLetterVC: BaseVC {
 
     lazy var tableHeaderView = HomeTableHeaderView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 95))
 
-    override func configureVC() {
-        sendButton.rx.tap
-            .subscribe(onNext: {
-                self.navigationController?.pushViewController(NewLetterVC(), animated: true)
-            }).disposed(by: disposeBag)
-    }
-
     // MARK: - Life Cycles
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -104,6 +97,13 @@ class MyLetterVC: BaseVC {
                     self?.navigationController?.pushViewController(loadingVC, animated: true)
                 }
             }.disposed(by: disposeBag)
+    }
+    
+    override func configureVC() {
+        sendButton.rx.tap
+            .subscribe(onNext: {
+                self.navigationController?.pushViewController(NewLetterVC(), animated: true)
+            }).disposed(by: disposeBag)
     }
 }
 
