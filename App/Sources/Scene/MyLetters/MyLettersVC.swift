@@ -96,7 +96,7 @@ class MyLetterVC: BaseVC {
             .bind { [weak self] bool in
                 if bool {
                     // 보관함으로 이동
-                    let keepRoomVC = LoadingLetterVC()
+                    let keepRoomVC = KeepingMyLetterVC()
                     self?.navigationController?.pushViewController(keepRoomVC, animated: true)
                 } else {
                     // 전송중으로 이동
