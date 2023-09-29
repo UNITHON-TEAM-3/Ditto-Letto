@@ -72,8 +72,7 @@ extension API: TargetType {
         case .login:
             return Header.tokenIsEmpty.header()
         case .getCount, .postNewLetter, .fetchDetailLetter, .deleteLetter, .letterMy:
-            guard let token = Token.accessToken else { return ["Contect-Type": "application/json"] }
-            return ["Authorization": "Bearer " + token, "Contect-Type": "application/json"]
+            return Header.accessToken.header()
         }
     }
 }
