@@ -36,25 +36,26 @@ struct Token {
 }
 
 enum Header {
-    case accessToken, tokenIsEmpty, refreshToken
+    case tokenIsEmpty, accessToken
+//    case tokenIsEmpty, accessToken, refreshToken
 
     func header() -> [String: String]? {
         guard let token = Token.accessToken else {
-            return ["Contect-Type": "application/json"]
+            return ["Content-Type": "application/json"]
         }
 
-        guard let refreshToken = Token.refreshToken else {
-            return ["Contect-Type": "application/json"]
-        }
+//        guard let refreshToken = Token.refreshToken else {
+//            return ["Content-Type": "application/json"]
+//        }
 
         switch self {
-        case .accessToken:
-            return ["Authorization": "Bearer " + token, "Contect-Type": "application/json"]
-        case .refreshToken:
-            return ["Authorization": "Bearer " + token,
-                    "Refresh-Token": refreshToken, "Contect-Type": "application/json"]
         case .tokenIsEmpty:
-            return ["Contect-Type": "application/json"]
+            return ["Content-Type": "application/json"]
+        case .accessToken:
+            return ["Authorization": "Bearer " + token, "Content-Type": "application/json"]
+//        case .refreshToken:
+//            return ["Authorization": "Bearer " + token,
+//                    "Refresh-Token": refreshToken, "Content-Type": "application/json"]
         }
     }
 }
