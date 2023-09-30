@@ -15,7 +15,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(windowScene: windowScence)
         window?.windowScene = windowScence
 
-        print("Token = \(String(describing: Token.accessToken))")
+        print("Token = \(Token.accessToken ?? "NOTHING RECEIVED")")
 
         if Token.accessToken == nil {
             window?.rootViewController = LoginVC()

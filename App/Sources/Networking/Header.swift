@@ -36,7 +36,8 @@ struct Token {
 }
 
 enum Header {
-    case accessToken, tokenIsEmpty, refreshToken
+    case tokenIsEmpty, accessToken
+//    case tokenIsEmpty, accessToken, refreshToken
 
     func header() -> [String: String]? {
         guard let token = Token.accessToken else {
@@ -46,14 +47,13 @@ enum Header {
 //            return ["Content-Type": "application/json"]
 //        }
         switch self {
-        case .accessToken:
-            return ["Authorization": "Bearer " + token, "Content-Type": "application/json"]
-        case .refreshToken:
-            return ["Content-Type": "application/json"]
-//            return ["Authorization": "Bearer " + token,
-//                    "Refresh-Token": refreshToken, "Content-Type": "application/json"]
         case .tokenIsEmpty:
             return ["Content-Type": "application/json"]
+        case .accessToken:
+            return ["Authorization": "Bearer " + token, "Content-Type": "application/json"]
+//        case .refreshToken:
+//            return ["Authorization": "Bearer " + token,
+//                    "Refresh-Token": refreshToken, "Content-Type": "application/json"]
         }
     }
 }

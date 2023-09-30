@@ -12,8 +12,7 @@ enum API {
 
 extension API: TargetType {
     var baseURL: URL {
-        let url = URL(string: "https://port-0-pro-4fju66f2clmvatsvw.sel5.cloudtype.app") ?? URL(string: "")!
-        return url
+        return URL(string: "https://port-0-pro-4fju66f2clmvatsvw.sel5.cloudtype.app")!
     }
 
     var path: String {
@@ -43,9 +42,12 @@ extension API: TargetType {
     var task: Task {
         switch self {
         case .login(let code):
-            return .requestParameters(parameters:
-                                        [ "kakaoAccessToken": code ],
-                                      encoding: JSONEncoding.prettyPrinted)
+            return .requestParameters(
+                parameters: [
+                    "kakaoAccessToken": code
+                ],
+                encoding: JSONEncoding.prettyPrinted
+            )
         case .getCount(let phone):
             return .requestParameters(
                 parameters: [
