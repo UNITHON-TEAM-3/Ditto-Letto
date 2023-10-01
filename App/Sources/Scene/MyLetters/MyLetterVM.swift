@@ -22,7 +22,7 @@ class MyLetterVM: BaseVM {
         let output = Output()
 
         api.letterMy()
-            .subscribe { [weak self] model, networkResult in
+            .subscribe { model, networkResult in
                 guard let model = model else { return }
 
                 if networkResult == .getOk {
@@ -31,10 +31,9 @@ class MyLetterVM: BaseVM {
             }.disposed(by: disposeBag)
 
         Observable
-            .zip(input.tableViewModelSelected, output.letterMyData)
+            .combineLatest(input.tableViewModelSelected, output.letterMyData)
             .subscribe { indexPath, dataList in
                 let data = dataList.outBoxLetters[indexPath.row]
-                
                 if data.arrived {
                     output.isArrived.accept(true)
                 } else {

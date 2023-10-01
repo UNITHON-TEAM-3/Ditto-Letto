@@ -10,6 +10,9 @@
 #elseif os(tvOS) || os(watchOS)
   import UIKit
 #endif
+#if canImport(SwiftUI)
+  import SwiftUI
+#endif
 
 // swiftlint:disable superfluous_disable_command file_length implicit_return
 
@@ -18,7 +21,7 @@
 // swiftlint:disable identifier_name line_length nesting type_body_length type_name
 public enum DittoLettoAsset {
   public enum Color {
-    public static let bg = DittoLettoColors(name: "bg")
+  public static let bg = DittoLettoColors(name: "bg")
     public static let dark = DittoLettoColors(name: "dark")
     public static let gray1 = DittoLettoColors(name: "gray1")
     public static let gray2 = DittoLettoColors(name: "gray2")
@@ -26,7 +29,7 @@ public enum DittoLettoAsset {
     public static let third = DittoLettoColors(name: "third")
   }
   public enum Image {
-    public static let generalImage = DittoLettoImages(name: "GeneralImage")
+  public static let generalImage = DittoLettoImages(name: "GeneralImage")
     public static let privateImage = DittoLettoImages(name: "PrivateImage")
     public static let profileImage = DittoLettoImages(name: "ProfileImage")
     public static let airplane = DittoLettoImages(name: "airplane")
@@ -83,6 +86,23 @@ public final class DittoLettoColors {
     return color
   }()
 
+  #if canImport(SwiftUI)
+  private var _swiftUIColor: Any? = nil
+  @available(iOS 13.0, tvOS 13.0, watchOS 6.0, macOS 10.15, *)
+  public private(set) var swiftUIColor: SwiftUI.Color {
+    get {
+      if self._swiftUIColor == nil {
+        self._swiftUIColor = SwiftUI.Color(asset: self)
+      }
+
+      return self._swiftUIColor as! SwiftUI.Color
+    }
+    set {
+      self._swiftUIColor = newValue
+    }
+  }
+  #endif
+
   fileprivate init(name: String) {
     self.name = name
   }
@@ -101,6 +121,16 @@ public extension DittoLettoColors.Color {
     #endif
   }
 }
+
+#if canImport(SwiftUI)
+@available(iOS 13.0, tvOS 13.0, watchOS 6.0, macOS 10.15, *)
+public extension SwiftUI.Color {
+  init(asset: DittoLettoColors) {
+    let bundle = DittoLettoResources.bundle
+    self.init(asset.name, bundle: bundle)
+  }
+}
+#endif
 
 public struct DittoLettoImages {
   public fileprivate(set) var name: String
@@ -125,6 +155,13 @@ public struct DittoLettoImages {
     }
     return result
   }
+
+  #if canImport(SwiftUI)
+  @available(iOS 13.0, tvOS 13.0, watchOS 6.0, macOS 10.15, *)
+  public var swiftUIImage: SwiftUI.Image {
+    SwiftUI.Image(asset: self)
+  }
+  #endif
 }
 
 public extension DittoLettoImages.Image {
@@ -141,6 +178,26 @@ public extension DittoLettoImages.Image {
     #endif
   }
 }
+
+#if canImport(SwiftUI)
+@available(iOS 13.0, tvOS 13.0, watchOS 6.0, macOS 10.15, *)
+public extension SwiftUI.Image {
+  init(asset: DittoLettoImages) {
+    let bundle = DittoLettoResources.bundle
+    self.init(asset.name, bundle: bundle)
+  }
+
+  init(asset: DittoLettoImages, label: Text) {
+    let bundle = DittoLettoResources.bundle
+    self.init(asset.name, bundle: bundle, label: label)
+  }
+
+  init(decorative asset: DittoLettoImages) {
+    let bundle = DittoLettoResources.bundle
+    self.init(decorative: asset.name, bundle: bundle)
+  }
+}
+#endif
 
 // swiftlint:enable all
 // swiftformat:enable all

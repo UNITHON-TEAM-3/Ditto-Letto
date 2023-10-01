@@ -1,46 +1,17 @@
 import UIKit
 import SnapKit
 
-enum MessageType: String, CaseIterable {
-    case normal = "BASIC"
-    case password = "CODE"
-}
-
-enum TransportationType: String, CaseIterable {
-    case airplane = "PLAIN"
-    case car = "CAR"
-    case bicycle = "BICYCLE"
-    case horse = "HORSE"
-    case running = "RUN"
-    case walk = "WALK"
-}
-
-enum ProgressType: Int, CaseIterable {
-    case type1 = 1
-    case type2 = 2
-    case type3 = 3
-    case type4 = 4
-    case type5 = 5
-    case type6 = 6
-    case type7 = 7
-}
-
 class HomeTableViewCell: BaseTC {
-
     static let identifier = "HomeTableViewCell"
     // MARK: - Properties
     private let folderImageView = UIImageView()
-
     private let phoneNumberLabel: UILabel = {
         $0.text = "010-2326-3046"
         $0.font = DittoLettoFontFamily.Ramche.regular.font(size: 17)
         return $0
     }(UILabel())
-
     private let transportationImageView = UIImageView()
-
     private let transportationState = UIImageView()
-
     var model: BoxLetterData? {
         didSet {
             configureVC()
@@ -51,14 +22,12 @@ class HomeTableViewCell: BaseTC {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
     }
-
     override func addView() {
         addSubview(folderImageView)
         addSubview(phoneNumberLabel)
         addSubview(transportationImageView)
         addSubview(transportationState)
     }
-
     override func setLayout() {
         folderImageView.snp.makeConstraints { make in
             make.top.equalToSuperview().inset(12)
@@ -82,7 +51,6 @@ class HomeTableViewCell: BaseTC {
             make.height.equalTo(15)
         }
     }
-
     override func configureVC() {
         guard let model = model else { return }
 

@@ -43,11 +43,9 @@ enum Header {
         guard let token = Token.accessToken else {
             return ["Content-Type": "application/json"]
         }
-
 //        guard let refreshToken = Token.refreshToken else {
 //            return ["Content-Type": "application/json"]
 //        }
-
         switch self {
         case .tokenIsEmpty:
             return ["Content-Type": "application/json"]

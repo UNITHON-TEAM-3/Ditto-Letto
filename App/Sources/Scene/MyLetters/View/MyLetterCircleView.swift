@@ -8,7 +8,6 @@ class MyLetterCircleView: UIView {
         self.backgroundColor = UIColor(named: "\(backgroundColor)")
         setView()
     }
-
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

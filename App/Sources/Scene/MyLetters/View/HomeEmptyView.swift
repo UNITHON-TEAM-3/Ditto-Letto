@@ -8,12 +8,10 @@ class HomeEmptyView: UIView {
         $0.font = DittoLettoFontFamily.Ramche.regular.font(size: 25)
         return $0
     }(UILabel())
-
     private let tungImageView: UIImageView = {
         $0.image = DittoLettoAsset.Image.emptyFolder.image
         return $0
     }(UIImageView())
-
     private let questionLabel: UILabel = {
         $0.text = """
             나에게 마음을 전달할 수 있도록\n
@@ -31,19 +29,16 @@ class HomeEmptyView: UIView {
         addView()
         setLayout()
     }
-
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
     // MARK: - Set UI
-
     private func addView() {
         addSubview(tungLabel)
         addSubview(tungImageView)
         addSubview(questionLabel)
     }
-
     private func setLayout() {
         tungImageView.snp.makeConstraints { make in
             make.center.equalToSuperview()

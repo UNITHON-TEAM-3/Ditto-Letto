@@ -9,23 +9,13 @@ class MyLetterVC: BaseVC {
 
     // MARK: - Properties
     lazy var myLetterView = MyLetterView()
-
     private let sendButton: UIButton = {
         $0.setTitle("편지 보내기", for: .normal)
         $0.setMainButton(color: "main")
         return $0
     }(UIButton())
-
     private let emptyView = HomeEmptyView()
-
     lazy var tableHeaderView = HomeTableHeaderView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 95))
-
-    override func configureVC() {
-        sendButton.rx.tap
-            .subscribe(onNext: {
-                self.navigationController?.pushViewController(NewLetterVC(), animated: true)
-            }).disposed(by: disposeBag)
-    }
 
     // MARK: - Life Cycles
     override func viewDidLoad() {
@@ -38,7 +28,6 @@ class MyLetterVC: BaseVC {
         view.addSubview(sendButton)
         view.addSubview(emptyView)
     }
-
     override func setLayout() {
         myLetterView.snp.makeConstraints { make in
             make.top.equalToSuperview().inset(70)
@@ -57,8 +46,6 @@ class MyLetterVC: BaseVC {
 
     // MARK: - bind
     override func bind() {
-        myLetterView.tableView.delegate = self
-
         let input = MyLetterVM.Input(
             tableViewModelSelected: myLetterView.tableView.rx.itemSelected.asObservable(),
             sendButtonTapped: sendButton.rx.tap.asObservable())
@@ -72,8 +59,7 @@ class MyLetterVC: BaseVC {
                     self?.tableHeaderView.model = data.inBoxLetters.first
                     self?.myLetterView.tableView.tableHeaderView = self?.tableHeaderView
                 }
-            }
-            .disposed(by: disposeBag)
+            }.disposed(by: disposeBag)
 
         output.letterMyData
             .do(onNext: { [weak self] data in
@@ -96,7 +82,7 @@ class MyLetterVC: BaseVC {
             .bind { [weak self] bool in
                 if bool {
                     // 보관함으로 이동
-                    let keepRoomVC = LoadingLetterVC()
+                    let keepRoomVC = KeepingMyLetterVC()
                     self?.navigationController?.pushViewController(keepRoomVC, animated: true)
                 } else {
                     // 전송중으로 이동
@@ -105,10 +91,10 @@ class MyLetterVC: BaseVC {
                 }
             }.disposed(by: disposeBag)
     }
-}
-
-extension MyLetterVC: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 110
+    override func configureVC() {
+        sendButton.rx.tap
+            .subscribe(onNext: {
+                self.navigationController?.pushViewController(NewLetterVC(), animated: true)
+            }).disposed(by: disposeBag)
     }
 }
