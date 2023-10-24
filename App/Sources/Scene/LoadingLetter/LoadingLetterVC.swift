@@ -64,7 +64,7 @@ class LoadingLetterVC: BaseVC {
     }
 
     func configureBar() {
-        let backButton = UIImage(systemName: "chevron.backward")?.withTintColor(.black, renderingMode: .alwaysOriginal)
+        let backButton = DittoLettoAsset.Image.backChevron.image.withTintColor(.black, renderingMode: .alwaysOriginal)
         let delButton = UIImage(systemName: "xmark")?.withTintColor(.black, renderingMode: .alwaysOriginal)
         let notiButton = UIBarButtonItem(image: backButton, style: .plain, target: self, action: nil)
         notiButton.title = ""

@@ -87,7 +87,6 @@ class DetailLetterVC: BaseVC {
     }
 
     // swiftlint:disable function_body_length
-    // swiftlint:disable cyclomatic_complexity
     override func bind() {
         let input = FetchDetailLetterVM.Input(getDetail: getDetail.asDriver(), id: letterID.asDriver())
         let output = fetchDetailLetterViewModel.transform(input)
@@ -151,7 +150,7 @@ class DetailLetterVC: BaseVC {
                 }
             }).disposed(by: disposeBag)
     }
-    // swiftlint:enable cyclomatic_complexity
+    // swiftlint:enable function_body_length
     override func configureVC() {
         self.navigationController?.navigationBar.topItem?.title = ""
         self.navigationController?.navigationBar.tintColor = .black

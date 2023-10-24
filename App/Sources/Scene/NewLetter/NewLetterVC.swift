@@ -190,6 +190,7 @@ class NewLetterVC: BaseVC {
                 }
             }).disposed(by: disposeBag)
     }
+    // swiftlint:enable function_body_length
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.letterTextView.resignFirstResponder()
     }

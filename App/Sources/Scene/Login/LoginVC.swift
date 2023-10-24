@@ -17,12 +17,6 @@ class LoginVC: BaseVC {
         return $0
     }(UIButton())
 
-    // MARK: - Life Cycles
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-    }
-
     // MARK: - Set UI
     override func addView() {
         view.addSubview(dittoImageView)

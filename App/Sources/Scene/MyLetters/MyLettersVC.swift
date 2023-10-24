@@ -15,12 +15,14 @@ class MyLetterVC: BaseVC {
         return $0
     }(UIButton())
     private let emptyView = HomeEmptyView()
-    lazy var tableHeaderView = HomeTableHeaderView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 95))
-
-    // MARK: - Life Cycles
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
+    lazy var tableHeaderView = HomeTableHeaderView(
+        frame: CGRect(
+            x: 0,
+            y: 0,
+            width: UIScreen.main.bounds.width,
+            height: 95
+        )
+    )
 
     // MARK: - Set UI
     override func addView() {

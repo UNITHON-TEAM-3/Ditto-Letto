@@ -74,6 +74,7 @@ extension UITextField {
             self.textColor = .black
         }
     }
+    // swiftlint:enable function_body_length
 }
 
 extension UITextView {
