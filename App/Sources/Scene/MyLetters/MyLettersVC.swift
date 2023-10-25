@@ -8,7 +8,7 @@ class MyLetterVC: BaseVC {
     let viewModel = MyLetterVM()
 
     // MARK: - Properties
-    lazy var myLetterView = MyLetterView()
+    lazy var myLetterView = MyLetterView(identifier: HomeTableViewCell.identifier)
     private let sendButton: UIButton = {
         $0.setTitle("편지 보내기", for: .normal)
         $0.setMainButton(color: "main")
@@ -82,8 +82,8 @@ class MyLetterVC: BaseVC {
             .bind { [weak self] bool in
                 if bool {
                     // 보관함으로 이동
-                    let keepRoomVC = KeepingMyLetterVC()
-                    self?.navigationController?.pushViewController(keepRoomVC, animated: true)
+                    let letterStorageVC = LetterStorageVC()
+                    self?.navigationController?.pushViewController(letterStorageVC, animated: true)
                 } else {
                     // 전송중으로 이동
                     let loadingVC = LoadingLetterVC()

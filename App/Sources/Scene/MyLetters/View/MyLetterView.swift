@@ -20,16 +20,16 @@ class MyLetterView: UIView {
         $0.layer.borderColor = DittoLettoAsset.Color.gray2.color.cgColor
         $0.layer.borderWidth = 1
         $0.separatorInset.left = 0
-        $0.register(HomeTableViewCell.self, forCellReuseIdentifier: HomeTableViewCell.identifier)
-        $0.rowHeight = 110
+        $0.rowHeight = 82
         return $0
     }(UITableView())
 
     // MARK: - Life Cycles
-    init() {
+    init(identifier: String) {
         super.init(frame: .zero)
         setView()
         addView()
+        setTableView(identifier: identifier)
         setLayout()
     }
     required init?(coder: NSCoder) {
@@ -49,6 +49,15 @@ class MyLetterView: UIView {
         addSubview(title)
         addSubview(line)
         addSubview(tableView)
+    }
+    private func setTableView(identifier: String) {
+        if identifier == HomeTableViewCell.identifier {
+            tableView.register(HomeTableViewCell.self, forCellReuseIdentifier: HomeTableViewCell.identifier)
+        }
+        if identifier == LetterStorageTableViewCell.identifier {
+            tableView.register(LetterStorageTableViewCell.self,
+                               forCellReuseIdentifier: LetterStorageTableViewCell.identifier)
+        }
     }
     private func setLayout() {
         redButton.snp.makeConstraints { make in

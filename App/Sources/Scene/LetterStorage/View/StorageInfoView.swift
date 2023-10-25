@@ -1,7 +1,7 @@
 import UIKit
 import SnapKit
 
-class KeepingLetterView: UIView {
+class StorageInfoView: UIView {
     // MARK: - Properties
     private let topStatusBarView: UIView = {
         $0.backgroundColor = DittoLettoAsset.Color.dark.color

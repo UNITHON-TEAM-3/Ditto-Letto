@@ -4,9 +4,11 @@ import SnapKit
 import RxSwift
 import RxCocoa
 
-class KeepingMyLetterVC: BaseVC {
-    let keepingLetterView = KeepingLetterView()
-    lazy var myLetterView = MyLetterView()
+class LetterStorageVC: BaseVC {
+    let viewModel = LetterStorageVM()
+    // MARK: Properties
+    let keepingLetterView = StorageInfoView()
+    lazy var myLetterView = MyLetterView(identifier: LetterStorageTableViewCell.identifier)
 
     // MARK: - Life Cycles
     override func viewDidLoad() {
@@ -36,5 +38,19 @@ class KeepingMyLetterVC: BaseVC {
     }
     // MARK: - Bind
     override func bind() {
+        let input = LetterStorageVM.Input(
+            tableViewModelSelected: myLetterView.tableView.rx.itemSelected.asObservable())
+        let output = viewModel.transform(input)
+        output.letterStorageData
+            .bind(to: myLetterView.tableView.rx.items) { tableView, index, item in
+                guard let cell = tableView.dequeueReusableCell(
+                        withIdentifier: LetterStorageTableViewCell.identifier,
+                        for: IndexPath(row: index, section: 0)
+                    ) as? LetterStorageTableViewCell else { return UITableViewCell() }
+                cell.selectionStyle = .none
+                cell.model = item
+                print("cell 호출되나")
+                return cell
+            }.disposed(by: disposeBag)
     }
 }
