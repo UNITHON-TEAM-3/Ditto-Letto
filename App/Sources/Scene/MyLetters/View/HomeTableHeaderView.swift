@@ -74,7 +74,6 @@ class HomeTableHeaderView: UIView {
                 transportationState.image = UIImage(named: "state0\(value.rawValue)")
             }
         }
-
         if model.mediumType == TransportationType.airplane.rawValue {
             transportationImageView.image = DittoLettoAsset.Image.airplaneIcon.image
         } else if model.mediumType == TransportationType.car.rawValue {

@@ -49,7 +49,6 @@ class LetterStorageVC: BaseVC {
                     ) as? LetterStorageTableViewCell else { return UITableViewCell() }
                 cell.selectionStyle = .none
                 cell.model = item
-                print("cell 호출되나")
                 return cell
             }.disposed(by: disposeBag)
     }

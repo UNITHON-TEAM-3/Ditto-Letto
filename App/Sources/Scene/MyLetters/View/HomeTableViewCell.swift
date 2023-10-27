@@ -12,6 +12,10 @@ class HomeTableViewCell: BaseTC {
     }(UILabel())
     private let transportationImageView = UIImageView()
     private let transportationState = UIImageView()
+    private let replyButton: UIButton = {
+        $0.setImage(DittoLettoAsset.Image.replyButton.image, for: .normal)
+        return $0
+    }(UIButton())
     var model: BoxLetterData? {
         didSet {
             configureVC()
@@ -23,17 +27,16 @@ class HomeTableViewCell: BaseTC {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
     }
     override func addView() {
-        addSubview(folderImageView)
-        addSubview(phoneNumberLabel)
-        addSubview(transportationImageView)
-        addSubview(transportationState)
+        [folderImageView, phoneNumberLabel, transportationImageView, transportationState, replyButton].forEach {
+            addSubview($0)
+        }
     }
     override func setLayout() {
         folderImageView.snp.makeConstraints { make in
-            make.top.equalToSuperview().inset(12)
+            make.top.equalToSuperview().inset(17)
             make.leading.equalToSuperview().inset(24)
-            make.width.equalTo(57)
-            make.height.equalTo(51)
+            make.width.equalTo(50)
+            make.height.equalTo(45)
         }
         phoneNumberLabel.snp.makeConstraints { make in
             make.centerY.equalTo(folderImageView.snp.centerY)
@@ -49,6 +52,12 @@ class HomeTableViewCell: BaseTC {
             make.leading.equalTo(transportationImageView.snp.trailing).inset(-10)
             make.trailing.equalToSuperview().inset(30)
             make.height.equalTo(15)
+        }
+        replyButton.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.trailing.equalToSuperview().inset(16)
+            make.width.equalTo(41)
+            make.height.equalTo(44)
         }
     }
     override func configureVC() {
@@ -74,7 +83,6 @@ class HomeTableViewCell: BaseTC {
                     transportationState.image = UIImage(named: "state0\(value.rawValue)")
                 }
             }
-
             if model.mediumType == TransportationType.airplane.rawValue {
                 transportationImageView.image = DittoLettoAsset.Image.airplaneIcon.image
             } else if model.mediumType == TransportationType.car.rawValue {

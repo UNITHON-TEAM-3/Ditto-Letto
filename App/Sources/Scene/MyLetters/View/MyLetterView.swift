@@ -15,10 +15,18 @@ class MyLetterView: UIView {
         $0.image = DittoLettoAsset.Image.twoLine.image
         return $0
     }(UIImageView())
+    private let scrollIndigatorView: UIView = {
+        $0.backgroundColor = .white
+        $0.layer.borderColor = DittoLettoAsset.Color.gray2.color.cgColor
+        $0.layer.borderWidth = 0.5
+        return $0
+    }(UIView())
+    private let triangleView = MyLetterTriangleView()
+    private let reverseTriangleView = MyLetterReverseTriangleView()
     let tableView: UITableView = {
         $0.backgroundColor = .white
         $0.layer.borderColor = DittoLettoAsset.Color.gray2.color.cgColor
-        $0.layer.borderWidth = 1
+        $0.layer.borderWidth = 0.5
         $0.separatorInset.left = 0
         $0.rowHeight = 82
         return $0
@@ -35,6 +43,10 @@ class MyLetterView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    override func draw(_ rect: CGRect) {
+        triangleView.setNeedsDisplay()
+        reverseTriangleView.setNeedsDisplay()
+    }
 
     // MARK: - Set UI
     private func setView() {
@@ -43,16 +55,17 @@ class MyLetterView: UIView {
         layer.borderColor = UIColor.black.cgColor
     }
     private func addView() {
-        addSubview(redButton)
-        addSubview(blueButton)
-        addSubview(yelloButton)
-        addSubview(title)
-        addSubview(line)
-        addSubview(tableView)
+        [redButton, blueButton, yelloButton, title, line, scrollIndigatorView, tableView]
+            .forEach {
+                addSubview($0)
+            }
+        scrollIndigatorView.addSubview(triangleView)
+        scrollIndigatorView.addSubview(reverseTriangleView)
     }
     private func setTableView(identifier: String) {
         if identifier == HomeTableViewCell.identifier {
-            tableView.register(HomeTableViewCell.self, forCellReuseIdentifier: HomeTableViewCell.identifier)
+            tableView.register(HomeTableViewCell.self, 
+                               forCellReuseIdentifier: HomeTableViewCell.identifier)
         }
         if identifier == LetterStorageTableViewCell.identifier {
             tableView.register(LetterStorageTableViewCell.self,
@@ -85,9 +98,26 @@ class MyLetterView: UIView {
             make.height.equalTo(11)
             make.width.equalTo(21)
         }
-        tableView.snp.makeConstraints { make in
+        scrollIndigatorView.snp.makeConstraints { make in
             make.top.equalTo(title.snp.bottom).inset(-8)
-            make.leading.trailing.bottom.equalToSuperview().inset(14)
+            make.trailing.bottom.equalToSuperview().inset(14)
+            make.width.equalTo(18)
+        }
+        triangleView.snp.makeConstraints { make in
+            make.top.equalToSuperview().inset(5)
+            make.centerX.equalToSuperview()
+            make.width.height.equalTo(14)
+        }
+        reverseTriangleView.snp.makeConstraints { make in
+            make.bottom.equalToSuperview().inset(5)
+            make.centerX.equalToSuperview()
+            make.width.height.equalTo(14)
+        }
+        tableView.snp.makeConstraints { make in
+            make.top.equalTo(scrollIndigatorView.snp.top)
+            make.trailing.equalTo(scrollIndigatorView.snp.leading)
+            make.bottom.equalTo(scrollIndigatorView.snp.bottom)
+            make.leading.equalToSuperview().inset(14)
         }
     }
 }
