@@ -27,6 +27,7 @@ public enum DesignSystemAsset {
     public static let gray2 = DesignSystemColors(name: "gray2")
     public static let main = DesignSystemColors(name: "main")
     public static let third = DesignSystemColors(name: "third")
+    public static let white = DesignSystemColors(name: "white")
   }
   public enum Image {
     public static let generalImage = DesignSystemImages(name: "GeneralImage")
