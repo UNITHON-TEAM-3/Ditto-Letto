@@ -20,31 +20,31 @@ class DetailLetterVC: BaseVC {
         $0.isEnabled = false
     }
     private let letterTextView = UITextView().then {
-        $0.layer.borderColor = DittoLettoAsset.Color.dark.color.cgColor
+        $0.layer.borderColor = UIColor.color(.dittoLettoColor(.dark)).cgColor
         $0.layer.borderWidth = 1.0
         $0.backgroundColor = .white
-        $0.textColor = DittoLettoAsset.Color.dark.color
+        $0.textColor = .color(.dittoLettoColor(.dark))
         $0.textContainerInset = UIEdgeInsets(top: 20, left: 20, bottom: 54, right: 20)
         $0.isEditable = false
         $0.isSelectable = false
     }
     private let distanceLabel = UILabel().then {
         $0.text = "전송거리"
-        $0.textColor = DittoLettoAsset.Color.dark.color
-        $0.font = DittoLettoFontFamily.Ramche.regular.font(size: 12)
+        $0.textColor = .color(.dittoLettoColor(.dark))
+        $0.font = .ramche(.caption1)
     }
     private let transportImage = UIImageView().then {
         $0.backgroundColor = .clear
     }
     private let dateLabel = UILabel().then {
-        $0.textColor = DittoLettoAsset.Color.dark.color
+        $0.textColor = .color(.dittoLettoColor(.dark))
     }
     private let deleteButton = UIButton().then {
         $0.setTitle("삭제하기", for: .normal)
-        $0.setTitleColor(DittoLettoAsset.Color.dark.color, for: .normal)
-        $0.titleLabel?.font = DittoLettoFontFamily.Ramche.regular.font(size: 16)
+        $0.setTitleColor(.color(.dittoLettoColor(.dark)), for: .normal)
+        $0.titleLabel?.font = .ramche(.body)
         $0.backgroundColor = .white
-        $0.layer.borderColor = DittoLettoAsset.Color.gray2.color.cgColor
+        $0.layer.borderColor = UIColor.color(.dittoLettoColor(.gray2)).cgColor
         $0.layer.borderWidth = 1
         $0.layer.shadowOpacity = 0.2
         $0.layer.shadowOffset = CGSize(width: 0, height: 2)
@@ -134,17 +134,17 @@ class DetailLetterVC: BaseVC {
 
                 switch data.mediumType {
                 case "WALK":
-                    transportImage.image = DittoLettoAsset.Image.walkIcon.image
+                    transportImage.image = .Image.walkIcon
                 case "RUN":
-                    transportImage.image = DittoLettoAsset.Image.runningIcon.image
+                    transportImage.image = .Image.runningIcon
                 case "BICYCLE":
-                    transportImage.image = DittoLettoAsset.Image.bikeIcon.image
+                    transportImage.image = .Image.bikeIcon
                 case "HORSE":
-                    transportImage.image = DittoLettoAsset.Image.horseIcon.image
+                    transportImage.image = .Image.horseIcon
                 case "CAR":
-                    transportImage.image = DittoLettoAsset.Image.carIcon.image
+                    transportImage.image = .Image.carIcon
                 case "PLAIN":
-                    transportImage.image = DittoLettoAsset.Image.airplaneIcon.image
+                    transportImage.image = .Image.airplaneIcon
                 default:
                     print("falied")
                 }

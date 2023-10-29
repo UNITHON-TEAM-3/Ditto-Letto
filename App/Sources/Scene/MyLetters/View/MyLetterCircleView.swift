@@ -1,5 +1,6 @@
 import UIKit
 import SnapKit
+import DesignSystem
 
 class MyLetterCircleView: UIView {
     // MARK: - Life Cycles
@@ -15,7 +16,7 @@ class MyLetterCircleView: UIView {
     // MARK: - Set UI
     private func setView() {
         layer.borderWidth = 0.8
-        layer.borderColor = DittoLettoAsset.Color.gray2.color.cgColor
+        layer.borderColor = UIColor.color(.dittoLettoColor(.gray2)).cgColor
         layer.cornerRadius = 6
     }
 }

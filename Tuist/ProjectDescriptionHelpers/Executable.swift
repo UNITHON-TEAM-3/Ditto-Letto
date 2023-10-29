@@ -24,6 +24,7 @@ extension Project{
                     resources: ["Resources/**"],
                     scripts: [.swiftlint],
                     dependencies: [
+                        .project(target: "DesignSystem", path: "../DesignSystem"),
                         .project(target: "ThirdPartyLib", path: "../ThirdPartyLib")
                     ] + dependencies
                 )

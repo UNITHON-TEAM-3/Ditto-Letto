@@ -1,6 +1,7 @@
 import UIKit
 import SnapKit
 import Then
+import DesignSystem
 
 class BaseTC: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -8,7 +9,7 @@ class BaseTC: UITableViewCell {
         self.addView()
         self.setLayout()
         self.configureVC()
-        self.backgroundColor = .white
+        self.backgroundColor = .color(.dittoLettoColor(.white))
     }
 
     @available(*, unavailable)

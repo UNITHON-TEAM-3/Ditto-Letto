@@ -48,7 +48,7 @@ public enum DesignSystemAsset {
     public static let horse = DesignSystemImages(name: "horse")
     public static let horseIcon = DesignSystemImages(name: "horseIcon")
     public static let kakaoButton = DesignSystemImages(name: "kakaoButton")
-      public static let launchImage = DesignSystemImages(name: "launchImage ")
+    public static let launchImage = DesignSystemImages(name: "launchImage")
     public static let loginImage = DesignSystemImages(name: "loginImage")
     public static let message = DesignSystemImages(name: "message")
     public static let personOff = DesignSystemImages(name: "person_off")

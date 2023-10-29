@@ -1,11 +1,12 @@
 import UIKit
 import Then
 import SnapKit
+import DesignSystem
 
 extension UIView {
     func setSeparatorView() {
-        self.backgroundColor = DittoLettoAsset.Color.main.color
-        self.layer.borderColor = DittoLettoAsset.Color.dark.color.cgColor
+        self.backgroundColor = .color(.dittoLettoColor(.main))
+        self.layer.borderColor = UIColor.color(.dittoLettoColor(.dark)).cgColor
         self.layer.borderWidth = 1.0
     }
 }
@@ -14,15 +15,15 @@ extension UITextField {
     // swiftlint:disable function_body_length
     func setTextField(_ isPrivate: Bool) {
         let profile = UIImageView().then {
-            $0.image = DittoLettoAsset.Image.profileImage.image
+            $0.image = .Image.profileImage
             $0.tag = 100
         }
         let privateImage = UIImageView().then {
-            $0.image = DittoLettoAsset.Image.privateImage.image
+            $0.image = .Image.privateImage
             $0.tag = 111
         }
         let generalImage = UIImageView().then {
-            $0.image = DittoLettoAsset.Image.generalImage.image
+            $0.image = .Image.generalImage
             $0.tag = 222
         }
         if isPrivate {
@@ -44,13 +45,13 @@ extension UITextField {
             }
             generalImage.removeFromSuperview()
 
-            self.backgroundColor = DittoLettoAsset.Color.dark.color
+            self.backgroundColor = .color(.dittoLettoColor(.dark))
             self.attributedPlaceholder = NSAttributedString(string: "번호를 입력해주세요.", attributes: [
-                .foregroundColor: DittoLettoAsset.Color.gray2.color,
-                .font: DittoLettoFontFamily.Ramche.regular.font(size: 17)
+                .foregroundColor: UIColor.color(.dittoLettoColor(.gray2)),
+                .font: UIFont.ramche(.body)
             ])
-            self.font = DittoLettoFontFamily.Ramche.regular.font(size: 17)
-            self.textColor = .white
+            self.font = .ramche(.body)
+            self.textColor = .color(.dittoLettoColor(.white))
             self.rightView = UIView(frame: CGRect(x: 0, y: 0, width: 68, height: 50))
             self.rightViewMode = .always
         } else {
@@ -67,10 +68,10 @@ extension UITextField {
             self.leftViewMode = ViewMode.always
             self.backgroundColor = .white
             self.attributedPlaceholder = NSAttributedString(string: "번호를 입력해주세요.", attributes: [
-                .foregroundColor: DittoLettoAsset.Color.gray2.color,
-                .font: DittoLettoFontFamily.YoonDongJu2.regular.font(size: 17)
+                .foregroundColor: UIColor.color(.dittoLettoColor(.gray2)),
+                .font: UIFont.yoondongju(.body)
             ])
-            self.font = DittoLettoFontFamily.YoonDongJu2.regular.font(size: 17)
+            self.font = .yoondongju(.body)
             self.textColor = .black
         }
     }
@@ -80,9 +81,9 @@ extension UITextField {
 extension UITextView {
     func setTextView(_ isPrivate: Bool) {
         if isPrivate {
-            self.font = DittoLettoFontFamily.Ramche.regular.font(size: 18)
+            self.font = .ramche(.headline)
         } else {
-            self.font = DittoLettoFontFamily.YoonDongJu2.regular.font(size: 18)
+            self.font = .ramche(.headline)
         }
     }
 
@@ -101,7 +102,7 @@ extension UITextView {
             range: NSRange(location: 0, length: attributedString.length)
         )
         self.attributedText = attributedString
-        self.textColor = DittoLettoAsset.Color.gray2.color
+        self.textColor = .color(.dittoLettoColor(.gray2))
     }
 }
 
@@ -109,10 +110,10 @@ extension UILabel {
     func setCount(_ isPrivate: Bool) {
         if isPrivate {
             self.textColor = .white
-            self.font = DittoLettoFontFamily.Ramche.regular.font(size: 12)
+            self.font = .ramche(.caption1)
         } else {
             self.textColor = .black
-            self.font = DittoLettoFontFamily.YoonDongJu2.regular.font(size: 12)
+            self.font = .yoondongju(.caption)
         }
     }
 }

@@ -8,7 +8,7 @@ import Foundation
 private class BundleFinder {}
 
 extension Foundation.Bundle {
-    /// Since DesignSystem is a static library, the bundle containing the resources is copied into the final product.
+    /// Since DesignSystem is a dynamic library, the bundle containing the resources is copied into the final product.
     static let module: Bundle = {
         let bundleName = "DesignSystem_DesignSystem"
 

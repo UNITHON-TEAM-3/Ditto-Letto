@@ -1,7 +1,7 @@
 import ProjectDescription
 
 extension Project {
-    public static func staticLibrary(
+    public static func dynamicLibrary(
         name: String,
         platform: Platform = .iOS,
         infoPlist: InfoPlist = .default,
@@ -14,7 +14,7 @@ extension Project {
                 Target(
                     name: name,
                     platform: platform,
-                    product: .staticLibrary,
+                    product: .dynamicLibrary,
                     bundleId: "\(unithonOrganizationName).\(name)",
                     deploymentTarget: deploymentTarget,
                     infoPlist: .file(path: Path("Support/Info.plist")),

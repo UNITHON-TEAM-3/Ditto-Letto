@@ -1,5 +1,6 @@
 import UIKit
 import SnapKit
+import DesignSystem
 
 class MyLetterView: UIView {
     // MARK: - Properties
@@ -8,16 +9,16 @@ class MyLetterView: UIView {
     private let yelloButton = MyLetterCircleView(backgroundColor: "main")
     private let title: UILabel = {
         $0.text = "나의 편지함"
-        $0.font = DittoLettoFontFamily.Ramche.regular.font(size: 15)
+        $0.font = .ramche(.caption1)
         return $0
     }(UILabel())
     private let line: UIImageView = {
-        $0.image = DittoLettoAsset.Image.twoLine.image
+        $0.image = .Image.twoLine
         return $0
     }(UIImageView())
     let tableView: UITableView = {
         $0.backgroundColor = .white
-        $0.layer.borderColor = DittoLettoAsset.Color.gray2.color.cgColor
+        $0.layer.borderColor = UIColor.color(.dittoLettoColor(.gray2)).cgColor
         $0.layer.borderWidth = 1
         $0.separatorInset.left = 0
         $0.register(HomeTableViewCell.self, forCellReuseIdentifier: HomeTableViewCell.identifier)
@@ -38,7 +39,7 @@ class MyLetterView: UIView {
 
     // MARK: - Set UI
     private func setView() {
-        backgroundColor = DittoLettoAsset.Color.gray1.color
+        backgroundColor = .color(.dittoLettoColor(.gray1))
         layer.borderWidth = 1
         layer.borderColor = UIColor.black.cgColor
     }

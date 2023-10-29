@@ -29,6 +29,8 @@ public extension UIImage {
         public static let launchImage = DesignSystemAsset.Image.launchImage.image
         public static let loginImage = DesignSystemAsset.Image.loginImage.image
         public static let privateImage = DesignSystemAsset.Image.privateImage.image
+        public static let generalImage = DesignSystemAsset.Image.generalImage.image
+        public static let profileImage = DesignSystemAsset.Image.profileImage.image
         public static let send = DesignSystemAsset.Image.send.image
         public static let receive = DesignSystemAsset.Image.receive.image
         public static let state1 = DesignSystemAsset.Image.state01.image
@@ -40,5 +42,6 @@ public extension UIImage {
         public static let state7 = DesignSystemAsset.Image.state07.image
         public static let windly = DesignSystemAsset.Image.windly.image
         public static let yellowHeart = DesignSystemAsset.Image.yellowHeart.image
+        public static let twoLine = DesignSystemAsset.Image.twoLine.image
     }
 }

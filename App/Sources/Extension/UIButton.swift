@@ -1,9 +1,10 @@
 import UIKit
+import DesignSystem
 
 public extension UIButton {
     func selectTypeButton(title: String) {
         self.clipsToBounds = true
-        self.titleLabel?.font = DittoLettoFontFamily.Ramche.regular.font(size: 17)
+        self.titleLabel?.font = .ramche(.body)
         self.setTitle("\(title)", for: .normal)
         self.layer.borderColor = UIColor.black.cgColor
         self.layer.borderWidth = 1.0
@@ -14,19 +15,19 @@ public extension UIButton {
 
     func setEnabled() {
         self.setTitleColor(.black, for: .normal)
-        self.backgroundColor = DittoLettoAsset.Color.main.color
+        self.backgroundColor = .color(.dittoLettoColor(.main))
     }
 
     func setDisabled() {
-        self.setTitleColor(DittoLettoAsset.Color.gray2.color, for: .normal)
-        self.backgroundColor = DittoLettoAsset.Color.gray1.color
+        self.setTitleColor(.color(.dittoLettoColor(.gray2)), for: .normal)
+        self.backgroundColor = .color(.dittoLettoColor(.gray1))
     }
 
     func setMainButton(color: String) {
-        setTitleColor(DittoLettoAsset.Color.dark.color, for: .normal)
-        titleLabel?.font = DittoLettoFontFamily.Ramche.regular.font(size: 17)
+        setTitleColor(.color(.dittoLettoColor(.dark)), for: .normal)
+        titleLabel?.font = .ramche(.body)
         backgroundColor = UIColor(named: color)
-        layer.borderColor = DittoLettoAsset.Color.dark.color.cgColor
+        layer.borderColor = UIColor.color(.dittoLettoColor(.dark)).cgColor
         layer.borderWidth = 1
         layer.shadowOpacity = 0.2
         layer.shadowOffset = CGSize(width: 0, height: 2)

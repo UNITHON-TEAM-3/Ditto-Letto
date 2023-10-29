@@ -2,12 +2,12 @@ import UIKit
 
 public extension UIColor {
     enum Colors {
-        case colors(Colors)
+        case dittoLettoColor(Colors)
     }
 
     static func color(_ style: Colors) -> UIColor {
         switch style {
-        case let .colors(colorable as Colorable):
+        case let .dittoLettoColor(colorable as Colorable):
             return colorable.color
         }
     }

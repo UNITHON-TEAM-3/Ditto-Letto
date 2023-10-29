@@ -1,5 +1,4 @@
 import UIKit
-
 import SnapKit
 import RxSwift
 import RxCocoa
@@ -10,12 +9,12 @@ class LoadingLetterVC: BaseVC {
     // MARK: - Properties
     private let sendingLabel: UILabel = {
         $0.text = "편지 전송 중"
-        $0.font = DittoLettoFontFamily.Ramche.regular.font(size: 22)
+        $0.font = .ramche(.title2)
         return $0
     }(UILabel())
     private let runningLabel: UILabel = {
         $0.text = "서로의 거리만큼 달려가고 있어요!"
-        $0.font = DittoLettoFontFamily.Ramche.regular.font(size: 16)
+        $0.font = .ramche(.body)
         return $0
     }(UILabel())
     private let transportationImageView = UIImageView()
@@ -64,7 +63,7 @@ class LoadingLetterVC: BaseVC {
     }
 
     func configureBar() {
-        let backButton = DittoLettoAsset.Image.backChevron.image.withTintColor(.black, renderingMode: .alwaysOriginal)
+        let backButton = UIImage.Image.backChevron.withTintColor(.black, renderingMode: .alwaysOriginal)
         let delButton = UIImage(systemName: "xmark")?.withTintColor(.black, renderingMode: .alwaysOriginal)
         let notiButton = UIBarButtonItem(image: backButton, style: .plain, target: self, action: nil)
         notiButton.title = ""
@@ -101,8 +100,8 @@ class LoadingLetterVC: BaseVC {
         let output = viewModel.transform(input)
 
         // 임시
-        transportationImageView.image = DittoLettoAsset.Image.car.image
-        transportationState.image = DittoLettoAsset.Image.state01.image
-        windyImageView.image = DittoLettoAsset.Image.windly.image
+        transportationImageView.image = .Image.car
+        transportationState.image = .Image.state1
+        windyImageView.image = .Image.windly
     }
 }
