@@ -4,10 +4,15 @@ import SnapKit
 class HomeTableViewCell: BaseTC {
     static let identifier = "HomeTableViewCell"
     // MARK: - Properties
-    private let folderImageView = UIImageView()
-    private let phoneNumberLabel: UILabel = {
+    private let titleImageView = UIImageView()
+    private let titleLabel: UILabel = {
         $0.text = "010-2326-3046"
         $0.font = DittoLettoFontFamily.Ramche.regular.font(size: 17)
+        return $0
+    }(UILabel())
+    private let subTitleLabel: UILabel = {
+        $0.text = "010-2326-3046"
+        $0.font = DittoLettoFontFamily.Ramche.regular.font(size: 13)
         return $0
     }(UILabel())
     private let transportationImageView = UIImageView()
@@ -16,6 +21,11 @@ class HomeTableViewCell: BaseTC {
         $0.setImage(DittoLettoAsset.Image.replyButton.image, for: .normal)
         return $0
     }(UIButton())
+    var type: HomeCellType? {
+        didSet {
+            setLayout(type: type)
+        }
+    }
     var model: BoxLetterData? {
         didSet {
             configureVC()
@@ -27,49 +37,34 @@ class HomeTableViewCell: BaseTC {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
     }
     override func addView() {
-        [folderImageView, phoneNumberLabel, transportationImageView, transportationState, replyButton].forEach {
+        [titleImageView, titleLabel, subTitleLabel, transportationImageView, transportationState, replyButton].forEach {
             addSubview($0)
         }
+        setLayout(type: .waiting)
     }
-    override func setLayout() {
-        folderImageView.snp.makeConstraints { make in
-            make.top.equalToSuperview().inset(17)
-            make.leading.equalToSuperview().inset(24)
-            make.width.equalTo(50)
-            make.height.equalTo(45)
-        }
-        phoneNumberLabel.snp.makeConstraints { make in
-            make.centerY.equalTo(folderImageView.snp.centerY)
-            make.leading.equalTo(folderImageView.snp.trailing).inset(-40)
-        }
-        transportationImageView.snp.makeConstraints { make in
-            make.top.equalTo(folderImageView.snp.bottom).inset(-11)
-            make.leading.equalToSuperview().inset(30)
-            make.width.height.equalTo(18)
-        }
-        transportationState.snp.makeConstraints { make in
-            make.centerY.equalTo(transportationImageView.snp.centerY)
-            make.leading.equalTo(transportationImageView.snp.trailing).inset(-10)
-            make.trailing.equalToSuperview().inset(30)
-            make.height.equalTo(15)
-        }
-        replyButton.snp.makeConstraints { make in
-            make.centerY.equalToSuperview()
-            make.trailing.equalToSuperview().inset(16)
-            make.width.equalTo(41)
-            make.height.equalTo(44)
+    func setLayout(type: HomeCellType?) {
+        guard let type = type else { return }
+        switch type {
+        case .stranger:
+            setStrangerUI()
+        case .friend:
+            setFriendUI()
+        case .sendingStranger:
+            setSendingStrangerUI()
+        case.sendingfriend:
+            setSendingFriendUI()
+        case .waiting:
+            setWaitingUI()
         }
     }
     override func configureVC() {
         guard let model = model else { return }
-
-        phoneNumberLabel.text = model.phoneNumber
-
+        titleLabel.text = model.phoneNumber
         if model.type == MessageType.normal.rawValue {
-            return folderImageView.image = DittoLettoAsset.Image.redFolder.image
+            titleImageView.image = DittoLettoAsset.Image.redFolder.image
         }
         if model.type == MessageType.password.rawValue {
-            return folderImageView.image = DittoLettoAsset.Image.yellowFolder.image
+            titleImageView.image = DittoLettoAsset.Image.yellowFolder.image
         }
 
         // 도착 완료 시
@@ -96,6 +91,124 @@ class HomeTableViewCell: BaseTC {
             } else if model.mediumType == TransportationType.walk.rawValue {
                 transportationState.image = DittoLettoAsset.Image.walkIcon.image
             }
+        }
+        // 임시
+        transportationState.image = UIImage(named: "state03")
+        transportationImageView.image = DittoLettoAsset.Image.airplaneIcon.image
+    }
+}
+
+extension HomeTableViewCell {
+    private func setStrangerUI() {
+        titleImageView.snp.makeConstraints { make in
+            make.top.equalToSuperview().inset(17.13)
+            make.bottom.equalToSuperview().inset(19.83)
+            make.leading.equalToSuperview().inset(24)
+            make.width.equalTo(50)
+            make.height.equalTo(44.74)
+        }
+        titleLabel.snp.makeConstraints { make in
+            make.top.bottom.equalToSuperview().inset(30)
+            make.centerY.equalTo(titleImageView.snp.centerY)
+            make.leading.equalTo(titleImageView.snp.trailing).inset(-40)
+        }
+        replyButton.snp.makeConstraints { make in
+            make.centerY.equalTo(titleLabel.snp.centerY)
+            make.trailing.equalToSuperview().inset(16)
+            make.width.equalTo(41)
+            make.height.equalTo(44)
+        }
+    }
+    private func setFriendUI() {
+        titleImageView.snp.makeConstraints { make in
+            make.width.height.equalTo(50)
+            make.top.equalToSuperview().inset(14.19)
+            make.bottom.equalToSuperview().inset(17.51)
+            make.leading.equalToSuperview().inset(20)
+        }
+        titleLabel.snp.makeConstraints { make in
+            make.top.equalTo(titleImageView.snp.top).inset(2)
+            make.leading.equalTo(titleImageView.snp.trailing).inset(-18)
+        }
+        subTitleLabel.snp.makeConstraints { make in
+            make.bottom.equalTo(titleImageView.snp.bottom).inset(2)
+            make.leading.equalTo(titleLabel.snp.leading)
+        }
+        replyButton.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.trailing.equalToSuperview().inset(16)
+            make.width.equalTo(41)
+            make.height.equalTo(44)
+        }
+    }
+    private func setSendingStrangerUI() {
+        titleImageView.snp.makeConstraints { make in
+            make.width.equalTo(50)
+            make.height.equalTo(44.74)
+            make.top.equalToSuperview().inset(19.19)
+            make.bottom.equalToSuperview().inset(35.81)
+            make.leading.equalToSuperview().inset(20)
+        }
+        transportationImageView.snp.makeConstraints { make in
+            make.top.equalTo(titleImageView.snp.bottom).inset(-8)
+            make.centerX.equalTo(titleImageView.snp.centerX)
+            make.height.width.equalTo(16)
+        }
+        titleLabel.snp.makeConstraints { make in
+            make.centerY.equalTo(titleImageView.snp.centerY)
+            make.leading.equalTo(titleImageView.snp.trailing).inset(-14.5)
+        }
+        transportationState.snp.makeConstraints { make in
+            make.centerY.equalTo(transportationImageView.snp.centerY)
+            make.leading.equalTo(titleLabel.snp.leading).inset(2)
+            make.trailing.equalToSuperview().inset(36)
+            make.height.equalTo(16)
+        }
+    }
+    private func setSendingFriendUI() {
+        titleImageView.snp.makeConstraints { make in
+            make.width.equalTo(50)
+            make.height.equalTo(44.74)
+            make.top.equalToSuperview().inset(19.19)
+            make.bottom.equalToSuperview().inset(35.81)
+            make.leading.equalToSuperview().inset(20)
+        }
+        transportationImageView.snp.makeConstraints { make in
+            make.top.equalTo(titleImageView.snp.bottom).inset(-8)
+            make.centerX.equalTo(titleImageView.snp.centerX)
+            make.height.width.equalTo(16)
+        }
+        titleLabel.snp.makeConstraints { make in
+            make.top.equalTo(titleImageView.snp.top).inset(2)
+            make.leading.equalTo(titleImageView.snp.trailing).inset(-18)
+        }
+        subTitleLabel.snp.makeConstraints { make in
+            make.bottom.equalTo(titleImageView.snp.bottom).inset(2)
+            make.leading.equalTo(titleLabel.snp.leading)
+        }
+        transportationState.snp.makeConstraints { make in
+            make.centerY.equalTo(transportationImageView.snp.centerY)
+            make.leading.equalTo(titleLabel.snp.leading).inset(2)
+            make.trailing.equalToSuperview().inset(36)
+            make.height.equalTo(16)
+        }
+    }
+    private func setWaitingUI() {
+        titleLabel.snp.makeConstraints { make in
+            make.top.equalToSuperview().inset(16)
+            make.leading.trailing.equalToSuperview().inset(23)
+        }
+        transportationImageView.snp.makeConstraints { make in
+            make.top.equalTo(titleLabel.snp.bottom).inset(-15.7)
+            make.leading.equalTo(titleLabel.snp.leading).inset(6)
+            make.bottom.equalToSuperview().inset(17)
+            make.width.height.equalTo(16)
+        }
+        transportationState.snp.makeConstraints { make in
+            make.centerY.equalTo(transportationImageView.snp.centerY)
+            make.leading.equalTo(transportationImageView.snp.trailing).inset(-30)
+            make.trailing.equalToSuperview().inset(36)
+            make.height.equalTo(16)
         }
     }
 }

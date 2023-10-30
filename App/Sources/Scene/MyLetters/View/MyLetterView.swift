@@ -15,22 +15,16 @@ class MyLetterView: UIView {
         $0.image = DittoLettoAsset.Image.twoLine.image
         return $0
     }(UIImageView())
-    private let scrollIndigatorView: UIView = {
-        $0.backgroundColor = .white
-        $0.layer.borderColor = DittoLettoAsset.Color.gray2.color.cgColor
-        $0.layer.borderWidth = 0.5
-        return $0
-    }(UIView())
-    private let triangleView = MyLetterTriangleView()
-    private let reverseTriangleView = MyLetterReverseTriangleView()
     let tableView: UITableView = {
         $0.backgroundColor = .white
         $0.layer.borderColor = DittoLettoAsset.Color.gray2.color.cgColor
         $0.layer.borderWidth = 0.5
         $0.separatorInset.left = 0
-        $0.rowHeight = 82
+        $0.showsVerticalScrollIndicator = false
+        $0.rowHeight = UITableView.automaticDimension
         return $0
     }(UITableView())
+    var indicatorView = IndicatorView()
 
     // MARK: - Life Cycles
     init(identifier: String) {
@@ -43,10 +37,6 @@ class MyLetterView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    override func draw(_ rect: CGRect) {
-        triangleView.setNeedsDisplay()
-        reverseTriangleView.setNeedsDisplay()
-    }
 
     // MARK: - Set UI
     private func setView() {
@@ -55,12 +45,10 @@ class MyLetterView: UIView {
         layer.borderColor = UIColor.black.cgColor
     }
     private func addView() {
-        [redButton, blueButton, yelloButton, title, line, scrollIndigatorView, tableView]
+        [redButton, blueButton, yelloButton, title, line, tableView, indicatorView]
             .forEach {
                 addSubview($0)
             }
-        scrollIndigatorView.addSubview(triangleView)
-        scrollIndigatorView.addSubview(reverseTriangleView)
     }
     private func setTableView(identifier: String) {
         if identifier == HomeTableViewCell.identifier {
@@ -98,26 +86,26 @@ class MyLetterView: UIView {
             make.height.equalTo(11)
             make.width.equalTo(21)
         }
-        scrollIndigatorView.snp.makeConstraints { make in
-            make.top.equalTo(title.snp.bottom).inset(-8)
-            make.trailing.bottom.equalToSuperview().inset(14)
-            make.width.equalTo(18)
-        }
-        triangleView.snp.makeConstraints { make in
-            make.top.equalToSuperview().inset(5)
-            make.centerX.equalToSuperview()
-            make.width.height.equalTo(14)
-        }
-        reverseTriangleView.snp.makeConstraints { make in
-            make.bottom.equalToSuperview().inset(5)
-            make.centerX.equalToSuperview()
-            make.width.height.equalTo(14)
-        }
         tableView.snp.makeConstraints { make in
-            make.top.equalTo(scrollIndigatorView.snp.top)
-            make.trailing.equalTo(scrollIndigatorView.snp.leading)
-            make.bottom.equalTo(scrollIndigatorView.snp.bottom)
-            make.leading.equalToSuperview().inset(14)
+            make.top.equalTo(title.snp.bottom).inset(-8)
+            make.leading.bottom.equalToSuperview().inset(14)
+            make.trailing.equalToSuperview().inset(32)
         }
+        indicatorView.snp.makeConstraints { make in
+            make.top.equalTo(tableView.snp.top)
+            make.trailing.equalToSuperview().inset(14)
+            make.leading.equalTo(tableView.snp.trailing)
+            make.bottom.equalTo(tableView.snp.bottom)
+        }
+    }
+    func setIndicatorSize() {
+        let visibleHeight = tableView.bounds.height
+        let contentHeight = tableView.contentSize.height
+        let insetTop = tableView.contentInset.top
+        let insetBottom = tableView.contentInset.bottom
+        let showingHeight = contentHeight - insetTop - insetBottom // 실제로 보여지는 tableView의 콘텐츠 높이
+        let heightRatio = min(1.0, showingHeight / visibleHeight) // 높이 비율을 계산하되, 최대 1.0로 제한
+        indicatorView.heightRatio = heightRatio
+        indicatorView.layoutIfNeeded()
     }
 }

@@ -9,12 +9,10 @@ class LetterStorageVC: BaseVC {
     // MARK: Properties
     let keepingLetterView = StorageInfoView()
     lazy var myLetterView = MyLetterView(identifier: LetterStorageTableViewCell.identifier)
-
     // MARK: - Life Cycles
     override func viewDidLoad() {
         super.viewDidLoad()
     }
-
     // MARK: - Set UI
     override func addView() {
         view.addSubview(keepingLetterView)
@@ -41,8 +39,20 @@ class LetterStorageVC: BaseVC {
         let input = LetterStorageVM.Input(
             tableViewModelSelected: myLetterView.tableView.rx.itemSelected.asObservable())
         let output = viewModel.transform(input)
+        myLetterView.tableView.rx.contentOffset
+            .observe(on: MainScheduler.instance)
+            .bind { [weak self] contentOffset in
+                guard let topInset = self?.myLetterView.tableView.contentInset.top,
+                      let bottomInset = self?.myLetterView.tableView.contentInset.bottom,
+                      let contentHeight = self?.myLetterView.tableView.contentSize.height else { return }
+                let scroll = contentOffset.y + topInset
+                let height = contentHeight + topInset + bottomInset
+                let scrollRatio = scroll / height
+                self?.myLetterView.indicatorView.topOffsetRatio = scrollRatio
+            }.disposed(by: disposeBag)
         output.letterStorageData
-            .bind(to: myLetterView.tableView.rx.items) { tableView, index, item in
+            .bind(to: myLetterView.tableView.rx.items) { [weak self] tableView, index, item in
+                self?.myLetterView.setIndicatorSize()
                 guard let cell = tableView.dequeueReusableCell(
                         withIdentifier: LetterStorageTableViewCell.identifier,
                         for: IndexPath(row: index, section: 0)

@@ -8,13 +8,13 @@ class LetterStorageTableViewCell: BaseTC {
     // MARK: - Properties
     private var titleLabel: UILabel = {
         $0.text = "너랑 지금 가까이 있나봐"
-        $0.font = DittoLettoFontFamily.Ramche.regular.font(size: 19)
+        $0.font = DittoLettoFontFamily.Ramche.regular.font(size: 17)
         return $0
     }(UILabel())
     private var transportationImageView = UIImageView()
     private var dateLabel: UILabel = {
         $0.text = "2023-10-24"
-        $0.font = DittoLettoFontFamily.Ramche.regular.font(size: 14)
+        $0.font = DittoLettoFontFamily.Ramche.regular.font(size: 12)
         return $0
     }(UILabel())
     private let deleteButton: UIButton = {
@@ -26,7 +26,6 @@ class LetterStorageTableViewCell: BaseTC {
             configureVC()
         }
     }
-
     // MARK: - Lifecycle
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -39,13 +38,15 @@ class LetterStorageTableViewCell: BaseTC {
     }
     override func setLayout() {
         titleLabel.snp.makeConstraints { make in
-            make.top.equalToSuperview().inset(20)
-            make.leading.trailing.equalToSuperview().inset(20)
+            make.top.equalToSuperview().inset(26)
+            make.leading.equalToSuperview().inset(23)
+            make.trailing.equalToSuperview().inset(14)
         }
         transportationImageView.snp.makeConstraints { make in
-            make.top.equalTo(titleLabel.snp.bottom).inset(-16)
+            make.top.equalTo(titleLabel.snp.bottom).inset(-11)
             make.leading.equalTo(titleLabel.snp.leading)
             make.width.height.equalTo(16)
+            make.bottom.equalToSuperview().inset(14)
         }
         dateLabel.snp.makeConstraints { make in
             make.leading.equalTo(transportationImageView.snp.trailing).inset(-10)

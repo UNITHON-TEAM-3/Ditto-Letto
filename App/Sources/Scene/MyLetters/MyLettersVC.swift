@@ -6,7 +6,6 @@ import RxCocoa
 
 class MyLetterVC: BaseVC {
     let viewModel = MyLetterVM()
-
     // MARK: - Properties
     lazy var myLetterView = MyLetterView(identifier: HomeTableViewCell.identifier)
     private let sendButton: UIButton = {
@@ -16,12 +15,10 @@ class MyLetterVC: BaseVC {
     }(UIButton())
     private let emptyView = HomeEmptyView()
     lazy var tableHeaderView = HomeTableHeaderView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 95))
-
     // MARK: - Life Cycles
     override func viewDidLoad() {
         super.viewDidLoad()
     }
-
     // MARK: - Set UI
     override func addView() {
         view.addSubview(myLetterView)
@@ -43,14 +40,24 @@ class MyLetterVC: BaseVC {
             make.edges.equalTo(myLetterView.tableView.snp.edges)
         }
     }
-
     // MARK: - bind
     override func bind() {
         let input = MyLetterVM.Input(
             tableViewModelSelected: myLetterView.tableView.rx.itemSelected.asObservable(),
             sendButtonTapped: sendButton.rx.tap.asObservable())
         let output = viewModel.transform(input)
-
+        // 커스텀 스크롤 바
+        myLetterView.tableView.rx.contentOffset
+            .observe(on: MainScheduler.instance)
+            .bind { [weak self] contentOffset in
+                guard let topInset = self?.myLetterView.tableView.contentInset.top,
+                      let bottomInset = self?.myLetterView.tableView.contentInset.bottom,
+                      let contentHeight = self?.myLetterView.tableView.contentSize.height else { return }
+                let scroll = contentOffset.y + topInset
+                let height = contentHeight + topInset + bottomInset
+                let scrollRatio = scroll / height
+                self?.myLetterView.indicatorView.topOffsetRatio = scrollRatio
+            }.disposed(by: disposeBag)
         output.letterMyData
             .bind { [weak self] data in
                 if data.inBoxLetters.isEmpty {
@@ -60,10 +67,10 @@ class MyLetterVC: BaseVC {
                     self?.myLetterView.tableView.tableHeaderView = self?.tableHeaderView
                 }
             }.disposed(by: disposeBag)
-
         output.letterMyData
             .do(onNext: { [weak self] data in
                 self?.emptyView.isHidden = !data.outBoxLetters.isEmpty
+                self?.myLetterView.setIndicatorSize()
             })
             .map { $0.outBoxLetters }
             .bind(to: myLetterView.tableView.rx.items) { tableView, index, item in
@@ -74,10 +81,8 @@ class MyLetterVC: BaseVC {
                     ) as? HomeTableViewCell else { return UITableViewCell() }
                 cell.selectionStyle = .none
                 cell.model = item
-
                 return cell
             }.disposed(by: disposeBag)
-
         output.isArrived
             .bind { [weak self] bool in
                 if bool {
