@@ -134,6 +134,7 @@ class NewLetterVC: BaseVC {
                     type.accept("CODE")
                     privateDiaryButton.setEnabled()
                     generalDiaryButton.setDisabled()
+                    letterTextView.font = .ramche(.headline)
                     textCountLabel.font = .ramche(.caption1)
 
                     sendCountLabel.snp.updateConstraints {
@@ -148,6 +149,7 @@ class NewLetterVC: BaseVC {
                     type.accept("BASIC")
                     generalDiaryButton.setEnabled()
                     privateDiaryButton.setDisabled()
+                    letterTextView.font = .yoondongju(.headline)
                     textCountLabel.font = .yoondongju(.caption)
 
                     sendCountLabel.snp.updateConstraints {
