@@ -22,8 +22,8 @@ public extension UIImage {
         public static let personOff = DesignSystemAsset.Image.personOff.image
         public static let backChevron = DesignSystemAsset.Image.backChevron.image
         public static let emptyFolder = DesignSystemAsset.Image.emptyFolder.image
-        public static let yellowFolder = DesignSystemAsset.Image.emptyFolder.image
-        public static let redFolder = DesignSystemAsset.Image.emptyFolder.image
+        public static let yellowFolder = DesignSystemAsset.Image.yellowFolder.image
+        public static let redFolder = DesignSystemAsset.Image.redFolder.image
         public static let message = DesignSystemAsset.Image.message.image
         public static let kakaoButton = DesignSystemAsset.Image.kakaoButton.image
         public static let launchImage = DesignSystemAsset.Image.launchImage.image

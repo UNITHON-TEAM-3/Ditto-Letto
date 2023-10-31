@@ -41,7 +41,7 @@ class NewLetterVC: BaseVC {
     }
     private let sendButton = UIButton().then {
         $0.setTitle("전송하기", for: .normal)
-        $0.setMainButton(color: "gray1")
+        $0.setMainButton(color: .gray1)
     }
     private let sendCountLabel = UILabel().then {
         $0.text = ""

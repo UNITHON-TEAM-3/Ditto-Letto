@@ -1,13 +1,11 @@
 import UIKit
 
 public extension UIFont {
-    // swiftlint:disable identifier_name
     enum YoonDongJuFontSystem: Fontable {
         case headline
         case body
         case caption
     }
-    // swiftlint:enable identifier_name
 
     static func yoondongju(_ style: YoonDongJuFontSystem) -> UIFont {
         return style.font

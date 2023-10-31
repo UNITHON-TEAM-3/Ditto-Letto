@@ -1,7 +1,6 @@
 import UIKit
 
 public extension UIFont {
-    // swiftlint:disable identifier_name
     enum RamcheFontSystem: Fontable {
         case title1
         case title2
@@ -13,7 +12,6 @@ public extension UIFont {
         case caption1
         case caption2
     }
-    // swiftlint:enable identifier_name
 
     static func ramche(_ style: RamcheFontSystem) -> UIFont {
         return style.font

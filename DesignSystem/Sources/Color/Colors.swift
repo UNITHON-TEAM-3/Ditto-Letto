@@ -2,6 +2,7 @@ import UIKit
 
 public extension UIColor.Colors {
     enum Colors: Colorable {
+        // swiftlint:disable identifier_name
         case dark
         case bg
         case main
@@ -10,6 +11,7 @@ public extension UIColor.Colors {
         case gray2
         case white
     }
+    // swiftlint:enable identifier_name
 }
 
 public extension UIColor.Colors.Colors {

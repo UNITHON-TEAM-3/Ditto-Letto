@@ -23,10 +23,10 @@ public extension UIButton {
         self.backgroundColor = .color(.dittoLettoColor(.gray1))
     }
 
-    func setMainButton(color: String) {
+    func setMainButton(color: UIColor.Colors.Colors) {
         setTitleColor(.color(.dittoLettoColor(.dark)), for: .normal)
         titleLabel?.font = .ramche(.body)
-        backgroundColor = UIColor(named: color)
+        backgroundColor = .color(.dittoLettoColor(color))
         layer.borderColor = UIColor.color(.dittoLettoColor(.dark)).cgColor
         layer.borderWidth = 1
         layer.shadowOpacity = 0.2

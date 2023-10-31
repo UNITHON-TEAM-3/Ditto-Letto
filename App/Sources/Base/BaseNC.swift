@@ -1,4 +1,5 @@
 import UIKit
+import DesignSystem
 
 class BaseNC: UINavigationController {
     private var backButtonImage: UIImage? {

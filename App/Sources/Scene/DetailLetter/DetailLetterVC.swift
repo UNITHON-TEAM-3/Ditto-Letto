@@ -52,7 +52,7 @@ class DetailLetterVC: BaseVC {
     }
     private let replyButton = UIButton().then {
         $0.setTitle("답장하기", for: .normal)
-        $0.setMainButton(color: "main")
+        $0.setMainButton(color: .main)
     }
     private let sendCountLabel = UILabel().then {
         $0.text = ""

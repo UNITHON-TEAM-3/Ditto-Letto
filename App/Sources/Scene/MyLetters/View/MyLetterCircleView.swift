@@ -4,9 +4,9 @@ import DesignSystem
 
 class MyLetterCircleView: UIView {
     // MARK: - Life Cycles
-    init(backgroundColor: String) {
+    init(backgroundColor: UIColor.Colors.Colors) {
         super.init(frame: .zero)
-        self.backgroundColor = UIColor(named: "\(backgroundColor)")
+        self.backgroundColor = .color(.dittoLettoColor(backgroundColor))
         setView()
     }
     required init?(coder: NSCoder) {

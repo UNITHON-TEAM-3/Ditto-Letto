@@ -1,23 +1,25 @@
 import ProjectDescription
 
 extension Project {
-    public static func dynamicLibrary(
+    public static func designSystem(
         name: String,
         platform: Platform = .iOS,
+        packages: [Package] = [],
         infoPlist: InfoPlist = .default,
         deploymentTarget: DeploymentTarget,
         dependencies: [TargetDependency] = []
     ) -> Project {
         return Project(
             name: name,
+            packages: packages,
             targets: [
                 Target(
                     name: name,
                     platform: platform,
-                    product: .dynamicLibrary,
+                    product: .framework,
                     bundleId: "\(unithonOrganizationName).\(name)",
                     deploymentTarget: deploymentTarget,
-                    infoPlist: .file(path: Path("Support/Info.plist")),
+                    infoPlist: infoPlist,
                     sources: ["Sources/**"],
                     resources: ["Resources/**"],
                     scripts: [.swiftlint],

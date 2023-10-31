@@ -1,5 +1,5 @@
 import UIKit
-
+import DesignSystem
 import SnapKit
 import RxSwift
 import RxCocoa
@@ -11,7 +11,7 @@ class MyLetterVC: BaseVC {
     lazy var myLetterView = MyLetterView()
     private let sendButton: UIButton = {
         $0.setTitle("편지 보내기", for: .normal)
-        $0.setMainButton(color: "main")
+        $0.setMainButton(color: .main)
         return $0
     }(UIButton())
     private let emptyView = HomeEmptyView()
