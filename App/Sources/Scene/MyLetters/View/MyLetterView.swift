@@ -4,9 +4,9 @@ import DesignSystem
 
 class MyLetterView: UIView {
     // MARK: - Properties
-    private let redButton = MyLetterCircleView(backgroundColor: .bg)
-    private let blueButton = MyLetterCircleView(backgroundColor: .third)
-    private let yelloButton = MyLetterCircleView(backgroundColor: .main)
+    private let redButton = Circle(.bg, 1)
+    private let blueButton = Circle(.third, 1)
+    private let yelloButton = Circle(.main, 1)
     private let title: UILabel = {
         $0.text = "나의 편지함"
         $0.font = .ramche(.caption1)
