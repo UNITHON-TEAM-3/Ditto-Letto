@@ -165,5 +165,5 @@ public final class AlertView: UIViewController {
 //            $0.top.equalTo(horizontalLine.snp.bottom).offset(10)
 //            $0.bottom.equalToSuperview().inset(10)
 //        }
-//    }
+    }
 }
