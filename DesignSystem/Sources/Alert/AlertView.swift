@@ -29,6 +29,7 @@ public final class AlertView: UIViewController {
         $0.font = .ramche(.body)
         $0.textColor = .color(.dittoLettoColor(.dark))
         $0.textAlignment = .center
+        $0.backgroundColor = .clear
         return $0
     }(UILabel())
     public let messageLabel: UILabel = {
@@ -36,6 +37,7 @@ public final class AlertView: UIViewController {
         $0.font = .ramche(.footnote)
         $0.textColor = .color(.dittoLettoColor(.dark))
         $0.textAlignment = .center
+        $0.backgroundColor = .clear
         return $0
     }(UILabel())
     private let horizontalLine: UIView = {
@@ -60,7 +62,7 @@ public final class AlertView: UIViewController {
     }(UIView())
     public override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .red.withAlphaComponent(0.3)
+        view.backgroundColor = .black.withAlphaComponent(0.3)
         addView()
         setLayout()
     }
@@ -119,12 +121,15 @@ public final class AlertView: UIViewController {
             yellowCircle.heightAnchor.constraint(equalToConstant: 6),
 
             titleLabel.leftAnchor.constraint(equalTo: alertBackView.leftAnchor, constant: self.view.frame.width * 0.09),
-            titleLabel.rightAnchor.constraint(equalTo: alertBackView.rightAnchor, constant: (-1) * self.view.frame.width * 0.09),
+            titleLabel.rightAnchor.constraint(
+                equalTo: alertBackView.rightAnchor,
+                constant: (-1) * self.view.frame.width * 0.09
+            ),
             titleLabel.topAnchor.constraint(equalTo: headerView.bottomAnchor, constant: 20)
         ])
     }
     func setUpConfirm() {
-        confirmButton.titleLabel?.text = "확인"
+        confirmButton.setTitle("확인", for: .normal)
 
         [ horizontalLine, confirmButton ].forEach { alertBackView.addSubview($0) }
 
@@ -138,19 +143,19 @@ public final class AlertView: UIViewController {
 
             confirmButton.centerXAnchor.constraint(equalTo: alertBackView.centerXAnchor),
             confirmButton.topAnchor.constraint(equalTo: horizontalLine.bottomAnchor, constant: 10),
-            confirmButton.bottomAnchor.constraint(equalTo: alertBackView.bottomAnchor, constant: 10)
+            confirmButton.bottomAnchor.constraint(equalTo: alertBackView.bottomAnchor, constant: -10)
         ])
     }
     func setUpYesNo() {
-        confirmButton.titleLabel?.text = "네"
-        cancelButton.titleLabel?.text = "아니오"
+        confirmButton.setTitle("네", for: .normal)
+        cancelButton.setTitle("아니오", for: .normal)
         messageLabel.setTracking()
 
         [
             messageLabel,
             horizontalLine,
-            confirmButton,
             verticalLine,
+            confirmButton,
             cancelButton
         ].forEach { alertBackView.addSubview($0) }
 
@@ -162,24 +167,37 @@ public final class AlertView: UIViewController {
 
         NSLayoutConstraint.activate([
             messageLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 10),
-            messageLabel.leftAnchor.constraint(equalTo: alertBackView.leftAnchor, constant: self.view.frame.width * 0.122),
-            messageLabel.rightAnchor.constraint(equalTo: alertBackView.rightAnchor, constant: (-1) * self.view.frame.width * 0.122),
+            messageLabel.leftAnchor.constraint(
+                equalTo: alertBackView.leftAnchor,
+                constant: self.view.frame.width * 0.122
+            ),
+            messageLabel.rightAnchor.constraint(
+                equalTo: alertBackView.rightAnchor,
+                constant: (-1) * self.view.frame.width * 0.122
+            ),
 
             horizontalLine.widthAnchor.constraint(equalToConstant: self.view.frame.width * 0.72),
             horizontalLine.heightAnchor.constraint(equalToConstant: 1),
             horizontalLine.topAnchor.constraint(equalTo: messageLabel.bottomAnchor, constant: 24),
 
-            confirmButton.rightAnchor.constraint(equalTo: alertBackView.centerXAnchor, constant: -60),
-            confirmButton.topAnchor.constraint(equalTo: horizontalLine.bottomAnchor, constant: 10),
-            confirmButton.bottomAnchor.constraint(equalTo: alertBackView.bottomAnchor, constant: 10),
-
             verticalLine.centerXAnchor.constraint(equalTo: alertBackView.centerXAnchor),
+            verticalLine.widthAnchor.constraint(equalToConstant: 1),
             verticalLine.topAnchor.constraint(equalTo: horizontalLine.bottomAnchor),
             verticalLine.bottomAnchor.constraint(equalTo: alertBackView.bottomAnchor),
 
-            cancelButton.leftAnchor.constraint(equalTo: alertBackView.centerXAnchor, constant: 60),
+            confirmButton.centerXAnchor.constraint(
+                equalTo: alertBackView.centerXAnchor,
+                constant: (-1) * self.view.frame.width * 0.75 * 0.25
+            ),
+            confirmButton.topAnchor.constraint(equalTo: horizontalLine.bottomAnchor, constant: 10),
+            confirmButton.bottomAnchor.constraint(equalTo: alertBackView.bottomAnchor, constant: -10),
+
+            cancelButton.centerXAnchor.constraint(
+                equalTo: alertBackView.centerXAnchor,
+                constant: self.view.frame.width * 0.75 * 0.25
+            ),
             cancelButton.topAnchor.constraint(equalTo: horizontalLine.bottomAnchor, constant: 10),
-            cancelButton.bottomAnchor.constraint(equalTo: alertBackView.bottomAnchor, constant: 10)
+            cancelButton.bottomAnchor.constraint(equalTo: alertBackView.bottomAnchor, constant: -10)
         ])
     }
 }
@@ -190,7 +208,11 @@ public extension UILabel {
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 4
         paragraphStyle.alignment = .center
-        attrString.addAttribute(NSAttributedString.Key.paragraphStyle, value: paragraphStyle, range: NSMakeRange(0, attrString.length))
+        attrString.addAttribute(
+            NSAttributedString.Key.paragraphStyle,
+            value: paragraphStyle,
+            range: NSRange(location: 0, length: attrString.length)
+        )
         self.attributedText = attrString
     }
 }
