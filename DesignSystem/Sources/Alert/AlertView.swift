@@ -5,7 +5,7 @@ public enum AlertType {
     case yesNo
 }
 
-protocol AlertDelegate {
+public protocol AlertDelegate {
     func exit()
     func yes()
 }
@@ -13,9 +13,9 @@ protocol AlertDelegate {
 public final class AlertView: UIViewController {
     var delegate: AlertDelegate?
     public var alertType: AlertType = .confirm
-    private let pinkCircle = Circle(.bg, 0.5)
-    private let blueCircle = Circle(.third, 0.5)
-    private let yellowCircle = Circle(.main, 0.5)
+    private let pinkCircle = Circle(.bg, 0.5, 3)
+    private let blueCircle = Circle(.third, 0.5, 3)
+    private let yellowCircle = Circle(.main, 0.5, 3)
     private let headerView: UIView = {
         $0.backgroundColor = .color(.dittoLettoColor(.gray1))
         return $0
@@ -28,12 +28,14 @@ public final class AlertView: UIViewController {
         $0.numberOfLines = 0
         $0.font = .ramche(.body)
         $0.textColor = .color(.dittoLettoColor(.dark))
+        $0.textAlignment = .center
         return $0
     }(UILabel())
     public let messageLabel: UILabel = {
         $0.numberOfLines = 0
-        $0.font = .ramche(.headline)
+        $0.font = .ramche(.footnote)
         $0.textColor = .color(.dittoLettoColor(.dark))
+        $0.textAlignment = .center
         return $0
     }(UILabel())
     private let horizontalLine: UIView = {
@@ -43,20 +45,22 @@ public final class AlertView: UIViewController {
     private let confirmButton: UIButton = {
         $0.setTitleColor(.color(.dittoLettoColor(.dark)), for: .normal)
         $0.titleLabel?.font = .ramche(.subheadline)
+        $0.backgroundColor = .clear
         return $0
     }(UIButton(type: .system))
     private let cancelButton: UIButton = {
         $0.setTitleColor(.color(.dittoLettoColor(.dark)), for: .normal)
         $0.titleLabel?.font = .ramche(.subheadline)
+        $0.backgroundColor = .clear
         return $0
     }(UIButton(type: .system))
-    private let verticalLine:  UIView = {
+    private let verticalLine: UIView = {
         $0.backgroundColor = .color(.dittoLettoColor(.gray2))
         return $0
     }(UIView())
     public override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .black.withAlphaComponent(0.7)
+        view.backgroundColor = .red.withAlphaComponent(0.3)
         addView()
         setLayout()
     }
@@ -89,81 +93,104 @@ public final class AlertView: UIViewController {
         alertBackView.translatesAutoresizingMaskIntoConstraints = false
         headerView.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
+
+        NSLayoutConstraint.activate([
+            alertBackView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+            alertBackView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
+            alertBackView.widthAnchor.constraint(equalToConstant: self.view.frame.width * 0.72),
+
+            headerView.topAnchor.constraint(equalTo: alertBackView.topAnchor),
+            headerView.heightAnchor.constraint(equalToConstant: self.view.frame.height * 0.022),
+            headerView.widthAnchor.constraint(equalToConstant: self.view.frame.width * 0.72),
+
+            pinkCircle.centerYAnchor.constraint(equalTo: headerView.centerYAnchor),
+            pinkCircle.leftAnchor.constraint(equalTo: headerView.leftAnchor, constant: 8),
+            pinkCircle.widthAnchor.constraint(equalToConstant: 6),
+            pinkCircle.heightAnchor.constraint(equalToConstant: 6),
+
+            blueCircle.centerYAnchor.constraint(equalTo: headerView.centerYAnchor),
+            blueCircle.leftAnchor.constraint(equalTo: pinkCircle.rightAnchor, constant: 5),
+            blueCircle.widthAnchor.constraint(equalToConstant: 6),
+            blueCircle.heightAnchor.constraint(equalToConstant: 6),
+
+            yellowCircle.centerYAnchor.constraint(equalTo: headerView.centerYAnchor),
+            yellowCircle.leftAnchor.constraint(equalTo: blueCircle.rightAnchor, constant: 5),
+            yellowCircle.widthAnchor.constraint(equalToConstant: 6),
+            yellowCircle.heightAnchor.constraint(equalToConstant: 6),
+
+            titleLabel.leftAnchor.constraint(equalTo: alertBackView.leftAnchor, constant: self.view.frame.width * 0.09),
+            titleLabel.rightAnchor.constraint(equalTo: alertBackView.rightAnchor, constant: (-1) * self.view.frame.width * 0.09),
+            titleLabel.topAnchor.constraint(equalTo: headerView.bottomAnchor, constant: 20)
+        ])
+    }
+    func setUpConfirm() {
+        confirmButton.titleLabel?.text = "확인"
+
+        [ horizontalLine, confirmButton ].forEach { alertBackView.addSubview($0) }
+
+        horizontalLine.translatesAutoresizingMaskIntoConstraints = false
+        confirmButton.translatesAutoresizingMaskIntoConstraints = false
+
+        NSLayoutConstraint.activate([
+            horizontalLine.widthAnchor.constraint(equalToConstant: self.view.frame.width * 0.72),
+            horizontalLine.heightAnchor.constraint(equalToConstant: 1),
+            horizontalLine.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 24),
+
+            confirmButton.centerXAnchor.constraint(equalTo: alertBackView.centerXAnchor),
+            confirmButton.topAnchor.constraint(equalTo: horizontalLine.bottomAnchor, constant: 10),
+            confirmButton.bottomAnchor.constraint(equalTo: alertBackView.bottomAnchor, constant: 10)
+        ])
+    }
+    func setUpYesNo() {
+        confirmButton.titleLabel?.text = "네"
+        cancelButton.titleLabel?.text = "아니오"
+        messageLabel.setTracking()
+
+        [
+            messageLabel,
+            horizontalLine,
+            confirmButton,
+            verticalLine,
+            cancelButton
+        ].forEach { alertBackView.addSubview($0) }
+
         messageLabel.translatesAutoresizingMaskIntoConstraints = false
         horizontalLine.translatesAutoresizingMaskIntoConstraints = false
         confirmButton.translatesAutoresizingMaskIntoConstraints = false
         verticalLine.translatesAutoresizingMaskIntoConstraints = false
         cancelButton.translatesAutoresizingMaskIntoConstraints = false
-//        alertBackView.snp.makeConstraints {
-//            $0.width.equalToSuperview().multipliedBy(0.72)
-//            $0.center.equalToSuperview()
-//        }
-//        headerView.snp.makeConstraints {
-////            $0.width.equalToSuperview().multipliedBy(0.72)
-//            $0.height.equalToSuperview().multipliedBy(0.022)
-//            $0.top.horizontalEdges.equalToSuperview()
-//        }
-//        pinkCircle.snp.makeConstraints {
-//            $0.centerY.equalToSuperview()
-//            $0.left.equalToSuperview().inset(8)
-//            $0.width.height.equalTo(6)
-//        }
-//        blueCircle.snp.makeConstraints {
-//            $0.centerY.equalToSuperview()
-//            $0.left.equalTo(pinkCircle.snp.right).offset(5)
-//            $0.width.height.equalTo(6)
-//        }
-//        yellowCircle.snp.makeConstraints {
-//            $0.centerY.equalToSuperview()
-//            $0.left.equalTo(blueCircle.snp.right).offset(5)
-//            $0.width.height.equalTo(6)
-//        }
-//        titleLabel.snp.makeConstraints {
-//            $0.top.equalTo(headerView.snp.bottom).offset(20)
-//            $0.centerX.equalToSuperview()
-//        }
-//        horizontalLine.snp.makeConstraints {
-//            $0.horizontalEdges.equalToSuperview()
-//            $0.height.equalTo(1)
-//            $0.top.equalTo(titleLabel.snp.bottom).offset(20)
-//        }
-//    }
-//    func setUpConfirm() {
-//        alertBackView.addSubview(confirmButton)
-//        confirmButton.titleLabel?.text = "확인"
-//        confirmButton.snp.makeConstraints {
-//            $0.centerX.equalToSuperview()
-//            $0.top.equalTo(horizontalLine.snp.bottom).offset(10)
-//            $0.bottom.equalToSuperview().inset(10)
-//        }
-//    }
-//    func setUpYesNo() {
-//        confirmButton.titleLabel?.text = "네"
-//        cancelButton.titleLabel?.text = "아니오"
-//        [ messageLabel, confirmButton, verticalLine, cancelButton ].forEach { alertBackView.addSubview($0) }
-//        messageLabel.snp.makeConstraints {
-//            $0.top.equalTo(titleLabel.snp.bottom).offset(6)
-//            $0.centerX.equalToSuperview()
-//        }
-//        horizontalLine.snp.updateConstraints {
-//            $0.horizontalEdges.equalToSuperview()
-//            $0.height.equalTo(1)
-//            $0.top.equalTo(messageLabel.snp.bottom).offset(20)
-//        }
-//        confirmButton.snp.makeConstraints {
-//            $0.right.equalTo(alertBackView.snp.centerX).offset(-60)
-//            $0.top.equalTo(horizontalLine.snp.bottom).offset(10)
-//            $0.bottom.equalToSuperview().inset(10)
-//        }
-//        verticalLine.snp.makeConstraints {
-//            $0.centerX.equalToSuperview()
-//            $0.top.equalTo(horizontalLine.snp.bottom).offset(0)
-//            $0.bottom.equalToSuperview()
-//        }
-//        cancelButton.snp.makeConstraints {
-//            $0.left.equalTo(alertBackView.snp.centerX).offset(60)
-//            $0.top.equalTo(horizontalLine.snp.bottom).offset(10)
-//            $0.bottom.equalToSuperview().inset(10)
-//        }
+
+        NSLayoutConstraint.activate([
+            messageLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 10),
+            messageLabel.leftAnchor.constraint(equalTo: alertBackView.leftAnchor, constant: self.view.frame.width * 0.122),
+            messageLabel.rightAnchor.constraint(equalTo: alertBackView.rightAnchor, constant: (-1) * self.view.frame.width * 0.122),
+
+            horizontalLine.widthAnchor.constraint(equalToConstant: self.view.frame.width * 0.72),
+            horizontalLine.heightAnchor.constraint(equalToConstant: 1),
+            horizontalLine.topAnchor.constraint(equalTo: messageLabel.bottomAnchor, constant: 24),
+
+            confirmButton.rightAnchor.constraint(equalTo: alertBackView.centerXAnchor, constant: -60),
+            confirmButton.topAnchor.constraint(equalTo: horizontalLine.bottomAnchor, constant: 10),
+            confirmButton.bottomAnchor.constraint(equalTo: alertBackView.bottomAnchor, constant: 10),
+
+            verticalLine.centerXAnchor.constraint(equalTo: alertBackView.centerXAnchor),
+            verticalLine.topAnchor.constraint(equalTo: horizontalLine.bottomAnchor),
+            verticalLine.bottomAnchor.constraint(equalTo: alertBackView.bottomAnchor),
+
+            cancelButton.leftAnchor.constraint(equalTo: alertBackView.centerXAnchor, constant: 60),
+            cancelButton.topAnchor.constraint(equalTo: horizontalLine.bottomAnchor, constant: 10),
+            cancelButton.bottomAnchor.constraint(equalTo: alertBackView.bottomAnchor, constant: 10)
+        ])
+    }
+}
+
+public extension UILabel {
+    func setTracking() {
+        let attrString = NSMutableAttributedString(string: self.text!)
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = 4
+        paragraphStyle.alignment = .center
+        attrString.addAttribute(NSAttributedString.Key.paragraphStyle, value: paragraphStyle, range: NSMakeRange(0, attrString.length))
+        self.attributedText = attrString
     }
 }
