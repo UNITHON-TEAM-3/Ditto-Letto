@@ -1,40 +1,41 @@
 import UIKit
 import SnapKit
+import DesignSystem
 
 class KeepingLetterView: UIView {
     // MARK: - Properties
     private let topStatusBarView: UIView = {
-        $0.backgroundColor = DittoLettoAsset.Color.dark.color
+        $0.backgroundColor = .color(.dittoLettoColor(.dark))
         return $0
     }(UIView())
     private let statusBarFirstDetailView: UIView = {
-        $0.backgroundColor = DittoLettoAsset.Color.gray1.color
+        $0.backgroundColor = .color(.dittoLettoColor(.gray1))
         return $0
     }(UIView())
     private let statusBarSecondDetailView: UIView = {
-        $0.backgroundColor = DittoLettoAsset.Color.gray1.color
+        $0.backgroundColor = .color(.dittoLettoColor(.gray1))
         return $0
     }(UIView())
     private let fileImageView: UIImageView = {
-        $0.image = UIImage(named: "redFolder")
+        $0.image = .Image.redFolder
         return $0
     }(UIImageView())
     private let titleNumberLabel: UILabel = {
         $0.text = "010-1234-5673"
-        $0.font = DittoLettoFontFamily.Ramche.regular.font(size: 20)
+        $0.font = .ramche(.title3)
         return $0
     }(UILabel())
     private let lineView: UIView = {
-        $0.backgroundColor = DittoLettoAsset.Color.gray2.color
+        $0.backgroundColor = .color(.dittoLettoColor(.gray2))
         return $0
     }(UIView())
     private let messageImageView: UIImageView = {
-        $0.image = DittoLettoAsset.Image.message.image
+        $0.image = .Image.message
         return $0
     }(UIImageView())
     private let messageNumLabel: UILabel = {
         $0.text = "12"
-        $0.font = DittoLettoFontFamily.Ramche.regular.font(size: 13)
+        $0.font = .ramche(.footnote)
         return $0
     }(UILabel())
 

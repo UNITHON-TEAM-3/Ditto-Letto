@@ -18,16 +18,16 @@
 // MARK: - Fonts
 
 // swiftlint:disable identifier_name line_length type_body_length
-public enum DittoLettoFontFamily {
+public enum DesignSystemFontFamily {
   public enum Ramche {
-    public static let regular = DittoLettoFontConvertible(name: "Ramche", family: "Ramche", path: "Ramche.otf")
-    public static let all: [DittoLettoFontConvertible] = [regular]
+    public static let regular = DesignSystemFontConvertible(name: "Ramche", family: "Ramche", path: "Ramche.otf")
+    public static let all: [DesignSystemFontConvertible] = [regular]
   }
   public enum YoonDongJu2 {
-    public static let regular = DittoLettoFontConvertible(name: "YOON-DONG-JU2", family: "YOON-DONG-JU2", path: "독립서체_윤동주_서시_GS.otf")
-    public static let all: [DittoLettoFontConvertible] = [regular]
+    public static let regular = DesignSystemFontConvertible(name: "YOON-DONG-JU2", family: "YOON-DONG-JU2", path: "독립서체_윤동주_서시_GS.otf")
+    public static let all: [DesignSystemFontConvertible] = [regular]
   }
-  public static let allCustomFonts: [DittoLettoFontConvertible] = [Ramche.all, YoonDongJu2.all].flatMap { $0 }
+  public static let allCustomFonts: [DesignSystemFontConvertible] = [Ramche.all, YoonDongJu2.all].flatMap { $0 }
   public static func registerAllCustomFonts() {
     allCustomFonts.forEach { $0.register() }
   }
@@ -36,7 +36,7 @@ public enum DittoLettoFontFamily {
 
 // MARK: - Implementation Details
 
-public struct DittoLettoFontConvertible {
+public struct DesignSystemFontConvertible {
   public let name: String
   public let family: String
   public let path: String
@@ -61,7 +61,7 @@ public struct DittoLettoFontConvertible {
       fatalError("Unable to initialize font '\(name)' (\(family))")
     }
     #if os(macOS)
-    return SwiftUI.Font.custom(font.fontName, size: font.pointSize)
+    return SwiftUI.Font.custom(font.fontName, size: font.size)
     #elseif os(iOS) || os(tvOS) || os(watchOS)
     return SwiftUI.Font(font)
     #endif
@@ -80,8 +80,8 @@ public struct DittoLettoFontConvertible {
   }
 }
 
-public extension DittoLettoFontConvertible.Font {
-  convenience init?(font: DittoLettoFontConvertible, size: CGFloat) {
+public extension DesignSystemFontConvertible.Font {
+  convenience init?(font: DesignSystemFontConvertible, size: CGFloat) {
     #if os(iOS) || os(tvOS) || os(watchOS)
     if !UIFont.fontNames(forFamilyName: font.family).contains(font.name) {
       font.register()

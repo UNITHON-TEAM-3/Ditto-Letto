@@ -1,5 +1,4 @@
 import UIKit
-
 import SnapKit
 import RxSwift
 import RxCocoa
@@ -7,11 +6,6 @@ import RxCocoa
 class KeepingMyLetterVC: BaseVC {
     let keepingLetterView = KeepingLetterView()
     lazy var myLetterView = MyLetterView()
-
-    // MARK: - Life Cycles
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
 
     // MARK: - Set UI
     override func addView() {

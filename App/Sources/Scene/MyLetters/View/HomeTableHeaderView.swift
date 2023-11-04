@@ -1,5 +1,6 @@
 import UIKit
 import SnapKit
+import DesignSystem
 
 class HomeTableHeaderView: UIView {
     var model: BoxLetterData? {
@@ -9,19 +10,19 @@ class HomeTableHeaderView: UIView {
     }
     private let headerTitleLabel: UILabel = {
         $0.text = "너랑 지금 정말 가까이 있나봐"
-        $0.font = DittoLettoFontFamily.Ramche.regular.font(size: 16)
+        $0.font = .ramche(.body)
         return $0
     }(UILabel())
     private let transportationImageView: UIImageView = {
-        $0.image = DittoLettoAsset.Image.horseIcon.image
+        $0.image = .Image.horseIcon
         return $0
     }(UIImageView())
     private let transportationState: UIImageView = {
-        $0.image = DittoLettoAsset.Image.state03.image
+        $0.image = .Image.state3
         return $0
     }(UIImageView())
     private let lineView: UIView = {
-        $0.backgroundColor = DittoLettoAsset.Color.gray2.color
+        $0.backgroundColor = .color(.dittoLettoColor(.gray2))
         return $0
     }(UIView())
 
@@ -76,17 +77,17 @@ class HomeTableHeaderView: UIView {
         }
 
         if model.mediumType == TransportationType.airplane.rawValue {
-            transportationImageView.image = DittoLettoAsset.Image.airplaneIcon.image
+            transportationImageView.image = .Image.airplaneIcon
         } else if model.mediumType == TransportationType.car.rawValue {
-            transportationImageView.image = DittoLettoAsset.Image.carIcon.image
+            transportationImageView.image = .Image.carIcon
         } else if model.mediumType == TransportationType.bicycle.rawValue {
-            transportationImageView.image = DittoLettoAsset.Image.bikeIcon.image
+            transportationImageView.image = .Image.bikeIcon
         } else if model.mediumType == TransportationType.horse.rawValue {
-            transportationImageView.image = DittoLettoAsset.Image.horseIcon.image
+            transportationImageView.image = .Image.horseIcon
         } else if model.mediumType == TransportationType.running.rawValue {
-            transportationImageView.image = DittoLettoAsset.Image.runningIcon.image
+            transportationImageView.image = .Image.runningIcon
         } else if model.mediumType == TransportationType.walk.rawValue {
-            transportationState.image = DittoLettoAsset.Image.walkIcon.image
+            transportationState.image = .Image.walkIcon
         }
     }
 }

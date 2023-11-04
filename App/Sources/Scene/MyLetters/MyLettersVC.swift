@@ -1,5 +1,5 @@
 import UIKit
-
+import DesignSystem
 import SnapKit
 import RxSwift
 import RxCocoa
@@ -11,16 +11,18 @@ class MyLetterVC: BaseVC {
     lazy var myLetterView = MyLetterView()
     private let sendButton: UIButton = {
         $0.setTitle("편지 보내기", for: .normal)
-        $0.setMainButton(color: "main")
+        $0.setMainButton(color: .main)
         return $0
     }(UIButton())
     private let emptyView = HomeEmptyView()
-    lazy var tableHeaderView = HomeTableHeaderView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 95))
-
-    // MARK: - Life Cycles
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
+    lazy var tableHeaderView = HomeTableHeaderView(
+        frame: CGRect(
+            x: 0,
+            y: 0,
+            width: UIScreen.main.bounds.width,
+            height: 95
+        )
+    )
 
     // MARK: - Set UI
     override func addView() {

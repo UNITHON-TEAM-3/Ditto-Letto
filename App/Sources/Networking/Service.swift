@@ -72,3 +72,4 @@ final class Service {
             }
     }
 }
+// swiftlint:enable superfluous_disable_command line_length
