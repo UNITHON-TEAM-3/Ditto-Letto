@@ -8,20 +8,14 @@ class LoginVC: BaseVC {
 
     // MARK: - Properties
     private let dittoImageView: UIImageView = {
-        $0.image = DittoLettoAsset.Image.loginImage.image
+        $0.image = .Image.loginImage
         $0.contentMode = .scaleAspectFit
         return $0
     }(UIImageView())
     private let kakaoButton: UIButton = {
-        $0.setImage(DittoLettoAsset.Image.kakaoButton.image, for: .normal)
+        $0.setImage(.Image.kakaoButton, for: .normal)
         return $0
     }(UIButton())
-
-    // MARK: - Life Cycles
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-    }
 
     // MARK: - Set UI
     override func addView() {

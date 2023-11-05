@@ -3,6 +3,7 @@ import RxSwift
 import RxCocoa
 import SnapKit
 import Then
+import DesignSystem
 
 class NewLetterVC: BaseVC {
     private let isPrivate = BehaviorRelay<Bool>(value: true)
@@ -25,22 +26,22 @@ class NewLetterVC: BaseVC {
         $0.layer.borderWidth = 1.0
     }
     private let letterTextView = UITextView().then {
-        $0.layer.borderColor = DittoLettoAsset.Color.dark.color.cgColor
+        $0.layer.borderColor = UIColor.color(.dittoLettoColor(.dark)).cgColor
         $0.layer.borderWidth = 1.0
         $0.backgroundColor = .white
         $0.text = "전하고 싶은 말을 입력해주세요."
-        $0.textColor = DittoLettoAsset.Color.gray2.color
+        $0.textColor = .color(.dittoLettoColor(.gray2))
         $0.textContainerInset = UIEdgeInsets(top: 20, left: 20, bottom: 54, right: 20)
         $0.autocorrectionType = .no
         $0.setLineAndLetterSpacing()
     }
     private let textCountLabel = UILabel().then {
         $0.text = "0 / 144"
-        $0.textColor = DittoLettoAsset.Color.dark.color
+        $0.textColor = .color(.dittoLettoColor(.dark))
     }
     private let sendButton = UIButton().then {
         $0.setTitle("전송하기", for: .normal)
-        $0.setMainButton(color: "gray1")
+        $0.setMainButton(color: .gray1)
     }
     private let sendCountLabel = UILabel().then {
         $0.text = ""
@@ -90,7 +91,7 @@ class NewLetterVC: BaseVC {
                             }
                         }).disposed(by: disposeBag)
                 } else if $0.count == 0 {
-                    sendButton.backgroundColor = DittoLettoAsset.Color.gray1.color
+                    sendButton.backgroundColor = .color(.dittoLettoColor(.gray1))
                 }
             }).disposed(by: disposeBag)
 
@@ -133,7 +134,8 @@ class NewLetterVC: BaseVC {
                     type.accept("CODE")
                     privateDiaryButton.setEnabled()
                     generalDiaryButton.setDisabled()
-                    textCountLabel.font = DittoLettoFontFamily.Ramche.regular.font(size: 12)
+                    letterTextView.font = .ramche(.headline)
+                    textCountLabel.font = .ramche(.caption1)
 
                     sendCountLabel.snp.updateConstraints {
                         $0.top.equalToSuperview().inset(17)
@@ -147,7 +149,8 @@ class NewLetterVC: BaseVC {
                     type.accept("BASIC")
                     generalDiaryButton.setEnabled()
                     privateDiaryButton.setDisabled()
-                    textCountLabel.font = DittoLettoFontFamily.YoonDongJu2.regular.font(size: 12)
+                    letterTextView.font = .yoondongju(.headline)
+                    textCountLabel.font = .yoondongju(.caption)
 
                     sendCountLabel.snp.updateConstraints {
                         $0.top.equalToSuperview().inset(15)
@@ -167,29 +170,30 @@ class NewLetterVC: BaseVC {
                     letterTextView.text = String($0[..<$0.index($0.startIndex, offsetBy: 144)])
                     letterTextView.resignFirstResponder()
                 } else if $0.count > 0 && $0.count < 144 {
-                    sendButton.backgroundColor = DittoLettoAsset.Color.main.color
+                    sendButton.backgroundColor = .color(.dittoLettoColor(.main))
                 }
                 if letterTextView.text == "전하고 싶은 말을 입력해주세요." {
                     textCountLabel.text = "0/144"
-                    sendButton.backgroundColor = DittoLettoAsset.Color.gray1.color
+                    sendButton.backgroundColor = .color(.dittoLettoColor(.gray1))
                 }
             }).disposed(by: disposeBag)
         letterTextView.rx.didBeginEditing
             .bind(onNext: { [self] in
                 if letterTextView.text == "전하고 싶은 말을 입력해주세요." {
                     letterTextView.text = ""
-                    letterTextView.textColor = DittoLettoAsset.Color.dark.color
+                    letterTextView.textColor = .color(.dittoLettoColor(.dark))
                 }
             }).disposed(by: disposeBag)
         letterTextView.rx.didEndEditing
             .bind(onNext: { [self] in
                 if letterTextView.text == "" {
                     letterTextView.text = "전하고 싶은 말을 입력해주세요."
-                    letterTextView.textColor = DittoLettoAsset.Color.gray2.color
-                    sendButton.backgroundColor = DittoLettoAsset.Color.gray1.color
+                    letterTextView.textColor = .color(.dittoLettoColor(.gray2))
+                    sendButton.backgroundColor = .color(.dittoLettoColor(.gray1))
                 }
             }).disposed(by: disposeBag)
     }
+    // swiftlint:enable function_body_length
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.letterTextView.resignFirstResponder()
     }

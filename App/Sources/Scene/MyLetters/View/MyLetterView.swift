@@ -1,23 +1,25 @@
 import UIKit
+
+import DesignSystem
 import SnapKit
 
 class MyLetterView: UIView {
     // MARK: - Properties
-    private let redButton = MyLetterCircleView(backgroundColor: "bg")
-    private let blueButton = MyLetterCircleView(backgroundColor: "third")
-    private let yelloButton = MyLetterCircleView(backgroundColor: "main")
+    private let redButton = Circle(.bg, 1, 6)
+    private let blueButton = Circle(.third, 1, 6)
+    private let yelloButton = Circle(.main, 1, 6)
     private let title: UILabel = {
         $0.text = "나의 편지함"
-        $0.font = DittoLettoFontFamily.Ramche.regular.font(size: 15)
+        $0.font = .ramche(.caption1)
         return $0
     }(UILabel())
     private let line: UIImageView = {
-        $0.image = DittoLettoAsset.Image.twoLine.image
+        $0.image = .Image.twoLine
         return $0
     }(UIImageView())
     let tableView: UITableView = {
         $0.backgroundColor = .white
-        $0.layer.borderColor = DittoLettoAsset.Color.gray2.color.cgColor
+        $0.layer.borderColor = UIColor.color(.dittoLettoColor(.gray2)).cgColor
         $0.layer.borderWidth = 0.5
         $0.separatorInset.left = 0
         $0.showsVerticalScrollIndicator = false
@@ -40,7 +42,7 @@ class MyLetterView: UIView {
 
     // MARK: - Set UI
     private func setView() {
-        backgroundColor = DittoLettoAsset.Color.gray1.color
+        backgroundColor = .color(.dittoLettoColor(.gray1))
         layer.borderWidth = 1
         layer.borderColor = UIColor.black.cgColor
     }

@@ -1,5 +1,6 @@
 import UIKit
 
+import DesignSystem
 import SnapKit
 import RxSwift
 import RxCocoa
@@ -10,11 +11,10 @@ class MyLetterVC: BaseVC {
     lazy var myLetterView = MyLetterView(identifier: HomeTableViewCell.identifier)
     private let sendButton: UIButton = {
         $0.setTitle("편지 보내기", for: .normal)
-        $0.setMainButton(color: "main")
+        $0.setMainButton(color: .main)
         return $0
     }(UIButton())
     private let emptyView = HomeEmptyView()
-    lazy var tableHeaderView = HomeTableHeaderView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 95))
     // MARK: - Life Cycles
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -59,21 +59,12 @@ class MyLetterVC: BaseVC {
                 self?.myLetterView.indicatorView.topOffsetRatio = scrollRatio
             }.disposed(by: disposeBag)
         output.letterMyData
-            .bind { [weak self] data in
-                if data.inBoxLetters.isEmpty {
-                    self?.myLetterView.tableView.tableHeaderView = nil
-                } else {
-                    self?.tableHeaderView.model = data.inBoxLetters.first
-                    self?.myLetterView.tableView.tableHeaderView = self?.tableHeaderView
-                }
-            }.disposed(by: disposeBag)
-        output.letterMyData
             .do(onNext: { [weak self] data in
                 self?.emptyView.isHidden = !data.outBoxLetters.isEmpty
-                self?.myLetterView.setIndicatorSize()
             })
             .map { $0.outBoxLetters }
-            .bind(to: myLetterView.tableView.rx.items) { tableView, index, item in
+            .bind(to: myLetterView.tableView.rx.items) { [weak self] tableView, index, item in
+                self?.myLetterView.setIndicatorSize()
                 // headerView에 model 에 새로 분기되는 값 input
                 guard let cell = tableView.dequeueReusableCell(
                         withIdentifier: HomeTableViewCell.identifier,

@@ -8,17 +8,17 @@ class LetterStorageTableViewCell: BaseTC {
     // MARK: - Properties
     private var titleLabel: UILabel = {
         $0.text = "너랑 지금 가까이 있나봐"
-        $0.font = DittoLettoFontFamily.Ramche.regular.font(size: 17)
+        $0.font = .ramche(.body)
         return $0
     }(UILabel())
     private var transportationImageView = UIImageView()
     private var dateLabel: UILabel = {
         $0.text = "2023-10-24"
-        $0.font = DittoLettoFontFamily.Ramche.regular.font(size: 12)
+        $0.font = .ramche(.caption1)
         return $0
     }(UILabel())
     private let deleteButton: UIButton = {
-        $0.setImage(DittoLettoAsset.Image.trashCan.image, for: .normal)
+        $0.setImage(.Image.trashCan, for: .normal)
         return $0
     }(UIButton())
     var model: LetterStorageModel? {
@@ -62,17 +62,17 @@ class LetterStorageTableViewCell: BaseTC {
         guard let model = model else { return }
         titleLabel.text = model.content
         if model.transportation == TransportationType.airplane.rawValue {
-            transportationImageView.image = DittoLettoAsset.Image.airplaneIcon.image
+            transportationImageView.image = .Image.airplaneIcon
         } else if model.transportation == TransportationType.car.rawValue {
-            transportationImageView.image = DittoLettoAsset.Image.carIcon.image
+            transportationImageView.image = .Image.carIcon
         } else if model.transportation == TransportationType.bicycle.rawValue {
-            transportationImageView.image = DittoLettoAsset.Image.bikeIcon.image
+            transportationImageView.image = .Image.bikeIcon
         } else if model.transportation == TransportationType.horse.rawValue {
-            transportationImageView.image = DittoLettoAsset.Image.horseIcon.image
+            transportationImageView.image = .Image.horseIcon
         } else if model.transportation == TransportationType.running.rawValue {
-            transportationImageView.image = DittoLettoAsset.Image.runningIcon.image
+            transportationImageView.image = .Image.runningIcon
         } else if model.transportation == TransportationType.walk.rawValue {
-            transportationImageView.image = DittoLettoAsset.Image.walkIcon.image
+            transportationImageView.image = .Image.walkIcon
         }
         dateLabel.text = model.date
     }

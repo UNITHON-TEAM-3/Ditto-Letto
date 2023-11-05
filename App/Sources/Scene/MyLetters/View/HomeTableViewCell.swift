@@ -1,4 +1,6 @@
 import UIKit
+
+import DesignSystem
 import SnapKit
 
 class HomeTableViewCell: BaseTC {
@@ -7,18 +9,18 @@ class HomeTableViewCell: BaseTC {
     private let titleImageView = UIImageView()
     private let titleLabel: UILabel = {
         $0.text = "010-2326-3046"
-        $0.font = DittoLettoFontFamily.Ramche.regular.font(size: 17)
+        $0.font = .ramche(.body)
         return $0
     }(UILabel())
     private let subTitleLabel: UILabel = {
-        $0.text = "010-2326-3046"
-        $0.font = DittoLettoFontFamily.Ramche.regular.font(size: 13)
+        $0.text = "subTitle"
+        $0.font = .ramche(.footnote)
         return $0
     }(UILabel())
     private let transportationImageView = UIImageView()
     private let transportationState = UIImageView()
     private let replyButton: UIButton = {
-        $0.setImage(DittoLettoAsset.Image.replyButton.image, for: .normal)
+        $0.setImage(.Image.replyButton, for: .normal)
         return $0
     }(UIButton())
     var type: HomeCellType? {
@@ -51,7 +53,7 @@ class HomeTableViewCell: BaseTC {
             setFriendUI()
         case .sendingStranger:
             setSendingStrangerUI()
-        case.sendingfriend:
+        case.sendingFriend:
             setSendingFriendUI()
         case .waiting:
             setWaitingUI()
@@ -61,10 +63,10 @@ class HomeTableViewCell: BaseTC {
         guard let model = model else { return }
         titleLabel.text = model.phoneNumber
         if model.type == MessageType.normal.rawValue {
-            titleImageView.image = DittoLettoAsset.Image.redFolder.image
+            titleImageView.image = .Image.redFolder
         }
         if model.type == MessageType.password.rawValue {
-            titleImageView.image = DittoLettoAsset.Image.yellowFolder.image
+            titleImageView.image = .Image.yellowFolder
         }
 
         // 도착 완료 시
@@ -73,28 +75,39 @@ class HomeTableViewCell: BaseTC {
             transportationState.image = nil
         } else {
             // 도착까지 시간이 남았을 시
-            ProgressType.allCases.forEach { value in
-                if model.progressLevel == value.rawValue {
-                    transportationState.image = UIImage(named: "state0\(value.rawValue)")
-                }
+            if model.progressLevel == ProgressType.type1.rawValue {
+                transportationState.image = .Image.state1
+            } else if model.progressLevel == ProgressType.type2.rawValue {
+                transportationState.image = .Image.state2
+            } else if model.progressLevel == ProgressType.type3.rawValue {
+                transportationState.image = .Image.state3
+            } else if model.progressLevel == ProgressType.type4.rawValue {
+                transportationState.image = .Image.state4
+            } else if model.progressLevel == ProgressType.type5.rawValue {
+                transportationState.image = .Image.state5
+            } else if model.progressLevel == ProgressType.type6.rawValue {
+                transportationState.image = .Image.state6
+            } else if model.progressLevel == ProgressType.type7.rawValue {
+                transportationState.image = .Image.state7
             }
+            
             if model.mediumType == TransportationType.airplane.rawValue {
-                transportationImageView.image = DittoLettoAsset.Image.airplaneIcon.image
+                transportationImageView.image = .Image.airplaneIcon
             } else if model.mediumType == TransportationType.car.rawValue {
-                transportationImageView.image = DittoLettoAsset.Image.carIcon.image
+                transportationImageView.image = .Image.carIcon
             } else if model.mediumType == TransportationType.bicycle.rawValue {
-                transportationImageView.image = DittoLettoAsset.Image.bikeIcon.image
+                transportationImageView.image = .Image.bikeIcon
             } else if model.mediumType == TransportationType.horse.rawValue {
-                transportationImageView.image = DittoLettoAsset.Image.horseIcon.image
+                transportationImageView.image = .Image.horseIcon
             } else if model.mediumType == TransportationType.running.rawValue {
-                transportationImageView.image = DittoLettoAsset.Image.runningIcon.image
+                transportationImageView.image = .Image.runningIcon
             } else if model.mediumType == TransportationType.walk.rawValue {
-                transportationState.image = DittoLettoAsset.Image.walkIcon.image
+                transportationState.image = .Image.walkIcon
             }
         }
         // 임시
-        transportationState.image = UIImage(named: "state03")
-        transportationImageView.image = DittoLettoAsset.Image.airplaneIcon.image
+        transportationState.image = .Image.state7
+        transportationImageView.image = .Image.airplaneIcon
     }
 }
 

@@ -1,4 +1,5 @@
 import UIKit
+import DesignSystem
 
 class MyLetterTriangleView: UIView {
     override func draw(_ rect: CGRect) {
@@ -15,7 +16,7 @@ class MyLetterTriangleView: UIView {
         path.addLine(to: CGPoint(x: width, y: height))
         path.addLine(to: CGPoint(x: 0, y: height))
         path.close()
-        DittoLettoAsset.Color.gray2.color.setFill()
+        UIColor.color(.dittoLettoColor(.gray2)).setFill()
         path.fill()
         let maskLayer = CAShapeLayer()
         maskLayer.path = path.cgPath
@@ -39,7 +40,7 @@ class MyLetterReverseTriangleView: UIView {
         path.addLine(to: CGPoint(x: width, y: 0))
         path.addLine(to: CGPoint(x: width/2, y: height))
         path.close()
-        DittoLettoAsset.Color.gray2.color.setFill()
+        UIColor.color(.dittoLettoColor(.gray2)).setFill()
         path.fill()
         let maskLayer = CAShapeLayer()
         maskLayer.path = path.cgPath

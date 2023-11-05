@@ -1,5 +1,6 @@
 import UIKit
 import RxSwift
+import DesignSystem
 
 class BaseVC: UIViewController {
     let bound = UIScreen.main.bounds
@@ -7,7 +8,7 @@ class BaseVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = DittoLettoAsset.Color.bg.color
+        view.backgroundColor = .color(.dittoLettoColor(.bg))
         addView()
         setLayout()
         configureVC()

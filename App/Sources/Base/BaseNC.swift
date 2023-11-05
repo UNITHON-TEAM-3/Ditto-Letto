@@ -1,9 +1,10 @@
 import UIKit
+import DesignSystem
 
 class BaseNC: UINavigationController {
     private var backButtonImage: UIImage? {
-        return UIImage(systemName: "chevron.backward")!
-            .withAlignmentRectInsets(UIEdgeInsets(top: -10.0, left: 20.0, bottom: 0.0, right: 0.0))
+        return .Image.backChevron
+            .withAlignmentRectInsets(UIEdgeInsets(top: 0.0, left: 30, bottom: 0.0, right: 0.0))
     }
 
     private var backButtonAppearance: UIBarButtonItemAppearance {
@@ -24,6 +25,7 @@ class BaseNC: UINavigationController {
     }
 
     func setNavigationBarAppearance() {
+        backButtonImage?.draw(in: CGRect(x: 40, y: 0, width: 8, height: 16))
         let appearance = UINavigationBarAppearance()
         let appearance2 = UINavigationBarAppearance()
         navigationBar.tintColor = .clear

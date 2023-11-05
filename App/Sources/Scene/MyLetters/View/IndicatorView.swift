@@ -50,7 +50,7 @@ final class IndicatorView: UIView {
     // MARK: - Set UI
     private func addView() {
         self.backgroundColor = .white
-        self.layer.borderColor = DittoLettoAsset.Color.gray2.color.cgColor
+        self.layer.borderColor = UIColor.color(.dittoLettoColor(.gray2)).cgColor
         self.layer.borderWidth = 0.5
         [triangleView, trackView, reverseTriangleView].forEach {
             addSubview($0)

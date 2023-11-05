@@ -12,7 +12,7 @@ let project = Project.dynamicFramework(
         .Lottie,
         .KakaoSDK
     ],
-    deploymentTarget: .iOS(targetVersion: "15.0", devices: [.iphone, .ipad]),
+    deploymentTarget: .iOS(targetVersion: "15.0", devices: [.iphone]),
     dependencies: [
         .SPM.RxSwift,
         .SPM.RxCocoa,
