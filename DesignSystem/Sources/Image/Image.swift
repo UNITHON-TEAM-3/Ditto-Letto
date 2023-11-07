@@ -43,5 +43,9 @@ public extension UIImage {
         public static let windly = DesignSystemAsset.Image.windly.image
         public static let yellowHeart = DesignSystemAsset.Image.yellowHeart.image
         public static let twoLine = DesignSystemAsset.Image.twoLine.image
+        public static let first = DesignSystemAsset.Image.first.image
+        public static let second = DesignSystemAsset.Image.second.image
+        public static let third = DesignSystemAsset.Image.third.image
+        public static let fourth = DesignSystemAsset.Image.fourth.image
     }
 }
