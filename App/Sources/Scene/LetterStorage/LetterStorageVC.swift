@@ -13,6 +13,10 @@ class LetterStorageVC: BaseVC {
     override func viewDidLoad() {
         super.viewDidLoad()
     }
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.myLetterView.setIndicatorSize()
+    }
     // MARK: - Set UI
     override func addView() {
         view.addSubview(keepingLetterView)
@@ -51,8 +55,8 @@ class LetterStorageVC: BaseVC {
                 self?.myLetterView.indicatorView.topOffsetRatio = scrollRatio
             }.disposed(by: disposeBag)
         output.letterStorageData
-            .bind(to: myLetterView.tableView.rx.items) { [weak self] tableView, index, item in
-                self?.myLetterView.setIndicatorSize()
+            .observe(on: MainScheduler.instance)
+            .bind(to: myLetterView.tableView.rx.items) { tableView, index, item in
                 guard let cell = tableView.dequeueReusableCell(
                         withIdentifier: LetterStorageTableViewCell.identifier,
                         for: IndexPath(row: index, section: 0)

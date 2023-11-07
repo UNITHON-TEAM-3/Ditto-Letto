@@ -89,7 +89,7 @@ class MyLetterView: UIView {
             make.width.equalTo(21)
         }
         tableView.snp.makeConstraints { make in
-            make.top.equalTo(title.snp.bottom).inset(-8)
+            make.top.equalToSuperview().inset(34)
             make.leading.bottom.equalToSuperview().inset(14)
             make.trailing.equalToSuperview().inset(32)
         }
@@ -101,12 +101,13 @@ class MyLetterView: UIView {
         }
     }
     func setIndicatorSize() {
-        let visibleHeight = tableView.bounds.height
+        let tableHeight = tableView.bounds.height
         let contentHeight = tableView.contentSize.height
         let insetTop = tableView.contentInset.top
         let insetBottom = tableView.contentInset.bottom
-        let showingHeight = contentHeight - insetTop - insetBottom // 실제로 보여지는 tableView의 콘텐츠 높이
-        let heightRatio = min(1.0, showingHeight / visibleHeight) // 높이 비율을 계산하되, 최대 1.0로 제한
+        let allHeight = contentHeight + insetTop + insetBottom // 실제로 보여지는 tableView의 콘텐츠 높이
+        if allHeight < tableHeight { return } // 콘텐츠 사이즈가 테이블 뷰 컨텐츠 사이즈보다 작을 시
+        let heightRatio = min(1.0, tableHeight / allHeight) // 높이 비율을 계산
         indicatorView.heightRatio = heightRatio
         indicatorView.layoutIfNeeded()
     }

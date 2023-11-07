@@ -19,6 +19,10 @@ class MyLetterVC: BaseVC {
     override func viewDidLoad() {
         super.viewDidLoad()
     }
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.myLetterView.setIndicatorSize()
+    }
     // MARK: - Set UI
     override func addView() {
         view.addSubview(myLetterView)
@@ -63,8 +67,7 @@ class MyLetterVC: BaseVC {
                 self?.emptyView.isHidden = !data.outBoxLetters.isEmpty
             })
             .map { $0.outBoxLetters }
-            .bind(to: myLetterView.tableView.rx.items) { [weak self] tableView, index, item in
-                self?.myLetterView.setIndicatorSize()
+            .bind(to: myLetterView.tableView.rx.items) { tableView, index, item in
                 // headerView에 model 에 새로 분기되는 값 input
                 guard let cell = tableView.dequeueReusableCell(
                         withIdentifier: HomeTableViewCell.identifier,

@@ -1,5 +1,6 @@
 import UIKit
 
+import DesignSystem
 import SnapKit
 
 final class IndicatorView: UIView {
@@ -11,14 +12,14 @@ final class IndicatorView: UIView {
         return $0
     }(UIView())
     private let trackTintView: UIView = {
-        $0.backgroundColor = .systemGray2
+        $0.backgroundColor = UIColor.color(.dittoLettoColor(.gray2))
         return $0
     }(UIView())
-    private var topInsetConstraint: Constraint?
     // MARK: - Properties
+    private var topInsetConstraint: Constraint?
     var heightRatio: Double? {
         didSet {
-            guard let heightRatio = self.heightRatio else { return }
+            guard let heightRatio = heightRatio else { return }
             self.trackTintView.snp.remakeConstraints {
                 $0.leading.trailing.equalToSuperview()
                 $0.height.equalToSuperview().multipliedBy(heightRatio)
@@ -31,7 +32,8 @@ final class IndicatorView: UIView {
     var topOffsetRatio: Double? {
         didSet {
             guard let topOffsetRatio = self.topOffsetRatio else { return }
-            self.topInsetConstraint?.update(inset: topOffsetRatio * self.bounds.height)
+            let topConstraint = topOffsetRatio * self.trackView.bounds.height
+            self.topInsetConstraint?.update(inset: topConstraint)
         }
     }
     // MARK: - Initilize
@@ -43,10 +45,7 @@ final class IndicatorView: UIView {
         addView()
         setLayout()
     }
-    override func draw(_ rect: CGRect) {
-        triangleView.setNeedsDisplay()
-        reverseTriangleView.setNeedsDisplay()
-    }
+
     // MARK: - Set UI
     private func addView() {
         self.backgroundColor = .white
@@ -61,17 +60,21 @@ final class IndicatorView: UIView {
         triangleView.snp.makeConstraints { make in
             make.top.equalToSuperview().inset(5)
             make.centerX.equalToSuperview()
-            make.width.height.equalTo(14)
+            make.height.equalTo(14)
+            make.leading.trailing.equalToSuperview().inset(3)
         }
         reverseTriangleView.snp.makeConstraints { make in
             make.bottom.equalToSuperview().inset(5)
             make.centerX.equalToSuperview()
-            make.width.height.equalTo(14)
+            make.height.equalTo(14)
+            make.leading.equalTo(triangleView.snp.leading)
+            make.trailing.equalTo(triangleView.snp.trailing)
         }
         trackView.snp.makeConstraints { make in
             make.top.equalTo(triangleView.snp.bottom).inset(-3)
-            make.leading.trailing.equalToSuperview().inset(3)
             make.bottom.equalTo(reverseTriangleView.snp.top).inset(-3)
+            make.leading.equalTo(triangleView.snp.leading)
+            make.trailing.equalTo(triangleView.snp.trailing)
         }
     }
 }
