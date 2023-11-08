@@ -1,5 +1,4 @@
 import UIKit
-
 import DesignSystem
 import SnapKit
 import RxSwift
@@ -81,12 +80,10 @@ class MyLetterVC: BaseVC {
             .bind { [weak self] bool in
                 if bool {
                     // 보관함으로 이동
-                    let letterStorageVC = LetterStorageVC()
-                    self?.navigationController?.pushViewController(letterStorageVC, animated: true)
+                    self?.navigationController?.pushViewController(LetterStorageVC(), animated: true)
                 } else {
                     // 전송중으로 이동
-                    let loadingVC = LoadingLetterVC()
-                    self?.navigationController?.pushViewController(loadingVC, animated: true)
+                    self?.navigationController?.pushViewController(LoadingLetterVC(), animated: true)
                 }
             }.disposed(by: disposeBag)
     }
