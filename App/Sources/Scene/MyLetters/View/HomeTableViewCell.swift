@@ -74,35 +74,8 @@ class HomeTableViewCell: BaseTC {
             transportationState.image = nil
         } else {
             // 도착까지 시간이 남았을 시
-            if model.progressLevel == ProgressType.type1.rawValue {
-                transportationState.image = .Image.state1
-            } else if model.progressLevel == ProgressType.type2.rawValue {
-                transportationState.image = .Image.state2
-            } else if model.progressLevel == ProgressType.type3.rawValue {
-                transportationState.image = .Image.state3
-            } else if model.progressLevel == ProgressType.type4.rawValue {
-                transportationState.image = .Image.state4
-            } else if model.progressLevel == ProgressType.type5.rawValue {
-                transportationState.image = .Image.state5
-            } else if model.progressLevel == ProgressType.type6.rawValue {
-                transportationState.image = .Image.state6
-            } else if model.progressLevel == ProgressType.type7.rawValue {
-                transportationState.image = .Image.state7
-            }
-            
-            if model.mediumType == TransportationType.airplane.rawValue {
-                transportationImageView.image = .Image.airplaneIcon
-            } else if model.mediumType == TransportationType.car.rawValue {
-                transportationImageView.image = .Image.carIcon
-            } else if model.mediumType == TransportationType.bicycle.rawValue {
-                transportationImageView.image = .Image.bikeIcon
-            } else if model.mediumType == TransportationType.horse.rawValue {
-                transportationImageView.image = .Image.horseIcon
-            } else if model.mediumType == TransportationType.running.rawValue {
-                transportationImageView.image = .Image.runningIcon
-            } else if model.mediumType == TransportationType.walk.rawValue {
-                transportationState.image = .Image.walkIcon
-            }
+            self.setImageForProgress(model.progressLevel, transportationState)
+            self.setImageForTransportation(model.mediumType, transportationImageView)
         }
         // 임시
         transportationState.image = .Image.state7

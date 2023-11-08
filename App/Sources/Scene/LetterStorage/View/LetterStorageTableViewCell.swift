@@ -60,19 +60,7 @@ class LetterStorageTableViewCell: BaseTC {
     override func configureVC() {
         guard let model = model else { return }
         titleLabel.text = model.content
-        if model.transportation == TransportationType.airplane.rawValue {
-            transportationImageView.image = .Image.airplaneIcon
-        } else if model.transportation == TransportationType.car.rawValue {
-            transportationImageView.image = .Image.carIcon
-        } else if model.transportation == TransportationType.bicycle.rawValue {
-            transportationImageView.image = .Image.bikeIcon
-        } else if model.transportation == TransportationType.horse.rawValue {
-            transportationImageView.image = .Image.horseIcon
-        } else if model.transportation == TransportationType.running.rawValue {
-            transportationImageView.image = .Image.runningIcon
-        } else if model.transportation == TransportationType.walk.rawValue {
-            transportationImageView.image = .Image.walkIcon
-        }
+        self.setImageForTransportation(model.transportation, transportationImageView)
         dateLabel.text = model.date
     }
 }
