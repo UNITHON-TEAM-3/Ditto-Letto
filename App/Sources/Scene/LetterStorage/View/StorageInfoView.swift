@@ -16,6 +16,10 @@ class StorageInfoView: UIView {
         $0.backgroundColor = .color(.dittoLettoColor(.gray1))
         return $0
     }(UIView())
+    private let backgroundWhiteView: UIView = {
+        $0.backgroundColor = .white
+        return $0
+    }(UIView())
     private let fileImageView: UIImageView = {
         $0.image = .Image.redFolder
         return $0
@@ -52,15 +56,16 @@ class StorageInfoView: UIView {
 
     // MARK: - Set UI
     private func addView() {
+        self.addSubview(topStatusBarView)
+        self.addSubview(backgroundWhiteView)
         [
-            topStatusBarView,
             fileImageView,
             titleNumberLabel,
             lineView,
             messageImageView,
             messageNumLabel
         ].forEach {
-            self.addSubview($0)
+            backgroundWhiteView.addSubview($0)
         }
         topStatusBarView.addSubview(statusBarFirstDetailView)
         topStatusBarView.addSubview(statusBarSecondDetailView)
@@ -69,44 +74,47 @@ class StorageInfoView: UIView {
         topStatusBarView.snp.makeConstraints { make in
             make.top.equalToSuperview()
             make.leading.trailing.equalToSuperview()
-            make.height.equalTo(16)
+            make.height.equalToSuperview().multipliedBy(0.18)
         }
         statusBarFirstDetailView.snp.makeConstraints { make in
-            make.top.bottom.equalToSuperview().inset(3)
+            make.height.equalToSuperview().multipliedBy(0.65)
             make.trailing.equalToSuperview().inset(10)
             make.centerY.equalToSuperview()
             make.width.equalTo(10)
         }
         statusBarSecondDetailView.snp.makeConstraints { make in
-            make.top.bottom.equalToSuperview().inset(6)
+            make.height.equalToSuperview().multipliedBy(0.3)
             make.trailing.equalTo(statusBarFirstDetailView.snp.leading).inset(-5)
             make.centerY.equalToSuperview()
             make.width.equalTo(10)
         }
+        backgroundWhiteView.snp.makeConstraints { make in
+            make.top.equalTo(topStatusBarView.snp.bottom)
+            make.leading.trailing.bottom.equalToSuperview()
+        }
         fileImageView.snp.makeConstraints { make in
-            make.top.equalTo(topStatusBarView.snp.bottom).inset(-14)
+            make.centerY.equalToSuperview()
             make.leading.equalToSuperview().inset(15)
-            make.width.equalTo(45)
-            make.height.equalTo(40)
+            make.width.height.equalTo(backgroundWhiteView.snp.height).multipliedBy(0.583)
         }
         titleNumberLabel.snp.makeConstraints { make in
             make.centerY.equalTo(fileImageView.snp.centerY)
             make.leading.equalTo(fileImageView.snp.trailing).inset(-17)
         }
-        messageImageView.snp.makeConstraints { make in
-            make.top.equalTo(topStatusBarView.snp.bottom).inset(-20)
-            make.trailing.equalToSuperview().inset(24)
-            make.width.equalTo(20)
-            make.height.equalTo(16)
-        }
         messageNumLabel.snp.makeConstraints { make in
-            make.top.equalTo(messageImageView.snp.bottom).inset(-4)
-            make.centerX.equalTo(messageImageView.snp.centerX)
+            make.trailing.equalToSuperview().multipliedBy(0.91)
+            make.bottom.equalToSuperview().multipliedBy(0.77)
+        }
+        messageImageView.snp.makeConstraints { make in
+            make.centerX.equalTo(messageNumLabel.snp.centerX)
+            make.bottom.equalTo(messageNumLabel.snp.top).inset(-6)
+            make.width.equalTo(backgroundWhiteView.snp.height).multipliedBy(0.28)
+            make.height.equalTo(backgroundWhiteView.snp.height).multipliedBy(0.22)
         }
         lineView.snp.makeConstraints { make in
             make.top.equalTo(topStatusBarView.snp.bottom)
             make.bottom.equalToSuperview()
-            make.trailing.equalTo(messageImageView.snp.leading).inset(-24)
+            make.trailing.equalTo(messageImageView.snp.leading).multipliedBy(0.91)
             make.width.equalTo(0.6)
         }
     }

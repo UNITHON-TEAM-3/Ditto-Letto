@@ -88,13 +88,13 @@ class MyLetterView: UIView {
             make.width.equalTo(21)
         }
         tableView.snp.makeConstraints { make in
-            make.top.equalToSuperview().inset(34)
-            make.leading.bottom.equalToSuperview().inset(14)
-            make.trailing.equalToSuperview().inset(32)
+            make.top.equalToSuperview().inset(32)
+            make.leading.bottom.equalToSuperview().inset(12)
+            make.width.equalToSuperview().multipliedBy(0.88)
         }
         indicatorView.snp.makeConstraints { make in
             make.top.equalTo(tableView.snp.top)
-            make.trailing.equalToSuperview().inset(14)
+            make.trailing.equalToSuperview().inset(12)
             make.leading.equalTo(tableView.snp.trailing)
             make.bottom.equalTo(tableView.snp.bottom)
         }

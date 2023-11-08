@@ -41,7 +41,7 @@ class HomeTableViewCell: BaseTC {
         [titleImageView, titleLabel, subTitleLabel, transportationImageView, transportationState, replyButton].forEach {
             addSubview($0)
         }
-        setLayout(type: .waiting)
+        setLayout(type: .sendingFriend)
     }
     func setLayout(type: HomeCellType?) {
         guard let type = type else { return }
@@ -86,14 +86,13 @@ class HomeTableViewCell: BaseTC {
 extension HomeTableViewCell {
     private func setStrangerUI() {
         titleImageView.snp.makeConstraints { make in
-            make.top.equalToSuperview().inset(17.13)
-            make.bottom.equalToSuperview().inset(19.83)
-            make.leading.equalToSuperview().inset(24)
             make.width.equalTo(50)
             make.height.equalTo(44.74)
+            make.top.equalToSuperview().inset(17.13)
+            make.bottom.equalToSuperview().inset(19.83).priority(.low)
+            make.leading.equalToSuperview().inset(20)
         }
         titleLabel.snp.makeConstraints { make in
-            make.top.bottom.equalToSuperview().inset(30)
             make.centerY.equalTo(titleImageView.snp.centerY)
             make.leading.equalTo(titleImageView.snp.trailing).inset(-40)
         }
@@ -108,7 +107,7 @@ extension HomeTableViewCell {
         titleImageView.snp.makeConstraints { make in
             make.width.height.equalTo(50)
             make.top.equalToSuperview().inset(14.19)
-            make.bottom.equalToSuperview().inset(17.51)
+            make.bottom.equalToSuperview().inset(17.51).priority(.low)
             make.leading.equalToSuperview().inset(20)
         }
         titleLabel.snp.makeConstraints { make in
@@ -131,13 +130,13 @@ extension HomeTableViewCell {
             make.width.equalTo(50)
             make.height.equalTo(44.74)
             make.top.equalToSuperview().inset(19.19)
-            make.bottom.equalToSuperview().inset(35.81)
             make.leading.equalToSuperview().inset(20)
         }
         transportationImageView.snp.makeConstraints { make in
-            make.top.equalTo(titleImageView.snp.bottom).inset(-8)
+            make.top.equalTo(titleImageView.snp.bottom).offset(8)
             make.centerX.equalTo(titleImageView.snp.centerX)
             make.height.width.equalTo(16)
+            make.bottom.equalToSuperview().inset(16).priority(.low)
         }
         titleLabel.snp.makeConstraints { make in
             make.centerY.equalTo(titleImageView.snp.centerY)
@@ -155,13 +154,13 @@ extension HomeTableViewCell {
             make.width.equalTo(50)
             make.height.equalTo(44.74)
             make.top.equalToSuperview().inset(19.19)
-            make.bottom.equalToSuperview().inset(35.81)
             make.leading.equalToSuperview().inset(20)
         }
         transportationImageView.snp.makeConstraints { make in
-            make.top.equalTo(titleImageView.snp.bottom).inset(-8)
+            make.top.equalTo(titleImageView.snp.bottom).offset(8)
             make.centerX.equalTo(titleImageView.snp.centerX)
             make.height.width.equalTo(16)
+            make.bottom.equalToSuperview().inset(16).priority(.low)
         }
         titleLabel.snp.makeConstraints { make in
             make.top.equalTo(titleImageView.snp.top).inset(2)

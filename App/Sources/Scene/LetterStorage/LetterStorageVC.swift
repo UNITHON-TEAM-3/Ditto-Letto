@@ -6,7 +6,7 @@ import RxCocoa
 class LetterStorageVC: BaseVC {
     let viewModel = LetterStorageVM()
     // MARK: Properties
-    let keepingLetterView = StorageInfoView()
+    let storageInfoView = StorageInfoView()
     lazy var myLetterView = MyLetterView(identifier: LetterStorageTableViewCell.identifier)
     // MARK: - Life Cycles
     override func viewDidLoad() {
@@ -18,18 +18,20 @@ class LetterStorageVC: BaseVC {
     }
     // MARK: - Set UI
     override func addView() {
-        view.addSubview(keepingLetterView)
+        view.addSubview(storageInfoView)
         view.addSubview(myLetterView)
     }
     override func setLayout() {
-        keepingLetterView.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide).inset(14)
-            make.leading.trailing.equalToSuperview().inset(20)
-            make.height.equalTo(90)
+        storageInfoView.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide).inset(6)
+            make.centerX.equalToSuperview()
+            make.width.equalToSuperview().multipliedBy(0.89)
+            make.height.equalToSuperview().multipliedBy(0.11)
         }
         myLetterView.snp.makeConstraints { make in
-            make.top.equalTo(keepingLetterView.snp.bottom).inset(-13)
-            make.leading.trailing.equalToSuperview().inset(20)
+            make.top.equalTo(storageInfoView.snp.bottom).inset(-13)
+            make.leading.equalTo(storageInfoView.snp.leading)
+            make.trailing.equalTo(storageInfoView.snp.trailing)
             make.bottom.equalTo(view.safeAreaLayoutGuide).inset(20)
         }
     }
