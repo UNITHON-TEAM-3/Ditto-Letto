@@ -47,5 +47,7 @@ public extension UIImage {
         public static let second = DesignSystemAsset.Image.second.image
         public static let third = DesignSystemAsset.Image.third.image
         public static let fourth = DesignSystemAsset.Image.fourth.image
+        public static let pinkHeart = DesignSystemAsset.Image.heartPink.image
+        public static let grayHeart = DesignSystemAsset.Image.heartGray.image
     }
 }
