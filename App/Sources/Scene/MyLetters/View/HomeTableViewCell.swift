@@ -86,33 +86,33 @@ class HomeTableViewCell: BaseTC {
 extension HomeTableViewCell {
     private func setStrangerUI() {
         titleImageView.snp.makeConstraints { make in
-            make.width.equalTo(50)
-            make.height.equalTo(44.74)
-            make.top.equalToSuperview().inset(17.13)
-            make.bottom.equalToSuperview().inset(19.83).priority(.low)
-            make.leading.equalToSuperview().inset(20)
+            make.width.equalTo(UIScreen.main.bounds.width * 0.133)
+            make.height.equalTo(UIScreen.main.bounds.width * 0.112)
+            make.top.equalToSuperview().inset(UIScreen.main.bounds.height * 0.025)
+            make.bottom.equalToSuperview().inset(UIScreen.main.bounds.height * 0.0297).priority(.low)
+            make.leading.equalToSuperview().inset(UIScreen.main.bounds.width * 0.053)
         }
         titleLabel.snp.makeConstraints { make in
             make.centerY.equalTo(titleImageView.snp.centerY)
-            make.leading.equalTo(titleImageView.snp.trailing).inset(-40)
+            make.centerX.equalToSuperview()
         }
         replyButton.snp.makeConstraints { make in
             make.centerY.equalTo(titleLabel.snp.centerY)
-            make.trailing.equalToSuperview().inset(16)
-            make.width.equalTo(41)
-            make.height.equalTo(44)
+            make.trailing.equalToSuperview().inset(UIScreen.main.bounds.width * 0.042)
+            make.width.equalTo(UIScreen.main.bounds.width * 0.109)
+            make.height.equalTo(UIScreen.main.bounds.width * 0.117)
         }
     }
     private func setFriendUI() {
         titleImageView.snp.makeConstraints { make in
-            make.width.height.equalTo(50)
-            make.top.equalToSuperview().inset(14.19)
-            make.bottom.equalToSuperview().inset(17.51).priority(.low)
-            make.leading.equalToSuperview().inset(20)
+            make.width.height.equalTo(UIScreen.main.bounds.width * 0.133)
+            make.top.equalToSuperview().inset(UIScreen.main.bounds.height * 0.021)
+            make.bottom.equalToSuperview().inset(UIScreen.main.bounds.height * 0.026).priority(.low)
+            make.leading.equalToSuperview().inset(UIScreen.main.bounds.width * 0.053)
         }
         titleLabel.snp.makeConstraints { make in
             make.top.equalTo(titleImageView.snp.top).inset(2)
-            make.leading.equalTo(titleImageView.snp.trailing).inset(-18)
+            make.leading.equalTo(titleImageView.snp.trailing).offset(UIScreen.main.bounds.width * 0.048)
         }
         subTitleLabel.snp.makeConstraints { make in
             make.bottom.equalTo(titleImageView.snp.bottom).inset(2)
@@ -120,79 +120,79 @@ extension HomeTableViewCell {
         }
         replyButton.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
-            make.trailing.equalToSuperview().inset(16)
-            make.width.equalTo(41)
-            make.height.equalTo(44)
+            make.trailing.equalToSuperview().inset(UIScreen.main.bounds.width * 0.042)
+            make.width.equalTo(UIScreen.main.bounds.width * 0.109)
+            make.height.equalTo(UIScreen.main.bounds.width * 0.117)
         }
     }
     private func setSendingStrangerUI() {
         titleImageView.snp.makeConstraints { make in
-            make.width.equalTo(50)
-            make.height.equalTo(44.74)
-            make.top.equalToSuperview().inset(19.19)
-            make.leading.equalToSuperview().inset(20)
+            make.width.equalTo(UIScreen.main.bounds.width * 0.133)
+            make.height.equalTo(UIScreen.main.bounds.width * 0.112)
+            make.top.equalToSuperview().inset(UIScreen.main.bounds.height * 0.028)
+            make.leading.equalToSuperview().inset(UIScreen.main.bounds.width * 0.053)
         }
         transportationImageView.snp.makeConstraints { make in
-            make.top.equalTo(titleImageView.snp.bottom).offset(8)
+            make.top.equalTo(titleImageView.snp.bottom).offset(10)
             make.centerX.equalTo(titleImageView.snp.centerX)
-            make.height.width.equalTo(16)
-            make.bottom.equalToSuperview().inset(16).priority(.low)
+            make.width.height.equalTo(UIScreen.main.bounds.width * 0.047)
+            make.bottom.equalToSuperview().inset(UIScreen.main.bounds.height * 0.021).priority(.low)
         }
         titleLabel.snp.makeConstraints { make in
             make.centerY.equalTo(titleImageView.snp.centerY)
-            make.leading.equalTo(titleImageView.snp.trailing).inset(-14.5)
+            make.leading.equalTo(titleImageView.snp.trailing).offset(UIScreen.main.bounds.width * 0.038)
         }
         transportationState.snp.makeConstraints { make in
             make.centerY.equalTo(transportationImageView.snp.centerY)
             make.leading.equalTo(titleLabel.snp.leading).inset(2)
-            make.trailing.equalToSuperview().inset(36)
-            make.height.equalTo(16)
+            make.trailing.equalToSuperview().inset(UIScreen.main.bounds.width * 0.096)
+            make.height.equalTo(UIScreen.main.bounds.width * 0.042)
         }
     }
     private func setSendingFriendUI() {
         titleImageView.snp.makeConstraints { make in
-            make.width.equalTo(50)
-            make.height.equalTo(44.74)
-            make.top.equalToSuperview().inset(19.19)
-            make.leading.equalToSuperview().inset(20)
+            make.width.equalTo(UIScreen.main.bounds.width * 0.133)
+            make.height.equalTo(UIScreen.main.bounds.width * 0.112)
+            make.top.equalToSuperview().inset(UIScreen.main.bounds.height * 0.028)
+            make.leading.equalToSuperview().inset(UIScreen.main.bounds.width * 0.053)
         }
         transportationImageView.snp.makeConstraints { make in
-            make.top.equalTo(titleImageView.snp.bottom).offset(8)
+            make.top.equalTo(titleImageView.snp.bottom).offset(10)
             make.centerX.equalTo(titleImageView.snp.centerX)
-            make.height.width.equalTo(16)
-            make.bottom.equalToSuperview().inset(16).priority(.low)
+            make.width.height.equalTo(UIScreen.main.bounds.width * 0.047)
+            make.bottom.equalToSuperview().inset(UIScreen.main.bounds.height * 0.021).priority(.low)
         }
         titleLabel.snp.makeConstraints { make in
             make.top.equalTo(titleImageView.snp.top).inset(2)
-            make.leading.equalTo(titleImageView.snp.trailing).inset(-18)
+            make.leading.equalTo(titleImageView.snp.trailing).offset(UIScreen.main.bounds.width * 0.048)
         }
         subTitleLabel.snp.makeConstraints { make in
-            make.bottom.equalTo(titleImageView.snp.bottom).inset(2)
+            make.bottom.equalTo(titleImageView.snp.bottom).inset(1)
             make.leading.equalTo(titleLabel.snp.leading)
         }
         transportationState.snp.makeConstraints { make in
             make.centerY.equalTo(transportationImageView.snp.centerY)
             make.leading.equalTo(titleLabel.snp.leading).inset(2)
-            make.trailing.equalToSuperview().inset(36)
-            make.height.equalTo(16)
+            make.trailing.equalToSuperview().inset(UIScreen.main.bounds.width * 0.096)
+            make.height.equalTo(UIScreen.main.bounds.width * 0.042)
         }
     }
     private func setWaitingUI() {
         titleLabel.snp.makeConstraints { make in
-            make.top.equalToSuperview().inset(16)
-            make.leading.trailing.equalToSuperview().inset(23)
+            make.top.equalToSuperview().inset(UIScreen.main.bounds.height * 0.024)
+            make.leading.trailing.equalToSuperview().inset(UIScreen.main.bounds.width * 0.061)
         }
         transportationImageView.snp.makeConstraints { make in
-            make.top.equalTo(titleLabel.snp.bottom).inset(-15.7)
+            make.top.equalTo(titleLabel.snp.bottom).offset(UIScreen.main.bounds.height * 0.023)
             make.leading.equalTo(titleLabel.snp.leading).inset(6)
-            make.bottom.equalToSuperview().inset(17)
-            make.width.height.equalTo(16)
+            make.bottom.equalToSuperview().inset(UIScreen.main.bounds.height * 0.025)
+            make.width.height.equalTo(UIScreen.main.bounds.width * 0.047)
         }
         transportationState.snp.makeConstraints { make in
             make.centerY.equalTo(transportationImageView.snp.centerY)
-            make.leading.equalTo(transportationImageView.snp.trailing).inset(-30)
-            make.trailing.equalToSuperview().inset(36)
-            make.height.equalTo(16)
+            make.leading.equalTo(transportationImageView.snp.trailing).offset(UIScreen.main.bounds.width * 0.08)
+            make.trailing.equalToSuperview().inset(UIScreen.main.bounds.width * 0.096)
+            make.height.equalTo(UIScreen.main.bounds.width * 0.042)
         }
     }
 }

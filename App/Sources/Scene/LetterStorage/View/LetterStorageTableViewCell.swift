@@ -1,4 +1,5 @@
 import UIKit
+import DesignSystem
 import SnapKit
 
 class LetterStorageTableViewCell: BaseTC {
@@ -34,18 +35,18 @@ class LetterStorageTableViewCell: BaseTC {
         [titleLabel, transportationImageView, dateLabel, deleteButton].forEach {
             addSubview($0)
         }
+        print(self.frame.height)
     }
     override func setLayout() {
         titleLabel.snp.makeConstraints { make in
-            make.top.equalToSuperview().inset(26)
-            make.leading.equalToSuperview().inset(23)
-            make.trailing.equalToSuperview().inset(14)
+            make.leading.trailing.equalToSuperview().inset(23)
+            make.top.equalToSuperview().inset(UIScreen.main.bounds.height * 0.032)
         }
         transportationImageView.snp.makeConstraints { make in
-            make.top.equalTo(titleLabel.snp.bottom).inset(-11)
+            make.top.equalTo(titleLabel.snp.bottom).offset(15)
             make.leading.equalTo(titleLabel.snp.leading)
-            make.width.height.equalTo(16)
-            make.bottom.equalToSuperview().inset(14)
+            make.width.height.equalTo(UIScreen.main.bounds.width * 0.047)
+            make.bottom.equalToSuperview().inset(UIScreen.main.bounds.height * 0.02)
         }
         dateLabel.snp.makeConstraints { make in
             make.leading.equalTo(transportationImageView.snp.trailing).inset(-10)
@@ -54,7 +55,7 @@ class LetterStorageTableViewCell: BaseTC {
         deleteButton.snp.makeConstraints { make in
             make.centerY.equalTo(dateLabel.snp.centerY)
             make.trailing.equalToSuperview().inset(18)
-            make.width.height.equalTo(16)
+            make.width.height.equalTo(UIScreen.main.bounds.width * 0.042)
         }
     }
     override func configureVC() {
