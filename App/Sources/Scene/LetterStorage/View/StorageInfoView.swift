@@ -78,15 +78,15 @@ class StorageInfoView: UIView {
         }
         statusBarFirstDetailView.snp.makeConstraints { make in
             make.height.equalToSuperview().multipliedBy(0.65)
-            make.trailing.equalToSuperview().inset(10)
+            make.trailing.equalToSuperview().inset(UIScreen.main.bounds.width * 0.026)
             make.centerY.equalToSuperview()
-            make.width.equalTo(10)
+            make.width.equalTo(UIScreen.main.bounds.width * 0.026)
         }
         statusBarSecondDetailView.snp.makeConstraints { make in
             make.height.equalToSuperview().multipliedBy(0.3)
-            make.trailing.equalTo(statusBarFirstDetailView.snp.leading).inset(-5)
+            make.trailing.equalTo(statusBarFirstDetailView.snp.leading).inset(-(UIScreen.main.bounds.width * 0.013))
             make.centerY.equalToSuperview()
-            make.width.equalTo(10)
+            make.width.equalTo(UIScreen.main.bounds.width * 0.026)
         }
         backgroundWhiteView.snp.makeConstraints { make in
             make.top.equalTo(topStatusBarView.snp.bottom)
@@ -94,12 +94,12 @@ class StorageInfoView: UIView {
         }
         fileImageView.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
-            make.leading.equalToSuperview().inset(15)
+            make.leading.equalToSuperview().inset(UIScreen.main.bounds.width * 0.04)
             make.width.height.equalTo(backgroundWhiteView.snp.height).multipliedBy(0.583)
         }
         titleNumberLabel.snp.makeConstraints { make in
             make.centerY.equalTo(fileImageView.snp.centerY)
-            make.leading.equalTo(fileImageView.snp.trailing).inset(-17)
+            make.leading.equalTo(fileImageView.snp.trailing).inset(-(UIScreen.main.bounds.width * 0.045))
         }
         messageNumLabel.snp.makeConstraints { make in
             make.trailing.equalToSuperview().multipliedBy(0.91)
@@ -107,7 +107,7 @@ class StorageInfoView: UIView {
         }
         messageImageView.snp.makeConstraints { make in
             make.centerX.equalTo(messageNumLabel.snp.centerX)
-            make.bottom.equalTo(messageNumLabel.snp.top).inset(-6)
+            make.bottom.equalTo(messageNumLabel.snp.top).inset(-(UIScreen.main.bounds.height * 0.009))
             make.width.equalTo(backgroundWhiteView.snp.height).multipliedBy(0.28)
             make.height.equalTo(backgroundWhiteView.snp.height).multipliedBy(0.22)
         }
