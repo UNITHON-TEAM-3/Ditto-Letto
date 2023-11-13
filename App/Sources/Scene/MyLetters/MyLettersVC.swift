@@ -24,20 +24,22 @@ class MyLetterVC: BaseVC {
     }
     // MARK: - Set UI
     override func addView() {
-        view.addSubview(myLetterView)
         view.addSubview(sendButton)
+        view.addSubview(myLetterView)
         view.addSubview(emptyView)
     }
     override func setLayout() {
-        myLetterView.snp.makeConstraints { make in
-            make.top.equalToSuperview().inset(70)
-            make.leading.trailing.equalToSuperview().inset(20)
-            make.bottom.equalToSuperview().inset(126)
-        }
         sendButton.snp.makeConstraints { make in
-            make.leading.trailing.equalToSuperview().inset(20)
-            make.height.equalTo(55)
-            make.top.equalTo(myLetterView.snp.bottom).offset(20)
+            make.centerX.equalToSuperview()
+            make.width.equalToSuperview().multipliedBy(0.9)
+            make.height.equalTo(UIScreen.main.bounds.height * 0.075)
+            make.bottom.equalTo(view.safeAreaLayoutGuide).inset(UIScreen.main.bounds.height * 0.03)
+        }
+        myLetterView.snp.makeConstraints { make in
+            make.top.equalToSuperview().inset(UIScreen.main.bounds.height * 0.104)
+            make.centerX.equalToSuperview()
+            make.width.equalToSuperview().multipliedBy(0.9)
+            make.bottom.equalTo(sendButton.snp.top).inset(-(UIScreen.main.bounds.height * 0.02))
         }
         emptyView.snp.makeConstraints { make in
             make.edges.equalTo(myLetterView.tableView.snp.edges)

@@ -111,11 +111,11 @@ extension HomeTableViewCell {
             make.leading.equalToSuperview().inset(UIScreen.main.bounds.width * 0.053)
         }
         titleLabel.snp.makeConstraints { make in
-            make.top.equalTo(titleImageView.snp.top).inset(2)
+            make.top.equalTo(titleImageView.snp.top).inset(UIScreen.main.bounds.height * 0.003)
             make.leading.equalTo(titleImageView.snp.trailing).offset(UIScreen.main.bounds.width * 0.048)
         }
         subTitleLabel.snp.makeConstraints { make in
-            make.bottom.equalTo(titleImageView.snp.bottom).inset(2)
+            make.bottom.equalTo(titleImageView.snp.bottom).inset(UIScreen.main.bounds.height * 0.003)
             make.leading.equalTo(titleLabel.snp.leading)
         }
         replyButton.snp.makeConstraints { make in
@@ -133,7 +133,7 @@ extension HomeTableViewCell {
             make.leading.equalToSuperview().inset(UIScreen.main.bounds.width * 0.053)
         }
         transportationImageView.snp.makeConstraints { make in
-            make.top.equalTo(titleImageView.snp.bottom).offset(10)
+            make.top.equalTo(titleImageView.snp.bottom).offset(UIScreen.main.bounds.height * 0.015)
             make.centerX.equalTo(titleImageView.snp.centerX)
             make.width.height.equalTo(UIScreen.main.bounds.width * 0.047)
             make.bottom.equalToSuperview().inset(UIScreen.main.bounds.height * 0.021).priority(.low)
@@ -144,7 +144,7 @@ extension HomeTableViewCell {
         }
         transportationState.snp.makeConstraints { make in
             make.centerY.equalTo(transportationImageView.snp.centerY)
-            make.leading.equalTo(titleLabel.snp.leading).inset(2)
+            make.leading.equalTo(titleLabel.snp.leading).inset(UIScreen.main.bounds.height * 0.003)
             make.trailing.equalToSuperview().inset(UIScreen.main.bounds.width * 0.096)
             make.height.equalTo(UIScreen.main.bounds.width * 0.042)
         }
@@ -157,22 +157,22 @@ extension HomeTableViewCell {
             make.leading.equalToSuperview().inset(UIScreen.main.bounds.width * 0.053)
         }
         transportationImageView.snp.makeConstraints { make in
-            make.top.equalTo(titleImageView.snp.bottom).offset(10)
+            make.top.equalTo(titleImageView.snp.bottom).offset(UIScreen.main.bounds.height * 0.015)
             make.centerX.equalTo(titleImageView.snp.centerX)
             make.width.height.equalTo(UIScreen.main.bounds.width * 0.047)
             make.bottom.equalToSuperview().inset(UIScreen.main.bounds.height * 0.021).priority(.low)
         }
         titleLabel.snp.makeConstraints { make in
-            make.top.equalTo(titleImageView.snp.top).inset(2)
+            make.top.equalTo(titleImageView.snp.top).inset(UIScreen.main.bounds.height * 0.003)
             make.leading.equalTo(titleImageView.snp.trailing).offset(UIScreen.main.bounds.width * 0.048)
         }
         subTitleLabel.snp.makeConstraints { make in
-            make.bottom.equalTo(titleImageView.snp.bottom).inset(1)
+            make.bottom.equalTo(titleImageView.snp.bottom).inset(UIScreen.main.bounds.height * 0.0015)
             make.leading.equalTo(titleLabel.snp.leading)
         }
         transportationState.snp.makeConstraints { make in
             make.centerY.equalTo(transportationImageView.snp.centerY)
-            make.leading.equalTo(titleLabel.snp.leading).inset(2)
+            make.leading.equalTo(titleLabel.snp.leading).inset(UIScreen.main.bounds.height * 0.003)
             make.trailing.equalToSuperview().inset(UIScreen.main.bounds.width * 0.096)
             make.height.equalTo(UIScreen.main.bounds.width * 0.042)
         }
@@ -184,7 +184,7 @@ extension HomeTableViewCell {
         }
         transportationImageView.snp.makeConstraints { make in
             make.top.equalTo(titleLabel.snp.bottom).offset(UIScreen.main.bounds.height * 0.023)
-            make.leading.equalTo(titleLabel.snp.leading).inset(6)
+            make.leading.equalTo(titleLabel.snp.leading).inset(UIScreen.main.bounds.width * 0.016)
             make.bottom.equalToSuperview().inset(UIScreen.main.bounds.height * 0.025)
             make.width.height.equalTo(UIScreen.main.bounds.width * 0.047)
         }

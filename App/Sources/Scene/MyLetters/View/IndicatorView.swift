@@ -58,19 +58,19 @@ final class IndicatorView: UIView {
     private func setLayout() {
         triangleView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalToSuperview().inset(3)
+            make.top.equalToSuperview().inset(UIScreen.main.bounds.height * 0.004)
             make.width.equalToSuperview().multipliedBy(0.67)
             make.height.equalToSuperview().multipliedBy(0.025)
         }
         reverseTriangleView.snp.makeConstraints { make in
-            make.bottom.equalToSuperview().inset(3)
+            make.bottom.equalToSuperview().inset(UIScreen.main.bounds.height * 0.004)
             make.height.equalTo(triangleView.snp.height)
             make.leading.equalTo(triangleView.snp.leading)
             make.trailing.equalTo(triangleView.snp.trailing)
         }
         trackView.snp.makeConstraints { make in
-            make.top.equalTo(triangleView.snp.bottom).inset(-3)
-            make.bottom.equalTo(reverseTriangleView.snp.top).inset(-3)
+            make.top.equalTo(triangleView.snp.bottom).offset(UIScreen.main.bounds.height * 0.004)
+            make.bottom.equalTo(reverseTriangleView.snp.top).inset(-(UIScreen.main.bounds.height * 0.004))
             make.leading.equalTo(triangleView.snp.leading)
             make.trailing.equalTo(triangleView.snp.trailing)
         }

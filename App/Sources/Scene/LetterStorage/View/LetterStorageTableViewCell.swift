@@ -3,7 +3,6 @@ import DesignSystem
 import SnapKit
 
 class LetterStorageTableViewCell: BaseTC {
-
     static let identifier = "LetterStorageTableViewCell"
     // MARK: - Properties
     private var titleLabel: UILabel = {
@@ -35,26 +34,25 @@ class LetterStorageTableViewCell: BaseTC {
         [titleLabel, transportationImageView, dateLabel, deleteButton].forEach {
             addSubview($0)
         }
-        print(self.frame.height)
     }
     override func setLayout() {
         titleLabel.snp.makeConstraints { make in
-            make.leading.trailing.equalToSuperview().inset(23)
+            make.leading.trailing.equalToSuperview().inset(UIScreen.main.bounds.width * 0.042)
             make.top.equalToSuperview().inset(UIScreen.main.bounds.height * 0.032)
         }
         transportationImageView.snp.makeConstraints { make in
-            make.top.equalTo(titleLabel.snp.bottom).offset(15)
+            make.top.equalTo(titleLabel.snp.bottom).offset(UIScreen.main.bounds.height * 0.022)
             make.leading.equalTo(titleLabel.snp.leading)
             make.width.height.equalTo(UIScreen.main.bounds.width * 0.047)
             make.bottom.equalToSuperview().inset(UIScreen.main.bounds.height * 0.02)
         }
         dateLabel.snp.makeConstraints { make in
-            make.leading.equalTo(transportationImageView.snp.trailing).inset(-10)
+            make.leading.equalTo(transportationImageView.snp.trailing).offset(UIScreen.main.bounds.width * 0.026)
             make.centerY.equalTo(transportationImageView.snp.centerY)
         }
         deleteButton.snp.makeConstraints { make in
             make.centerY.equalTo(dateLabel.snp.centerY)
-            make.trailing.equalToSuperview().inset(18)
+            make.trailing.equalToSuperview().inset(UIScreen.main.bounds.width * 0.048)
             make.width.height.equalTo(UIScreen.main.bounds.width * 0.042)
         }
     }

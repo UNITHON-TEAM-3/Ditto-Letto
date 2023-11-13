@@ -23,16 +23,16 @@ class LetterStorageVC: BaseVC {
     }
     override func setLayout() {
         storageInfoView.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide).inset(6)
+            make.top.equalTo(view.safeAreaLayoutGuide).inset(UIScreen.main.bounds.height * 0.009)
             make.centerX.equalToSuperview()
-            make.width.equalToSuperview().multipliedBy(0.89)
+            make.width.equalToSuperview().multipliedBy(0.9)
             make.height.equalToSuperview().multipliedBy(0.11)
         }
         myLetterView.snp.makeConstraints { make in
-            make.top.equalTo(storageInfoView.snp.bottom).inset(-13)
+            make.top.equalTo(storageInfoView.snp.bottom).offset(UIScreen.main.bounds.height * 0.019)
             make.leading.equalTo(storageInfoView.snp.leading)
             make.trailing.equalTo(storageInfoView.snp.trailing)
-            make.bottom.equalTo(view.safeAreaLayoutGuide).inset(20)
+            make.bottom.equalTo(view.safeAreaLayoutGuide).inset(UIScreen.main.bounds.height * 0.03)
         }
     }
     override func configureVC() {

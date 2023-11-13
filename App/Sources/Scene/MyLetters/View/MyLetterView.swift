@@ -63,19 +63,19 @@ class MyLetterView: UIView {
     }
     private func setLayout() {
         redButton.snp.makeConstraints { make in
-            make.top.equalToSuperview().inset(11)
-            make.leading.equalToSuperview().inset(12)
-            make.height.width.equalTo(12)
+            make.top.equalToSuperview().inset(UIScreen.main.bounds.height * 0.016)
+            make.leading.equalToSuperview().inset(UIScreen.main.bounds.width * 0.032)
+            make.height.width.equalTo(UIScreen.main.bounds.width * 0.032)
         }
         blueButton.snp.makeConstraints { make in
             make.centerY.equalTo(redButton.snp.centerY)
-            make.leading.equalTo(redButton.snp.trailing).inset(-10)
-            make.width.height.equalTo(12)
+            make.leading.equalTo(redButton.snp.trailing).offset(UIScreen.main.bounds.width * 0.026)
+            make.height.width.equalTo(UIScreen.main.bounds.width * 0.032)
         }
         yelloButton.snp.makeConstraints { make in
             make.centerY.equalTo(blueButton.snp.centerY)
-            make.leading.equalTo(blueButton.snp.trailing).inset(-10)
-            make.width.height.equalTo(12)
+            make.leading.equalTo(blueButton.snp.trailing).offset(UIScreen.main.bounds.width * 0.026)
+            make.height.width.equalTo(UIScreen.main.bounds.width * 0.032)
         }
         title.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
@@ -83,18 +83,18 @@ class MyLetterView: UIView {
         }
         line.snp.makeConstraints { make in
             make.centerY.equalTo(title.snp.centerY)
-            make.trailing.equalToSuperview().inset(12)
-            make.height.equalTo(11)
-            make.width.equalTo(21)
+            make.trailing.equalToSuperview().inset(UIScreen.main.bounds.width * 0.026)
+            make.height.equalTo(UIScreen.main.bounds.height * 0.016)
+            make.width.equalTo(UIScreen.main.bounds.width * 0.056)
         }
         tableView.snp.makeConstraints { make in
-            make.top.equalToSuperview().inset(32)
-            make.leading.bottom.equalToSuperview().inset(12)
+            make.top.equalToSuperview().inset(UIScreen.main.bounds.height * 0.048)
+            make.leading.bottom.equalToSuperview().inset(UIScreen.main.bounds.width * 0.026)
             make.width.equalToSuperview().multipliedBy(0.88)
         }
         indicatorView.snp.makeConstraints { make in
             make.top.equalTo(tableView.snp.top)
-            make.trailing.equalToSuperview().inset(12)
+            make.trailing.equalToSuperview().inset(UIScreen.main.bounds.width * 0.026)
             make.leading.equalTo(tableView.snp.trailing)
             make.bottom.equalTo(tableView.snp.bottom)
         }
