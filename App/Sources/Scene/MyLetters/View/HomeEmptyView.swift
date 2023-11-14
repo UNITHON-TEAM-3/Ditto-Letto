@@ -36,22 +36,22 @@ class HomeEmptyView: UIView {
 
     // MARK: - Set UI
     private func addView() {
-        addSubview(tungLabel)
         addSubview(tungImageView)
+        addSubview(tungLabel)
         addSubview(questionLabel)
     }
     private func setLayout() {
         tungImageView.snp.makeConstraints { make in
             make.center.equalToSuperview()
-            make.height.equalTo(51)
-            make.width.equalTo(57)
+            make.height.equalTo(UIScreen.main.bounds.width * 0.136)
+            make.width.equalTo(UIScreen.main.bounds.width * 0.152)
         }
         tungLabel.snp.makeConstraints { make in
-            make.bottom.equalTo(tungImageView.snp.top).inset(-20)
+            make.bottom.equalTo(tungImageView.snp.top).inset(-(UIScreen.main.bounds.height * 0.03))
             make.centerX.equalToSuperview()
         }
         questionLabel.snp.makeConstraints { make in
-            make.top.equalTo(tungImageView.snp.bottom).inset(-20)
+            make.top.equalTo(tungImageView.snp.bottom).offset(UIScreen.main.bounds.height * 0.03)
             make.centerX.equalToSuperview()
         }
     }

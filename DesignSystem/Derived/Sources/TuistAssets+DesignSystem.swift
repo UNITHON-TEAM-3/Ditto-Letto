@@ -21,7 +21,7 @@
 // swiftlint:disable identifier_name line_length nesting type_body_length type_name
 public enum DesignSystemAsset {
   public enum Color {
-    public static let bg = DesignSystemColors(name: "bg")
+  public static let bg = DesignSystemColors(name: "bg")
     public static let dark = DesignSystemColors(name: "dark")
     public static let gray1 = DesignSystemColors(name: "gray1")
     public static let gray2 = DesignSystemColors(name: "gray2")
@@ -30,7 +30,7 @@ public enum DesignSystemAsset {
     public static let white = DesignSystemColors(name: "white")
   }
   public enum Image {
-    public static let generalImage = DesignSystemImages(name: "GeneralImage")
+  public static let generalImage = DesignSystemImages(name: "GeneralImage")
     public static let privateImage = DesignSystemImages(name: "PrivateImage")
     public static let profileImage = DesignSystemImages(name: "ProfileImage")
     public static let airplane = DesignSystemImages(name: "airplane")
@@ -55,6 +55,7 @@ public enum DesignSystemAsset {
     public static let personOn = DesignSystemImages(name: "person_on")
     public static let receive = DesignSystemImages(name: "receive")
     public static let redFolder = DesignSystemImages(name: "redFolder")
+    public static let replyButton = DesignSystemImages(name: "replyButton")
     public static let running = DesignSystemImages(name: "running")
     public static let runningIcon = DesignSystemImages(name: "runningIcon")
     public static let send = DesignSystemImages(name: "send")
@@ -65,6 +66,7 @@ public enum DesignSystemAsset {
     public static let state05 = DesignSystemImages(name: "state05")
     public static let state06 = DesignSystemImages(name: "state06")
     public static let state07 = DesignSystemImages(name: "state07")
+    public static let trashCan = DesignSystemImages(name: "trashCan")
     public static let twoLine = DesignSystemImages(name: "twoLine")
     public static let walk = DesignSystemImages(name: "walk")
     public static let walkIcon = DesignSystemImages(name: "walkIcon")
