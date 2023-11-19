@@ -49,5 +49,7 @@ public extension UIImage {
         public static let fourth = DesignSystemAsset.Image.fourth.image
         public static let pinkHeart = DesignSystemAsset.Image.heartPink.image
         public static let grayHeart = DesignSystemAsset.Image.heartGray.image
+        public static let cancel = DesignSystemAsset.Image.x.image
+        public static let onboardingBg = DesignSystemAsset.Image.onboardingBackground.image
     }
 }

@@ -31,6 +31,7 @@ public enum DesignSystemAsset {
   }
   public enum Image {
     public static let generalImage = DesignSystemImages(name: "GeneralImage")
+    public static let onboardingBackground = DesignSystemImages(name: "OnboardingBackground")
     public static let privateImage = DesignSystemImages(name: "PrivateImage")
     public static let profileImage = DesignSystemImages(name: "ProfileImage")
     public static let airplane = DesignSystemImages(name: "airplane")
@@ -75,6 +76,7 @@ public enum DesignSystemAsset {
     public static let walk = DesignSystemImages(name: "walk")
     public static let walkIcon = DesignSystemImages(name: "walkIcon")
     public static let windly = DesignSystemImages(name: "windly")
+    public static let x = DesignSystemImages(name: "x")
     public static let yellowFolder = DesignSystemImages(name: "yellowFolder")
     public static let yellowHeart = DesignSystemImages(name: "yellowHeart")
   }

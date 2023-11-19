@@ -1,60 +1,90 @@
 import UIKit
+import DesignSystem
 import SnapKit
 import Then
 import RxSwift
 import RxCocoa
 
 class OnboardingVC: BaseVC, UIScrollViewDelegate {
-    private let onboardingImages: [(mockUpimage: UIImage, pageImage: UIImage)] = [
-        (UIImage(named: "first")!, UIImage(named: "first")!),
-        (UIImage(named: "second")!, UIImage(named: "second")!),
-        (UIImage(named: "third")!, UIImage(named: "third")!),
-        (UIImage(named: "fourth")!, UIImage(named: "fourth")!)
-    ].compactMap { $0 as? (mockUpimage: UIImage, pageImage: UIImage) }
-
-    private let scrollView = UIScrollView()
+    private let onboardingImages: [UIImage] = [.Image.first, .Image.second, .Image.third, .Image.fourth]
+    private let xButton = UIButton(type: .system).then {
+        $0.setImage(.Image.cancel, for: .normal)
+        $0.setTitleColor(.black, for: .normal)
+        $0.backgroundColor = .clear
+    }
+    private let scrollView = UIScrollView().then {
+        $0.isPagingEnabled = true
+        $0.isScrollEnabled = true
+        $0.showsVerticalScrollIndicator = false
+        $0.showsHorizontalScrollIndicator = false
+        $0.backgroundColor = .red
+    }
+    private let onboardingBackgroundImage = UIImageView().then {
+        $0.image = .Image.first
+        $0.contentMode = .scaleAspectFit
+        $0.backgroundColor = .blue
+    }
     private let pageControl = UIPageControl()
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func addView() {
+        [
+            xButton,
+            onboardingBackgroundImage
+        ].forEach {
+            view.addSubview($0)
+        }
+        onboardingBackgroundImage.addSubview(scrollView)
+    }
+    override func configureVC() {
+        view.backgroundColor = .color(.dittoLettoColor(.main))
         setupScrollView()
         setupPageControl()
     }
-
-    private func setupScrollView() {
-        scrollView.delegate = self
-        scrollView.isPagingEnabled = true
-        scrollView.showsHorizontalScrollIndicator = false
-        scrollView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
-
-        for i in 0..<onboardingImages.count {
-            let imageView = UIImageView()
-            imageView.image = onboardingImages[i]
-            imageView.contentMode = .scaleAspectFit
-            let xPos = view.frame.width * CGFloat(i)
-            imageView.frame = CGRect(x: xPos, y: 0, width: view.frame.width, height: view.frame.height)
-            scrollView.contentSize.width = scrollView.frame.width * CGFloat(i + 1)
-            scrollView.addSubview(imageView)
+    override func setLayout() {
+        xButton.snp.makeConstraints {
+            $0.width.height.equalTo(UIScreen.main.bounds.width * 0.042)
+            $0.top.equalToSuperview().inset(UIScreen.main.bounds.height * 0.067)
+            $0.right.equalToSuperview().inset(UIScreen.main.bounds.width * 0.053)
         }
-        view.addSubview(scrollView)
+        onboardingBackgroundImage.snp.makeConstraints {
+            $0.width.equalToSuperview()
+            $0.top.equalToSuperview().inset(UIScreen.main.bounds.height * 0.137)
+            $0.height.equalTo(UIScreen.main.bounds.height * 0.811)
+        }
+        scrollView.snp.makeConstraints {
+            $0.height.equalTo(UIScreen.main.bounds.height * 0.811)
+            $0.center.equalToSuperview()
+        }
     }
+    func setupScrollView() {
+        scrollView.frame = self.view.bounds
+        scrollView.delegate = self
 
-    private func setupPageControl() {
+        for idx in 0..<onboardingImages.count {
+            let onboardingView = UIImageView().then {
+                $0.image = onboardingImages[idx]
+                $0.contentMode = .scaleAspectFit
+            }
+
+            onboardingView.frame = CGRect(
+                x: UIScreen.main.bounds.width * CGFloat(idx),
+                y: UIScreen.main.bounds.height * 0.025,
+                width: UIScreen.main.bounds.width,
+                height: onboardingBackgroundImage.frame.size.height
+            )
+            scrollView.addSubview(onboardingView)
+        }
+        scrollView.contentSize = CGSize(width: UIScreen.main.bounds.width * 4, height: onboardingBackgroundImage.frame.size.height)
+    }
+    func setupPageControl() {
         pageControl.numberOfPages = onboardingImages.count
-        pageControl.currentPageIndicatorTintColor = .white
-        pageControl.pageIndicatorTintColor = UIColor(named: "placeholderColor")
-        view.addSubview(pageControl)
-
-        pageControl.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            pageControl.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-            pageControl.widthAnchor.constraint(equalTo: view.widthAnchor),
-            pageControl.heightAnchor.constraint(equalToConstant: 20)
-        ])
+        pageControl.currentPageIndicatorTintColor = .clear
+        pageControl.pageIndicatorTintColor = .clear
+        pageControl.center = self.view.center
+        self.view.addSubview(pageControl)
     }
 
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        let pageNumber = scrollView.contentOffset.x / scrollView.frame.size.width
+        let pageNumber = round(scrollView.contentOffset.x / scrollView.frame.size.width)
         pageControl.currentPage = Int(pageNumber)
     }
 }
