@@ -20,7 +20,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         if Token.accessToken == nil {
             window?.rootViewController = LoginVC()
         } else {
-            window?.rootViewController = UINavigationController(rootViewController: MyLetterVC())
+            window?.rootViewController = UINavigationController(rootViewController: PhoneBookVC())
         }
 
         window?.makeKeyAndVisible()

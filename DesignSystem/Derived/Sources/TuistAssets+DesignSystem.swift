@@ -51,6 +51,7 @@ public enum DesignSystemAsset {
     public static let launchImage = DesignSystemImages(name: "launchImage")
     public static let loginImage = DesignSystemImages(name: "loginImage")
     public static let message = DesignSystemImages(name: "message")
+    public static let pen = DesignSystemImages(name: "pen")
     public static let personOff = DesignSystemImages(name: "person_off")
     public static let personOn = DesignSystemImages(name: "person_on")
     public static let receive = DesignSystemImages(name: "receive")
