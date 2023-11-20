@@ -44,7 +44,7 @@ class PhoneBookInfoView: UIView {
         $0.textColor = .color(.dittoLettoColor(.dark))
         return $0
     }(UILabel())
-    private let pencilButton: UIButton = {
+    let pencilButton: UIButton = {
         $0.setImage(UIImage(asset: DesignSystemAsset.Image.pen), for: .normal)
         return $0
     }(UIButton())

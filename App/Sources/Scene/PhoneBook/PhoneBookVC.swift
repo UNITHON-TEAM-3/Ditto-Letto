@@ -5,6 +5,7 @@ import RxSwift
 import RxCocoa
 
 class PhoneBookVC: BaseVC {
+    let viewModel = PhoneBookVM()
     // MARK: Properties
     private let phoneBookInfoView: PhoneBookInfoView = {
         $0.layer.shadowColor = UIColor.black.cgColor
@@ -42,6 +43,27 @@ class PhoneBookVC: BaseVC {
     }
     // MARK: - Bind
     override func bind() {
-        
+        let input = PhoneBookVM.Input(
+            tableViewModelSelected: phoneBookView.tableView.rx.itemSelected.asObservable(),
+            settingButtonTapped: phoneBookInfoView.pencilButton.rx.tap.asObservable())
+        let output = viewModel.transform(input)
+        output.phoneBookData
+            .observe(on: MainScheduler.instance)
+            .bind(to: phoneBookView.tableView.rx.items) { tableView, index, item in
+                guard let cell = tableView.dequeueReusableCell(
+                    withIdentifier: PhoneBookTableViewCell.identifier,
+                    for: IndexPath(row: index, section: 0)
+                ) as? PhoneBookTableViewCell else { return UITableViewCell() }
+                cell.selectionStyle = .none
+                cell.delegate = self
+                cell.model = item
+                return cell
+            }.disposed(by: disposeBag)
+    }
+}
+// MARK: - PhoneBookTableViewCellDelegate
+extension PhoneBookVC: PhoneBookTableViewCellDelegate {
+    func settingButtonTap() {
+        print("cell button Tap")
     }
 }

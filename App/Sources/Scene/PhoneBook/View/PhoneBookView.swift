@@ -22,6 +22,7 @@ class PhoneBookView: UIView {
         $0.separatorInset.left = 0
         $0.showsVerticalScrollIndicator = false
         $0.rowHeight = UITableView.automaticDimension
+        $0.register(PhoneBookTableViewCell.self, forCellReuseIdentifier: PhoneBookTableViewCell.identifier)
         return $0
     }(UITableView())
     // MARK: - Life Cycles
@@ -89,7 +90,8 @@ class PhoneBookView: UIView {
             make.width.equalTo(UIScreen.main.bounds.width * 0.07)
         }
         tableView.snp.makeConstraints { make in
-            make.top.leading.bottom.equalToSuperview()
+            make.top.bottom.equalToSuperview()
+            make.leading.equalTo(springView1.snp.trailing)
             make.trailing.equalTo(indicatorView.snp.leading)
         }
     }

@@ -75,6 +75,7 @@ class MyLetterVC: BaseVC {
                         for: IndexPath(row: index, section: 0)
                     ) as? HomeTableViewCell else { return UITableViewCell() }
                 cell.selectionStyle = .none
+                cell.delegate = self
                 cell.model = item
                 return cell
             }.disposed(by: disposeBag)
@@ -94,5 +95,10 @@ class MyLetterVC: BaseVC {
             .subscribe(onNext: {
                 self.navigationController?.pushViewController(NewLetterVC(), animated: true)
             }).disposed(by: disposeBag)
+    }
+}
+extension MyLetterVC: HomeTableViewCellDelegate {
+    func replyButtonTap() {
+        print("replyButton Tap")
     }
 }

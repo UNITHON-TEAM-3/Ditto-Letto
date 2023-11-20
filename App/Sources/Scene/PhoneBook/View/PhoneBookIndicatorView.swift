@@ -15,7 +15,7 @@ final class PhoneBookIndicatorView: UIView {
         didSet {
             guard let heightRatio = heightRatio else { return }
             self.trackTintView.snp.remakeConstraints {
-                $0.leading.trailing.equalToSuperview()
+                $0.leading.trailing.equalToSuperview().inset(UIScreen.main.bounds.width * 0.012)
                 $0.height.equalToSuperview().multipliedBy(heightRatio)
                 $0.top.greaterThanOrEqualToSuperview()
                 $0.bottom.lessThanOrEqualToSuperview()

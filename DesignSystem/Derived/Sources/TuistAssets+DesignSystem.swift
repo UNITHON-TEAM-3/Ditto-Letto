@@ -67,6 +67,7 @@ public enum DesignSystemAsset {
     public static let state05 = DesignSystemImages(name: "state05")
     public static let state06 = DesignSystemImages(name: "state06")
     public static let state07 = DesignSystemImages(name: "state07")
+    public static let threeDot = DesignSystemImages(name: "threeDot")
     public static let trashCan = DesignSystemImages(name: "trashCan")
     public static let twoLine = DesignSystemImages(name: "twoLine")
     public static let walk = DesignSystemImages(name: "walk")
