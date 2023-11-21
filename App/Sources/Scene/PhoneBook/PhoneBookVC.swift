@@ -15,6 +15,10 @@ class PhoneBookVC: BaseVC {
         return $0
     }(PhoneBookInfoView())
     private let phoneBookView = PhoneBookView()
+    private lazy var phoneBookTableHeaderView = PhoneBookTableHeaderView(frame: CGRect(x: 0, 
+                                                                                       y: 0,
+                                                                                       width: phoneBookView.tableView.bounds.width,
+                                                                                       height: UIScreen.main.bounds.height * 0.089))
     // MARK: - Life Cycles
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,12 +44,14 @@ class PhoneBookVC: BaseVC {
     override func configureVC() {
         self.navigationController?.navigationBar.topItem?.title = ""
         self.navigationController?.navigationBar.tintColor = .black
+        phoneBookView.tableView.tableHeaderView = phoneBookTableHeaderView
     }
     // MARK: - Bind
     override func bind() {
         let input = PhoneBookVM.Input(
             tableViewModelSelected: phoneBookView.tableView.rx.itemSelected.asObservable(),
-            settingButtonTapped: phoneBookInfoView.pencilButton.rx.tap.asObservable())
+            settingButtonTapped: phoneBookInfoView.pencilButton.rx.tap.asObservable(),
+            tableHeaderViewTapped: phoneBookTableHeaderView.tapObservable)
         let output = viewModel.transform(input)
         output.phoneBookData
             .observe(on: MainScheduler.instance)

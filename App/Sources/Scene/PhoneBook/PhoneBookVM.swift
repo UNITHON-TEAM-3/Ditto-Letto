@@ -9,6 +9,7 @@ class PhoneBookVM: BaseVM {
     struct Input {
         let tableViewModelSelected: Observable<IndexPath>
         let settingButtonTapped: Observable<Void>
+        let tableHeaderViewTapped: Observable<Void>
     }
 
     struct Output {
@@ -29,6 +30,10 @@ class PhoneBookVM: BaseVM {
         input.settingButtonTapped
             .bind { _ in
                 print("setting Button Tap")
+            }.disposed(by: disposeBag)
+        input.tableHeaderViewTapped
+            .bind { _ in
+                print("tableHeaderView Tap")
             }.disposed(by: disposeBag)
         Observable
             .combineLatest(input.tableViewModelSelected, output.phoneBookData)
