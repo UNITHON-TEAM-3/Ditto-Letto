@@ -2,8 +2,6 @@ import UIKit
 import DesignSystem
 import SnapKit
 import Then
-import RxSwift
-import RxCocoa
 
 class OnboardingVC: BaseVC, UIScrollViewDelegate {
     private let onboardingImages: [UIImage] = [.Image.first, .Image.second, .Image.third, .Image.fourth]
@@ -19,20 +17,14 @@ class OnboardingVC: BaseVC, UIScrollViewDelegate {
         $0.showsHorizontalScrollIndicator = false
         $0.backgroundColor = .red
     }
-    private let onboardingBackgroundImage = UIImageView().then {
-        $0.image = .Image.first
-        $0.contentMode = .scaleAspectFit
-        $0.backgroundColor = .blue
-    }
     private let pageControl = UIPageControl()
     override func addView() {
         [
             xButton,
-            onboardingBackgroundImage
+            scrollView
         ].forEach {
             view.addSubview($0)
         }
-        onboardingBackgroundImage.addSubview(scrollView)
     }
     override func configureVC() {
         view.backgroundColor = .color(.dittoLettoColor(.main))
@@ -42,17 +34,13 @@ class OnboardingVC: BaseVC, UIScrollViewDelegate {
     override func setLayout() {
         xButton.snp.makeConstraints {
             $0.width.height.equalTo(UIScreen.main.bounds.width * 0.042)
-            $0.top.equalToSuperview().inset(UIScreen.main.bounds.height * 0.067)
-            $0.right.equalToSuperview().inset(UIScreen.main.bounds.width * 0.053)
-        }
-        onboardingBackgroundImage.snp.makeConstraints {
-            $0.width.equalToSuperview()
-            $0.top.equalToSuperview().inset(UIScreen.main.bounds.height * 0.137)
-            $0.height.equalTo(UIScreen.main.bounds.height * 0.811)
+            $0.top.equalToSuperview().inset(UIScreen.main.bounds.height * 0.077)
+            $0.right.equalToSuperview().inset(UIScreen.main.bounds.width * 0.061)
         }
         scrollView.snp.makeConstraints {
+            $0.width.equalToSuperview()
             $0.height.equalTo(UIScreen.main.bounds.height * 0.811)
-            $0.center.equalToSuperview()
+            $0.centerY.equalToSuperview().offset(UIScreen.main.bounds.height * 0.04)
         }
     }
     func setupScrollView() {
@@ -69,11 +57,11 @@ class OnboardingVC: BaseVC, UIScrollViewDelegate {
                 x: UIScreen.main.bounds.width * CGFloat(idx),
                 y: UIScreen.main.bounds.height * 0.025,
                 width: UIScreen.main.bounds.width,
-                height: onboardingBackgroundImage.frame.size.height
+                height: UIScreen.main.bounds.height * 0.811
             )
             scrollView.addSubview(onboardingView)
         }
-        scrollView.contentSize = CGSize(width: UIScreen.main.bounds.width * 4, height: onboardingBackgroundImage.frame.size.height)
+//        scrollView.contentSize = CGSize(width: UIScreen.main.bounds.width * 4, height: onboardingBackgroundImage.frame.size.height)
     }
     func setupPageControl() {
         pageControl.numberOfPages = onboardingImages.count
