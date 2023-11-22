@@ -15,7 +15,11 @@ class PhoneBookVC: BaseVC {
         return $0
     }(PhoneBookInfoView())
     private let phoneBookView = PhoneBookView()
-    private lazy var phoneBookTableHeaderView = PhoneBookTableHeaderView(frame: CGRect(x: 0, 
+    private let emptyView = HomeEmptyView(text: """
+            나의 전화번호부에  \n
+            누구를 저장해볼까요?
+        """)
+    private lazy var phoneBookTableHeaderView = PhoneBookTableHeaderView(frame: CGRect(x: 0,
                                                                                        y: 0,
                                                                                        width: phoneBookView.tableView.bounds.width,
                                                                                        height: UIScreen.main.bounds.height * 0.089))
@@ -45,6 +49,7 @@ class PhoneBookVC: BaseVC {
         self.navigationController?.navigationBar.topItem?.title = ""
         self.navigationController?.navigationBar.tintColor = .black
         phoneBookView.tableView.tableHeaderView = phoneBookTableHeaderView
+        phoneBookView.tableView.backgroundView = emptyView
     }
     // MARK: - Bind
     override func bind() {
@@ -55,6 +60,9 @@ class PhoneBookVC: BaseVC {
         let output = viewModel.transform(input)
         output.phoneBookData
             .observe(on: MainScheduler.instance)
+            .do(onNext: { [weak self] data in
+                self?.phoneBookView.tableView.backgroundView?.isHidden = !data.isEmpty
+            })
             .bind(to: phoneBookView.tableView.rx.items) { tableView, index, item in
                 guard let cell = tableView.dequeueReusableCell(
                     withIdentifier: PhoneBookTableViewCell.identifier,
