@@ -16,7 +16,7 @@ class PhoneBookView: UIView {
     private lazy var springView4 = makeSpringView()
     private lazy var springView5 = makeSpringView()
     private lazy var springView6 = makeSpringView()
-    private lazy var indicatorView = PhoneBookIndicatorView()
+    lazy var indicatorView = PhoneBookIndicatorView()
     let tableView: UITableView = {
         $0.backgroundColor = .white
         $0.separatorInset.left = 0
@@ -94,5 +94,16 @@ class PhoneBookView: UIView {
             make.leading.equalTo(springView1.snp.trailing)
             make.trailing.equalTo(indicatorView.snp.leading)
         }
+    }
+    func setIndicatorSize() {
+        let tableHeight = tableView.bounds.height
+        let contentHeight = tableView.contentSize.height
+        let insetTop = tableView.contentInset.top
+        let insetBottom = tableView.contentInset.bottom
+        let allHeight = contentHeight + insetTop + insetBottom // 실제로 보여지는 tableView의 콘텐츠 높이
+        if allHeight < tableHeight { return } // 콘텐츠 사이즈가 테이블 뷰 컨텐츠 사이즈보다 작을 시
+        let heightRatio = min(1.0, tableHeight / allHeight) // 높이 비율을 계산
+        indicatorView.heightRatio = heightRatio
+        indicatorView.layoutIfNeeded()
     }
 }

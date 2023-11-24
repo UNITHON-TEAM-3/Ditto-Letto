@@ -27,6 +27,10 @@ class PhoneBookVC: BaseVC {
     override func viewDidLoad() {
         super.viewDidLoad()
     }
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.phoneBookView.setIndicatorSize()
+    }
     // MARK: - Set UI
     override func addView() {
         [phoneBookInfoView, phoneBookView].forEach({
@@ -58,6 +62,17 @@ class PhoneBookVC: BaseVC {
             settingButtonTapped: phoneBookInfoView.pencilButton.rx.tap.asObservable(),
             tableHeaderViewTapped: phoneBookTableHeaderView.tapObservable)
         let output = viewModel.transform(input)
+        phoneBookView.tableView.rx.contentOffset
+            .observe(on: MainScheduler.instance)
+            .bind { [weak self] contentOffset in
+                guard let topInset = self?.phoneBookView.tableView.contentInset.top,
+                      let bottomInset = self?.phoneBookView.tableView.contentInset.bottom,
+                      let contentHeight = self?.phoneBookView.tableView.contentSize.height else { return }
+                let scroll = contentOffset.y + topInset
+                let height = contentHeight + topInset + bottomInset
+                let scrollRatio = scroll / height
+                self?.phoneBookView.indicatorView.topOffsetRatio = scrollRatio
+            }.disposed(by: disposeBag)
         output.phoneBookData
             .observe(on: MainScheduler.instance)
             .do(onNext: { [weak self] data in
