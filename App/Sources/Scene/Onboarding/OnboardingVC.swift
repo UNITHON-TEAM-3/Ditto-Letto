@@ -15,9 +15,10 @@ class OnboardingVC: BaseVC, UIScrollViewDelegate {
         $0.isScrollEnabled = true
         $0.showsVerticalScrollIndicator = false
         $0.showsHorizontalScrollIndicator = false
-        $0.backgroundColor = .red
+        $0.backgroundColor = .clear
+        $0.bounces = false
+        $0.bouncesZoom = false
     }
-    private let pageControl = UIPageControl()
     override func addView() {
         [
             xButton,
@@ -29,7 +30,7 @@ class OnboardingVC: BaseVC, UIScrollViewDelegate {
     override func configureVC() {
         view.backgroundColor = .color(.dittoLettoColor(.main))
         setupScrollView()
-        setupPageControl()
+        navigationController?.isNavigationBarHidden = true
     }
     override func setLayout() {
         xButton.snp.makeConstraints {
@@ -39,8 +40,8 @@ class OnboardingVC: BaseVC, UIScrollViewDelegate {
         }
         scrollView.snp.makeConstraints {
             $0.width.equalToSuperview()
-            $0.height.equalTo(UIScreen.main.bounds.height * 0.811)
-            $0.centerY.equalToSuperview().offset(UIScreen.main.bounds.height * 0.04)
+            $0.height.equalToSuperview().multipliedBy(0.811)
+            $0.top.equalTo(xButton.snp.bottom).offset(UIScreen.main.bounds.height * 0.025)
         }
     }
     func setupScrollView() {
@@ -55,24 +56,15 @@ class OnboardingVC: BaseVC, UIScrollViewDelegate {
 
             onboardingView.frame = CGRect(
                 x: UIScreen.main.bounds.width * CGFloat(idx),
-                y: UIScreen.main.bounds.height * 0.025,
+                y: 0,
                 width: UIScreen.main.bounds.width,
                 height: UIScreen.main.bounds.height * 0.811
             )
             scrollView.addSubview(onboardingView)
         }
-//        scrollView.contentSize = CGSize(width: UIScreen.main.bounds.width * 4, height: onboardingBackgroundImage.frame.size.height)
-    }
-    func setupPageControl() {
-        pageControl.numberOfPages = onboardingImages.count
-        pageControl.currentPageIndicatorTintColor = .clear
-        pageControl.pageIndicatorTintColor = .clear
-        pageControl.center = self.view.center
-        self.view.addSubview(pageControl)
-    }
-
-    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        let pageNumber = round(scrollView.contentOffset.x / scrollView.frame.size.width)
-        pageControl.currentPage = Int(pageNumber)
+        scrollView.contentSize = CGSize(
+            width: UIScreen.main.bounds.width * 4,
+            height: UIScreen.main.bounds.height * 0.811
+        )
     }
 }
