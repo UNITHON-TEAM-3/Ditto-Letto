@@ -2,6 +2,7 @@ import UIKit
 import DesignSystem
 import SnapKit
 import Then
+import RxCocoa
 
 class OnboardingVC: BaseVC, UIScrollViewDelegate {
     private let onboardingImages: [UIImage] = [.Image.first, .Image.second, .Image.third, .Image.fourth]
@@ -27,6 +28,13 @@ class OnboardingVC: BaseVC, UIScrollViewDelegate {
             view.addSubview($0)
         }
     }
+    override func bind() {
+        xButton.rx.tap
+            .bind {
+                self.navigationController?.pushViewController(MyLetterVC(), animated: true)
+            }
+            .disposed(by: disposeBag)
+    }
     override func configureVC() {
         view.backgroundColor = .color(.dittoLettoColor(.main))
         setupScrollView()
@@ -45,7 +53,6 @@ class OnboardingVC: BaseVC, UIScrollViewDelegate {
         }
     }
     func setupScrollView() {
-        scrollView.frame = self.view.bounds
         scrollView.delegate = self
 
         for idx in 0..<onboardingImages.count {
