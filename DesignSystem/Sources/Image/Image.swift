@@ -50,6 +50,7 @@ public extension UIImage {
         public static let pinkHeart = DesignSystemAsset.Image.heartPink.image
         public static let grayHeart = DesignSystemAsset.Image.heartGray.image
         public static let cancel = DesignSystemAsset.Image.x.image
-        public static let onboardingBg = DesignSystemAsset.Image.onboardingBackground.image
+        public static let replyButton = DesignSystemAsset.Image.replyButton.image
+        public static let trashCan = DesignSystemAsset.Image.trashCan.image
     }
 }

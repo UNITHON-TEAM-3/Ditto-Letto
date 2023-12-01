@@ -2,7 +2,7 @@ import UIKit
 import SnapKit
 import DesignSystem
 
-class KeepingLetterView: UIView {
+class StorageInfoView: UIView {
     // MARK: - Properties
     private let topStatusBarView: UIView = {
         $0.backgroundColor = .color(.dittoLettoColor(.dark))
@@ -14,6 +14,10 @@ class KeepingLetterView: UIView {
     }(UIView())
     private let statusBarSecondDetailView: UIView = {
         $0.backgroundColor = .color(.dittoLettoColor(.gray1))
+        return $0
+    }(UIView())
+    private let backgroundWhiteView: UIView = {
+        $0.backgroundColor = .white
         return $0
     }(UIView())
     private let fileImageView: UIImageView = {
@@ -52,15 +56,16 @@ class KeepingLetterView: UIView {
 
     // MARK: - Set UI
     private func addView() {
+        self.addSubview(topStatusBarView)
+        self.addSubview(backgroundWhiteView)
         [
-            topStatusBarView,
             fileImageView,
             titleNumberLabel,
             lineView,
             messageImageView,
             messageNumLabel
         ].forEach {
-            self.addSubview($0)
+            backgroundWhiteView.addSubview($0)
         }
         topStatusBarView.addSubview(statusBarFirstDetailView)
         topStatusBarView.addSubview(statusBarSecondDetailView)
@@ -69,44 +74,47 @@ class KeepingLetterView: UIView {
         topStatusBarView.snp.makeConstraints { make in
             make.top.equalToSuperview()
             make.leading.trailing.equalToSuperview()
-            make.height.equalTo(16)
+            make.height.equalToSuperview().multipliedBy(0.18)
         }
         statusBarFirstDetailView.snp.makeConstraints { make in
-            make.top.bottom.equalToSuperview().inset(3)
-            make.trailing.equalToSuperview().inset(10)
+            make.height.equalToSuperview().multipliedBy(0.65)
+            make.trailing.equalToSuperview().inset(UIScreen.main.bounds.width * 0.026)
             make.centerY.equalToSuperview()
-            make.width.equalTo(10)
+            make.width.equalTo(UIScreen.main.bounds.width * 0.026)
         }
         statusBarSecondDetailView.snp.makeConstraints { make in
-            make.top.bottom.equalToSuperview().inset(6)
-            make.trailing.equalTo(statusBarFirstDetailView.snp.leading).inset(-5)
+            make.height.equalToSuperview().multipliedBy(0.3)
+            make.trailing.equalTo(statusBarFirstDetailView.snp.leading).inset(-(UIScreen.main.bounds.width * 0.013))
             make.centerY.equalToSuperview()
-            make.width.equalTo(10)
+            make.width.equalTo(UIScreen.main.bounds.width * 0.026)
+        }
+        backgroundWhiteView.snp.makeConstraints { make in
+            make.top.equalTo(topStatusBarView.snp.bottom)
+            make.leading.trailing.bottom.equalToSuperview()
         }
         fileImageView.snp.makeConstraints { make in
-            make.top.equalTo(topStatusBarView.snp.bottom).inset(-14)
-            make.leading.equalToSuperview().inset(15)
-            make.width.equalTo(45)
-            make.height.equalTo(40)
+            make.centerY.equalToSuperview()
+            make.leading.equalToSuperview().inset(UIScreen.main.bounds.width * 0.04)
+            make.width.height.equalTo(backgroundWhiteView.snp.height).multipliedBy(0.583)
         }
         titleNumberLabel.snp.makeConstraints { make in
             make.centerY.equalTo(fileImageView.snp.centerY)
-            make.leading.equalTo(fileImageView.snp.trailing).inset(-17)
-        }
-        messageImageView.snp.makeConstraints { make in
-            make.top.equalTo(topStatusBarView.snp.bottom).inset(-20)
-            make.trailing.equalToSuperview().inset(24)
-            make.width.equalTo(20)
-            make.height.equalTo(16)
+            make.leading.equalTo(fileImageView.snp.trailing).inset(-(UIScreen.main.bounds.width * 0.045))
         }
         messageNumLabel.snp.makeConstraints { make in
-            make.top.equalTo(messageImageView.snp.bottom).inset(-4)
-            make.centerX.equalTo(messageImageView.snp.centerX)
+            make.trailing.equalToSuperview().multipliedBy(0.91)
+            make.bottom.equalToSuperview().multipliedBy(0.77)
+        }
+        messageImageView.snp.makeConstraints { make in
+            make.centerX.equalTo(messageNumLabel.snp.centerX)
+            make.bottom.equalTo(messageNumLabel.snp.top).inset(-(UIScreen.main.bounds.height * 0.009))
+            make.width.equalTo(backgroundWhiteView.snp.height).multipliedBy(0.28)
+            make.height.equalTo(backgroundWhiteView.snp.height).multipliedBy(0.22)
         }
         lineView.snp.makeConstraints { make in
             make.top.equalTo(topStatusBarView.snp.bottom)
             make.bottom.equalToSuperview()
-            make.trailing.equalTo(messageImageView.snp.leading).inset(-24)
+            make.trailing.equalTo(messageImageView.snp.leading).multipliedBy(0.91)
             make.width.equalTo(0.6)
         }
     }
