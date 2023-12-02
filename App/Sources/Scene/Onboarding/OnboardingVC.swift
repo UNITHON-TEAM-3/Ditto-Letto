@@ -60,7 +60,6 @@ class OnboardingVC: BaseVC, UIScrollViewDelegate {
                 $0.image = onboardingImages[idx]
                 $0.contentMode = .scaleAspectFit
             }
-
             onboardingView.frame = CGRect(
                 x: UIScreen.main.bounds.width * CGFloat(idx),
                 y: 0,
