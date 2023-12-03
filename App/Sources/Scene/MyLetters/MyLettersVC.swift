@@ -90,6 +90,7 @@ class MyLetterVC: BaseVC {
             }.disposed(by: disposeBag)
     }
     override func configureVC() {
+        navigationController?.isNavigationBarHidden = true
         sendButton.rx.tap
             .subscribe(onNext: {
                 self.navigationController?.pushViewController(NewLetterVC(), animated: true)

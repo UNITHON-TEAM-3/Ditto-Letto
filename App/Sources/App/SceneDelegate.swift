@@ -1,5 +1,6 @@
 import UIKit
 import KakaoSDKAuth
+import DesignSystem
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -15,12 +16,17 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(windowScene: windowScence)
         window?.windowScene = windowScence
 
+//        UserDefaults().removeObject(forKey: "first")
         print("Token = \(Token.accessToken ?? "NOTHING RECEIVED")")
 
         if Token.accessToken == nil {
             window?.rootViewController = LoginVC()
         } else {
-            window?.rootViewController = UINavigationController(rootViewController: MyLetterVC())
+            if Storage.isFirstTime() {
+                window?.rootViewController = UINavigationController(rootViewController: OnboardingVC())
+            } else {
+                window?.rootViewController = UINavigationController(rootViewController: MyLetterVC())
+            }
         }
 
         window?.makeKeyAndVisible()
