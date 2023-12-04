@@ -93,6 +93,9 @@ class PhoneBookVC: BaseVC {
 // MARK: - PhoneBookTableViewCellDelegate
 extension PhoneBookVC: PhoneBookTableViewCellDelegate {
     func settingButtonTap() {
-        print("cell button Tap")
+        let sheetView = BottomSheetView()
+        sheetView.bottomSheetType = .home
+        sheetView.modalPresentationStyle = .overFullScreen
+        self.present(sheetView, animated: false)
     }
 }
