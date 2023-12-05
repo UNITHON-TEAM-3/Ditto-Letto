@@ -39,14 +39,11 @@ class PhoneBookTableViewCell: BaseTC {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
     }
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        if let contentView = superview {
-            contentView.bringSubviewToFront(self)
-        }
-    }
     override func addView() {
-        [emoziImageView, nameLabel, numberLabel, settingButton].forEach {
+        [emoziImageView, 
+         nameLabel,
+         numberLabel,
+         settingButton].forEach {
             contentView.addSubview($0)
         }
     }

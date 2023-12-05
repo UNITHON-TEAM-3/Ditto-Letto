@@ -8,7 +8,6 @@ class PhoneBookVM: BaseVM {
     // MARK: - In/Out
     struct Input {
         let tableViewModelSelected: Observable<IndexPath>
-        let settingButtonTapped: Observable<Void>
         let tableHeaderViewTapped: Observable<Void>
     }
 
@@ -32,10 +31,6 @@ class PhoneBookVM: BaseVM {
     func transform(_ input: Input) -> Output {
         let api = Service()
         let output = Output()
-        input.settingButtonTapped
-            .bind { _ in
-                print("setting Button Tap")
-            }.disposed(by: disposeBag)
         input.tableHeaderViewTapped
             .bind { _ in
                 print("tableHeaderView Tap")

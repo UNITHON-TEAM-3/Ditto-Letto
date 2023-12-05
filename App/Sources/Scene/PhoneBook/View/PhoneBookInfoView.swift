@@ -8,30 +8,12 @@ class PhoneBookInfoView: UIView {
         $0.backgroundColor = .white
         return $0
     }(UIView())
-    private let emptyView1: UIView = {
-        $0.backgroundColor = .color(.dittoLettoColor(.bg))
-        return $0
-    }(UIView())
-    private let emptyView2: UIView = {
-        $0.backgroundColor = .color(.dittoLettoColor(.bg))
-        return $0
-    }(UIView())
-    private let emptyView3: UIView = {
-        $0.backgroundColor = .color(.dittoLettoColor(.bg))
-        return $0
-    }(UIView())
-    private let emptyView4: UIView = {
-        $0.backgroundColor = .color(.dittoLettoColor(.bg))
-        return $0
-    }(UIView())
-    private let emptyView5: UIView = {
-        $0.backgroundColor = .color(.dittoLettoColor(.bg))
-        return $0
-    }(UIView())
-    private let emptyView6: UIView = {
-        $0.backgroundColor = .color(.dittoLettoColor(.bg))
-        return $0
-    }(UIView())
+    private let emptyView1 = UIView()
+    private let emptyView2 = UIView()
+    private let emptyView3 = UIView()
+    private let emptyView4 = UIView()
+    private let emptyView5 = UIView()
+    private let emptyView6 = UIView()
     private let myNumberLabel: UILabel = {
         $0.text = "나의 번호"
         $0.font = .ramche(.footnote)
@@ -61,6 +43,14 @@ class PhoneBookInfoView: UIView {
     }
     // MARK: - Set UI
     private func addView() {
+        [emptyView1,
+         emptyView2,
+         emptyView3,
+         emptyView4,
+         emptyView5,
+         emptyView6].forEach {
+            $0.backgroundColor = .color(.dittoLettoColor(.bg))
+        }
         addSubview(backgroundView)
         [emptyView1,
          emptyView2,

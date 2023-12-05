@@ -15,14 +15,19 @@ class PhoneBookVC: BaseVC {
         return $0
     }(PhoneBookInfoView())
     private let phoneBookView = PhoneBookView()
-    private let emptyView = HomeEmptyView(text: """
+    private let emptyView = HomeEmptyView(
+        text: """
             나의 전화번호부에  \n
             누구를 저장해볼까요?
-        """)
-    private lazy var phoneBookTableHeaderView = PhoneBookTableHeaderView(frame: CGRect(x: 0,
-                                                                                       y: 0,
-                                                                                       width: phoneBookView.tableView.bounds.width,
-                                                                                       height: UIScreen.main.bounds.height * 0.089))
+        """
+    )
+    private lazy var phoneBookTableHeaderView = PhoneBookTableHeaderView(
+        frame: CGRect(x: 0,
+                      y: 0,
+                      width: phoneBookView.tableView.bounds.width,
+                      height: UIScreen.main.bounds.height * 0.089
+                     )
+    )
     // MARK: - Life Cycles
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,7 +38,8 @@ class PhoneBookVC: BaseVC {
     }
     // MARK: - Set UI
     override func addView() {
-        [phoneBookInfoView, phoneBookView].forEach({
+        [phoneBookInfoView, 
+         phoneBookView].forEach({
             view.addSubview($0)
         })
     }
@@ -59,9 +65,13 @@ class PhoneBookVC: BaseVC {
     override func bind() {
         let input = PhoneBookVM.Input(
             tableViewModelSelected: phoneBookView.tableView.rx.itemSelected.asObservable(),
-            settingButtonTapped: phoneBookInfoView.pencilButton.rx.tap.asObservable(),
-            tableHeaderViewTapped: phoneBookTableHeaderView.tapObservable)
+            tableHeaderViewTapped: phoneBookTableHeaderView.tapObservable
+        )
         let output = viewModel.transform(input)
+        phoneBookInfoView.pencilButton.rx.tap
+            .bind {
+                print("pencil Tap")
+            }.disposed(by: disposeBag)
         phoneBookView.tableView.rx.contentOffset
             .observe(on: MainScheduler.instance)
             .bind { [weak self] contentOffset in

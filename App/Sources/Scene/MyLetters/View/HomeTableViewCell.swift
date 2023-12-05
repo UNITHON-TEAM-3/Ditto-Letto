@@ -5,6 +5,7 @@ import SnapKit
 protocol HomeTableViewCellDelegate: AnyObject {
     func replyButtonTap()
 }
+
 class HomeTableViewCell: BaseTC {
     static let identifier = "HomeTableViewCell"
     weak var delegate: HomeTableViewCellDelegate?
@@ -43,7 +44,12 @@ class HomeTableViewCell: BaseTC {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
     }
     override func addView() {
-        [titleImageView, titleLabel, subTitleLabel, transportationImageView, transportationState, replyButton].forEach {
+        [titleImageView, 
+         titleLabel,
+         subTitleLabel,
+         transportationImageView,
+         transportationState,
+         replyButton].forEach {
             contentView.addSubview($0)
         }
         setLayout(type: .sendingFriend)

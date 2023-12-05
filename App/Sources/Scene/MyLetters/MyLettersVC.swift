@@ -13,10 +13,12 @@ class MyLetterVC: BaseVC {
         $0.setMainButton(color: .main)
         return $0
     }(UIButton())
-    private let emptyView = HomeEmptyView(text: """
+    private let emptyView = HomeEmptyView(
+        text: """
             나에게 마음을 전달할 수 있도록\n
             편지를 보내볼까요?
-        """)
+            """
+    )
     // MARK: - Life Cycles
     override func viewDidLoad() {
         super.viewDidLoad()
