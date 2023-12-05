@@ -6,16 +6,26 @@ public enum BottomSheetType: CaseIterable {
     case modifyDelete
 }
 
-public protocol BottomSheetDelegate {
-    func tappedEvent()
-}
-
 public final class BottomSheetView: UIViewController {
+    enum HomeSheetType: String, CaseIterable {
+        case saveNumber = "번호 저장하기"
+        case deleteToList = "리스트에서 기록 삭제하기"
+    }
+    enum SetNumberSheetType: String, CaseIterable {
+        case one = "011"
+        case six = "016"
+        case seven = "017"
+        case eight = "018"
+        case nine = "019"
+    }
+    enum ModifyDeleteSheetType: String, CaseIterable {
+        case modify = "수정하기"
+        case delete = "삭제하기"
+    }
     public var bottomSheetType: BottomSheetType = .home
-    var delegate: BottomSheetDelegate?
     // MARK: - Properties
     private let dimmedView: UIView = {
-        $0.backgroundColor = UIColor.black.withAlphaComponent(0.6)
+        $0.backgroundColor = UIColor.black.withAlphaComponent(0.7)
         $0.alpha = 0
         return $0
     }(UIView())
@@ -27,16 +37,31 @@ public final class BottomSheetView: UIViewController {
         return $0
     }(UIView())
     var numberOrFriendLabel: UILabel = {
-        $0.text = "바텀시트 title"
         $0.font = .ramche(.body)
         $0.textColor = .color(.dittoLettoColor(.dark))
         return $0
     }(UILabel())
-    private let seperateLine: UIView = {
+    private let seperateLine1: UIView = {
         $0.backgroundColor = .color(.dittoLettoColor(.dark))
         return $0
     }(UIView())
-    private let bottomTableSheetController = BottomTableSheetController()
+    private let seperateLine2: UIView = {
+        $0.backgroundColor = .systemGray4
+        return $0
+    }(UIView())
+    private let deleteSheetButton: UIButton = {
+        $0.setTitle("닫기", for: .normal)
+        $0.setTitleColor(.color(.dittoLettoColor(.dark)), for: .normal)
+        $0.setBackgroundColor(.systemGray6, for: .highlighted)
+        $0.titleLabel?.font = .ramche(.body)
+        return $0
+    }(UIButton())
+    private var stackView: UIStackView = {
+        $0.axis = .vertical
+        $0.distribution = .fillEqually
+        $0.alignment = .fill
+        return $0
+    }(UIStackView())
     private var bottomSheetViewTopConstraint: NSLayoutConstraint!
     var defaultHeight: CGFloat = 300
     // MARK: - Life Cycles
@@ -53,22 +78,32 @@ public final class BottomSheetView: UIViewController {
     func addView() {
         view.addSubview(dimmedView)
         view.addSubview(bottomSheetView)
+        bottomSheetView.addSubview(deleteSheetButton)
         switch bottomSheetType {
         case .home:
-            defaultHeight = UIScreen.main.bounds.height * 0.8
+            numberOrFriendLabel.text = "친구 ㅋ"
+            defaultHeight = UIScreen.main.bounds.height * 0.38
             bottomSheetView.addSubview(numberOrFriendLabel)
-            bottomSheetView.addSubview(seperateLine)
+            bottomSheetView.addSubview(seperateLine1)
+            bottomSheetView.addSubview(seperateLine2)
+            bottomSheetView.addSubview(stackView)
         case .setNumber:
-            defaultHeight = UIScreen.main.bounds.height * 0.4
+            numberOrFriendLabel.text = "번호 설정"
+            defaultHeight = UIScreen.main.bounds.height * 0.68
             bottomSheetView.addSubview(numberOrFriendLabel)
-            bottomSheetView.addSubview(seperateLine)
+            bottomSheetView.addSubview(seperateLine1)
+            bottomSheetView.addSubview(seperateLine2)
+            bottomSheetView.addSubview(stackView)
         case .modifyDelete:
-            defaultHeight = UIScreen.main.bounds.height * 0.3
+            defaultHeight = UIScreen.main.bounds.height * 0.33
+            bottomSheetView.addSubview(seperateLine2)
+            bottomSheetView.addSubview(stackView)
         }
     }
     func setLayout() {
         dimmedView.translatesAutoresizingMaskIntoConstraints = false
         bottomSheetView.translatesAutoresizingMaskIntoConstraints = false
+        deleteSheetButton.translatesAutoresizingMaskIntoConstraints = false
         let topConstant = view.safeAreaInsets.bottom + view.safeAreaLayoutGuide.layoutFrame.height
         bottomSheetViewTopConstraint = bottomSheetView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor,
                                                                             constant: topConstant)
@@ -81,73 +116,113 @@ public final class BottomSheetView: UIViewController {
             bottomSheetView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             bottomSheetView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             bottomSheetView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            bottomSheetViewTopConstraint
+            bottomSheetViewTopConstraint,
+            
+            deleteSheetButton.leadingAnchor.constraint(equalTo: bottomSheetView.leadingAnchor),
+            deleteSheetButton.trailingAnchor.constraint(equalTo: bottomSheetView.trailingAnchor),
+            deleteSheetButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            deleteSheetButton.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height * 0.09)
         ])
         setTypeToLayout()
     }
     private func setTypeToLayout() {
         switch bottomSheetType {
         case .home:
-            addChild(bottomTableSheetController)
-            bottomSheetView.addSubview(bottomTableSheetController.view)
-            bottomTableSheetController.didMove(toParent: self)
-            bottomSheetView.clipsToBounds = true
+            HomeSheetType.allCases.forEach { title in
+                let button = makeStackButton(title: title.rawValue)
+                button.setBackgroundColor(.white, for: .normal)
+                button.setBackgroundColor(.color(.dittoLettoColor(.main)), for: .highlighted)
+                button.tag = title.hashValue
+                button.addTarget(self, action: #selector(valueButtonTapped(_:)), for: .touchUpInside)
+                stackView.addArrangedSubview(button)
+            }
             numberOrFriendLabel.translatesAutoresizingMaskIntoConstraints = false
-            seperateLine.translatesAutoresizingMaskIntoConstraints = false
-            bottomTableSheetController.view.translatesAutoresizingMaskIntoConstraints = false
+            seperateLine1.translatesAutoresizingMaskIntoConstraints = false
+            seperateLine2.translatesAutoresizingMaskIntoConstraints = false
+            stackView.translatesAutoresizingMaskIntoConstraints = false
             
             NSLayoutConstraint.activate([
-                numberOrFriendLabel.centerXAnchor.constraint(equalTo: bottomSheetView.centerXAnchor),
+                numberOrFriendLabel.leadingAnchor.constraint(equalTo: bottomSheetView.leadingAnchor,
+                                                             constant: UIScreen.main.bounds.height * 0.03),
                 numberOrFriendLabel.topAnchor.constraint(equalTo: bottomSheetView.topAnchor,
                                                          constant: UIScreen.main.bounds.height * 0.025),
                 
-                seperateLine.leadingAnchor.constraint(equalTo: bottomSheetView.leadingAnchor),
-                seperateLine.trailingAnchor.constraint(equalTo: bottomSheetView.trailingAnchor),
-                seperateLine.topAnchor.constraint(equalTo: numberOrFriendLabel.bottomAnchor,
+                seperateLine1.leadingAnchor.constraint(equalTo: bottomSheetView.leadingAnchor),
+                seperateLine1.trailingAnchor.constraint(equalTo: bottomSheetView.trailingAnchor),
+                seperateLine1.topAnchor.constraint(equalTo: numberOrFriendLabel.bottomAnchor,
                                                   constant: UIScreen.main.bounds.height * 0.02),
-                seperateLine.heightAnchor.constraint(equalToConstant: 0.8),
+                seperateLine1.heightAnchor.constraint(equalToConstant: 0.8),
                 
-                bottomTableSheetController.view.topAnchor.constraint(equalTo: seperateLine.bottomAnchor),
-                bottomTableSheetController.view.leadingAnchor.constraint(equalTo: bottomSheetView.leadingAnchor),
-                bottomTableSheetController.view.trailingAnchor.constraint(equalTo: bottomSheetView.trailingAnchor),
-                bottomTableSheetController.view.bottomAnchor.constraint(equalTo: bottomSheetView.bottomAnchor)
+                seperateLine2.leadingAnchor.constraint(equalTo: bottomSheetView.leadingAnchor),
+                seperateLine2.trailingAnchor.constraint(equalTo: bottomSheetView.trailingAnchor),
+                seperateLine2.topAnchor.constraint(equalTo: deleteSheetButton.topAnchor),
+                seperateLine2.heightAnchor.constraint(equalToConstant: 0.8),
+                
+                stackView.topAnchor.constraint(equalTo: seperateLine1.bottomAnchor),
+                stackView.leadingAnchor.constraint(equalTo: bottomSheetView.leadingAnchor),
+                stackView.trailingAnchor.constraint(equalTo: bottomSheetView.trailingAnchor),
+                stackView.bottomAnchor.constraint(equalTo: seperateLine2.topAnchor)
             ])
         case .setNumber:
+            SetNumberSheetType.allCases.forEach { title in
+                let button = makeStackButton(title: title.rawValue)
+                button.setBackgroundColor(.white, for: .normal)
+                button.setBackgroundColor(.color(.dittoLettoColor(.main)), for: .highlighted)
+                button.tag = title.hashValue
+                
+                button.addTarget(self, action: #selector(valueButtonTapped(_:)), for: .touchUpInside)
+                stackView.addArrangedSubview(button)
+            }
+            
             numberOrFriendLabel.translatesAutoresizingMaskIntoConstraints = false
-            seperateLine.translatesAutoresizingMaskIntoConstraints = false
-            addChild(bottomTableSheetController)
-            bottomSheetView.addSubview(bottomTableSheetController.view)
-            bottomTableSheetController.didMove(toParent: self)
-            bottomSheetView.clipsToBounds = true
+            seperateLine1.translatesAutoresizingMaskIntoConstraints = false
+            seperateLine2.translatesAutoresizingMaskIntoConstraints = false
+            stackView.translatesAutoresizingMaskIntoConstraints = false
             
             NSLayoutConstraint.activate([
-                numberOrFriendLabel.centerXAnchor.constraint(equalTo: bottomSheetView.centerXAnchor),
+                numberOrFriendLabel.leadingAnchor.constraint(equalTo: bottomSheetView.leadingAnchor,
+                                                             constant: UIScreen.main.bounds.height * 0.03),
                 numberOrFriendLabel.topAnchor.constraint(equalTo: bottomSheetView.topAnchor,
                                                          constant: UIScreen.main.bounds.height * 0.025),
                 
-                seperateLine.leadingAnchor.constraint(equalTo: bottomSheetView.leadingAnchor),
-                seperateLine.trailingAnchor.constraint(equalTo: bottomSheetView.trailingAnchor),
-                seperateLine.topAnchor.constraint(equalTo: numberOrFriendLabel.bottomAnchor,
+                seperateLine1.leadingAnchor.constraint(equalTo: bottomSheetView.leadingAnchor),
+                seperateLine1.trailingAnchor.constraint(equalTo: bottomSheetView.trailingAnchor),
+                seperateLine1.topAnchor.constraint(equalTo: numberOrFriendLabel.bottomAnchor,
                                                   constant: UIScreen.main.bounds.height * 0.02),
-                seperateLine.heightAnchor.constraint(equalToConstant: 0.8),
+                seperateLine1.heightAnchor.constraint(equalToConstant: 0.8),
                 
-                bottomTableSheetController.view.topAnchor.constraint(equalTo: seperateLine.bottomAnchor),
-                bottomTableSheetController.view.leadingAnchor.constraint(equalTo: bottomSheetView.leadingAnchor),
-                bottomTableSheetController.view.trailingAnchor.constraint(equalTo: bottomSheetView.trailingAnchor),
-                bottomTableSheetController.view.bottomAnchor.constraint(equalTo: bottomSheetView.bottomAnchor)
+                seperateLine2.leadingAnchor.constraint(equalTo: bottomSheetView.leadingAnchor),
+                seperateLine2.trailingAnchor.constraint(equalTo: bottomSheetView.trailingAnchor),
+                seperateLine2.topAnchor.constraint(equalTo: deleteSheetButton.topAnchor),
+                seperateLine2.heightAnchor.constraint(equalToConstant: 0.8),
+                
+                stackView.topAnchor.constraint(equalTo: seperateLine1.bottomAnchor),
+                stackView.leadingAnchor.constraint(equalTo: bottomSheetView.leadingAnchor),
+                stackView.trailingAnchor.constraint(equalTo: bottomSheetView.trailingAnchor),
+                stackView.bottomAnchor.constraint(equalTo: seperateLine2.topAnchor)
             ])
         case .modifyDelete:
-            addChild(bottomTableSheetController)
-            bottomSheetView.addSubview(bottomTableSheetController.view)
-            bottomTableSheetController.didMove(toParent: self)
-            bottomSheetView.clipsToBounds = true
-            
-            bottomTableSheetController.view.translatesAutoresizingMaskIntoConstraints = false
+            ModifyDeleteSheetType.allCases.forEach { title in
+                let button = makeStackButton(title: title.rawValue)
+                button.setBackgroundColor(.white, for: .normal)
+                button.setBackgroundColor(.color(.dittoLettoColor(.main)), for: .highlighted)
+                button.tag = title.hashValue
+                button.addTarget(self, action: #selector(valueButtonTapped(_:)), for: .touchUpInside)
+                stackView.addArrangedSubview(button)
+            }
+            seperateLine2.translatesAutoresizingMaskIntoConstraints = false
+            stackView.translatesAutoresizingMaskIntoConstraints = false
             NSLayoutConstraint.activate([
-                bottomTableSheetController.view.topAnchor.constraint(equalTo: bottomSheetView.topAnchor),
-                bottomTableSheetController.view.leadingAnchor.constraint(equalTo: bottomSheetView.leadingAnchor),
-                bottomTableSheetController.view.trailingAnchor.constraint(equalTo: bottomSheetView.trailingAnchor),
-                bottomTableSheetController.view.bottomAnchor.constraint(equalTo: bottomSheetView.bottomAnchor)
+                seperateLine2.leadingAnchor.constraint(equalTo: bottomSheetView.leadingAnchor),
+                seperateLine2.trailingAnchor.constraint(equalTo: bottomSheetView.trailingAnchor),
+                seperateLine2.topAnchor.constraint(equalTo: deleteSheetButton.topAnchor),
+                seperateLine2.heightAnchor.constraint(equalToConstant: 0.8),
+                
+                stackView.topAnchor.constraint(equalTo: bottomSheetView.topAnchor,
+                                               constant: UIScreen.main.bounds.height * 0.025),
+                stackView.leadingAnchor.constraint(equalTo: bottomSheetView.leadingAnchor),
+                stackView.trailingAnchor.constraint(equalTo: bottomSheetView.trailingAnchor),
+                stackView.bottomAnchor.constraint(equalTo: seperateLine2.topAnchor)
             ])
         }
     }
@@ -173,13 +248,59 @@ public final class BottomSheetView: UIViewController {
             }
         }
     }
+    private func makeStackButton(title: String) -> UIButton {
+        let button: UIButton = {
+            $0.setTitle(title, for: .normal)
+            $0.setTitleColor(.color(.dittoLettoColor(.dark)), for: .normal)
+            $0.titleLabel?.font = .ramche(.body)
+            return $0
+        }(UIButton())
+        return button
+    }
     // MARK: - Gesture
     private func configGesture() {
         let dimmedTap = UITapGestureRecognizer(target: self, action: #selector(dimmedViewTapped(_:)))
         dimmedView.addGestureRecognizer(dimmedTap)
         dimmedView.isUserInteractionEnabled = true
+        deleteSheetButton.addTarget(self, action: #selector(valueButtonTapped(_:)), for: .touchUpInside)
     }
     @objc private func dimmedViewTapped(_ tapRecognizer: UITapGestureRecognizer) {
         hideBottomSheet()
+    }
+    @objc private func valueButtonTapped(_ sender: UIButton) {
+        switch sender.tag {
+        case HomeSheetType.saveNumber.hashValue:
+            print("saveNum")
+        case HomeSheetType.deleteToList.hashValue:
+            print("deleteList")
+        case SetNumberSheetType.one.hashValue:
+            print("011")
+        case SetNumberSheetType.six.hashValue:
+            print("016")
+        case SetNumberSheetType.seven.hashValue:
+            print("017")
+        case SetNumberSheetType.eight.hashValue:
+            print("018")
+        case SetNumberSheetType.nine.hashValue:
+            print("019")
+        case ModifyDeleteSheetType.modify.hashValue:
+            print("수정")
+        case ModifyDeleteSheetType.delete.hashValue:
+            print("삭제")
+        default:
+            hideBottomSheet()
+        }
+    }
+}
+// button hilighting 색상 처리
+extension UIButton {
+    func setBackgroundColor(_ color: UIColor, for state: UIControl.State) {
+        UIGraphicsBeginImageContext(CGSize(width: 1.0, height: 1.0))
+        guard let context = UIGraphicsGetCurrentContext() else { return }
+        context.setFillColor(color.cgColor)
+        context.fill(CGRect(x: 0.0, y: 0.0, width: 1.0, height: 1.0))
+        let backgroundImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        self.setBackgroundImage(backgroundImage, for: state)
     }
 }
