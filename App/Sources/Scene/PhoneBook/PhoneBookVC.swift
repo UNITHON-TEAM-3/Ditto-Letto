@@ -94,8 +94,24 @@ class PhoneBookVC: BaseVC {
 extension PhoneBookVC: PhoneBookTableViewCellDelegate {
     func settingButtonTap() {
         let sheetView = BottomSheetView()
-        sheetView.bottomSheetType = .home
+        sheetView.bottomSheetType = .modifyDelete
+        sheetView.delegate = self
         sheetView.modalPresentationStyle = .overFullScreen
         self.present(sheetView, animated: false)
+    }
+}
+// MARK: - BottomSheetDelegate
+extension PhoneBookVC: BottomSheetDelegate {
+    func save() {
+        return
+    }
+    func modify() {
+        print("modi")
+    }
+    func delete() {
+        print("del")
+    }
+    func number(num: String) {
+        return
     }
 }

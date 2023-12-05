@@ -5,7 +5,12 @@ public enum BottomSheetType: CaseIterable {
     case setNumber
     case modifyDelete
 }
-
+public protocol BottomSheetDelegate {
+    func save()
+    func modify()
+    func delete()
+    func number(num: String)
+}
 public final class BottomSheetView: UIViewController {
     enum HomeSheetType: String, CaseIterable {
         case saveNumber = "번호 저장하기"
@@ -23,6 +28,7 @@ public final class BottomSheetView: UIViewController {
         case delete = "삭제하기"
     }
     public var bottomSheetType: BottomSheetType = .home
+    public var delegate: BottomSheetDelegate?
     // MARK: - Properties
     private let dimmedView: UIView = {
         $0.backgroundColor = UIColor.black.withAlphaComponent(0.7)
@@ -179,23 +185,32 @@ public final class BottomSheetView: UIViewController {
     @objc private func valueButtonTapped(_ sender: UIButton) {
         switch sender.tag {
         case HomeSheetType.saveNumber.hashValue:
-            print("saveNum")
+            delegate?.save()
+            hideBottomSheet()
         case HomeSheetType.deleteToList.hashValue:
-            print("deleteList")
+            delegate?.delete()
+            hideBottomSheet()
         case SetNumberSheetType.one.hashValue:
-            print("011")
+            delegate?.number(num: SetNumberSheetType.one.rawValue)
+            hideBottomSheet()
         case SetNumberSheetType.six.hashValue:
-            print("016")
+            delegate?.number(num: SetNumberSheetType.six.rawValue)
+            hideBottomSheet()
         case SetNumberSheetType.seven.hashValue:
-            print("017")
+            delegate?.number(num: SetNumberSheetType.seven.rawValue)
+            hideBottomSheet()
         case SetNumberSheetType.eight.hashValue:
-            print("018")
+            delegate?.number(num: SetNumberSheetType.eight.rawValue)
+            hideBottomSheet()
         case SetNumberSheetType.nine.hashValue:
-            print("019")
+            delegate?.number(num: SetNumberSheetType.nine.rawValue)
+            hideBottomSheet()
         case ModifyDeleteSheetType.modify.hashValue:
-            print("수정")
+            delegate?.modify()
+            hideBottomSheet()
         case ModifyDeleteSheetType.delete.hashValue:
-            print("삭제")
+            delegate?.delete()
+            hideBottomSheet()
         default:
             hideBottomSheet()
         }
