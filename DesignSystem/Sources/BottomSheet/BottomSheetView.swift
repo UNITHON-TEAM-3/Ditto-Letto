@@ -128,102 +128,11 @@ public final class BottomSheetView: UIViewController {
     private func setTypeToLayout() {
         switch bottomSheetType {
         case .home:
-            HomeSheetType.allCases.forEach { title in
-                let button = makeStackButton(title: title.rawValue)
-                button.setBackgroundColor(.white, for: .normal)
-                button.setBackgroundColor(.color(.dittoLettoColor(.main)), for: .highlighted)
-                button.tag = title.hashValue
-                button.addTarget(self, action: #selector(valueButtonTapped(_:)), for: .touchUpInside)
-                stackView.addArrangedSubview(button)
-            }
-            numberOrFriendLabel.translatesAutoresizingMaskIntoConstraints = false
-            seperateLine1.translatesAutoresizingMaskIntoConstraints = false
-            seperateLine2.translatesAutoresizingMaskIntoConstraints = false
-            stackView.translatesAutoresizingMaskIntoConstraints = false
-            
-            NSLayoutConstraint.activate([
-                numberOrFriendLabel.leadingAnchor.constraint(equalTo: bottomSheetView.leadingAnchor,
-                                                             constant: UIScreen.main.bounds.height * 0.03),
-                numberOrFriendLabel.topAnchor.constraint(equalTo: bottomSheetView.topAnchor,
-                                                         constant: UIScreen.main.bounds.height * 0.025),
-                
-                seperateLine1.leadingAnchor.constraint(equalTo: bottomSheetView.leadingAnchor),
-                seperateLine1.trailingAnchor.constraint(equalTo: bottomSheetView.trailingAnchor),
-                seperateLine1.topAnchor.constraint(equalTo: numberOrFriendLabel.bottomAnchor,
-                                                  constant: UIScreen.main.bounds.height * 0.02),
-                seperateLine1.heightAnchor.constraint(equalToConstant: 0.8),
-                
-                seperateLine2.leadingAnchor.constraint(equalTo: bottomSheetView.leadingAnchor),
-                seperateLine2.trailingAnchor.constraint(equalTo: bottomSheetView.trailingAnchor),
-                seperateLine2.topAnchor.constraint(equalTo: deleteSheetButton.topAnchor),
-                seperateLine2.heightAnchor.constraint(equalToConstant: 0.8),
-                
-                stackView.topAnchor.constraint(equalTo: seperateLine1.bottomAnchor),
-                stackView.leadingAnchor.constraint(equalTo: bottomSheetView.leadingAnchor),
-                stackView.trailingAnchor.constraint(equalTo: bottomSheetView.trailingAnchor),
-                stackView.bottomAnchor.constraint(equalTo: seperateLine2.topAnchor)
-            ])
+            homeTypeLayout()
         case .setNumber:
-            SetNumberSheetType.allCases.forEach { title in
-                let button = makeStackButton(title: title.rawValue)
-                button.setBackgroundColor(.white, for: .normal)
-                button.setBackgroundColor(.color(.dittoLettoColor(.main)), for: .highlighted)
-                button.tag = title.hashValue
-                
-                button.addTarget(self, action: #selector(valueButtonTapped(_:)), for: .touchUpInside)
-                stackView.addArrangedSubview(button)
-            }
-            
-            numberOrFriendLabel.translatesAutoresizingMaskIntoConstraints = false
-            seperateLine1.translatesAutoresizingMaskIntoConstraints = false
-            seperateLine2.translatesAutoresizingMaskIntoConstraints = false
-            stackView.translatesAutoresizingMaskIntoConstraints = false
-            
-            NSLayoutConstraint.activate([
-                numberOrFriendLabel.leadingAnchor.constraint(equalTo: bottomSheetView.leadingAnchor,
-                                                             constant: UIScreen.main.bounds.height * 0.03),
-                numberOrFriendLabel.topAnchor.constraint(equalTo: bottomSheetView.topAnchor,
-                                                         constant: UIScreen.main.bounds.height * 0.025),
-                
-                seperateLine1.leadingAnchor.constraint(equalTo: bottomSheetView.leadingAnchor),
-                seperateLine1.trailingAnchor.constraint(equalTo: bottomSheetView.trailingAnchor),
-                seperateLine1.topAnchor.constraint(equalTo: numberOrFriendLabel.bottomAnchor,
-                                                  constant: UIScreen.main.bounds.height * 0.02),
-                seperateLine1.heightAnchor.constraint(equalToConstant: 0.8),
-                
-                seperateLine2.leadingAnchor.constraint(equalTo: bottomSheetView.leadingAnchor),
-                seperateLine2.trailingAnchor.constraint(equalTo: bottomSheetView.trailingAnchor),
-                seperateLine2.topAnchor.constraint(equalTo: deleteSheetButton.topAnchor),
-                seperateLine2.heightAnchor.constraint(equalToConstant: 0.8),
-                
-                stackView.topAnchor.constraint(equalTo: seperateLine1.bottomAnchor),
-                stackView.leadingAnchor.constraint(equalTo: bottomSheetView.leadingAnchor),
-                stackView.trailingAnchor.constraint(equalTo: bottomSheetView.trailingAnchor),
-                stackView.bottomAnchor.constraint(equalTo: seperateLine2.topAnchor)
-            ])
+            setNumberTypeLayout()
         case .modifyDelete:
-            ModifyDeleteSheetType.allCases.forEach { title in
-                let button = makeStackButton(title: title.rawValue)
-                button.setBackgroundColor(.white, for: .normal)
-                button.setBackgroundColor(.color(.dittoLettoColor(.main)), for: .highlighted)
-                button.tag = title.hashValue
-                button.addTarget(self, action: #selector(valueButtonTapped(_:)), for: .touchUpInside)
-                stackView.addArrangedSubview(button)
-            }
-            seperateLine2.translatesAutoresizingMaskIntoConstraints = false
-            stackView.translatesAutoresizingMaskIntoConstraints = false
-            NSLayoutConstraint.activate([
-                seperateLine2.leadingAnchor.constraint(equalTo: bottomSheetView.leadingAnchor),
-                seperateLine2.trailingAnchor.constraint(equalTo: bottomSheetView.trailingAnchor),
-                seperateLine2.topAnchor.constraint(equalTo: deleteSheetButton.topAnchor),
-                seperateLine2.heightAnchor.constraint(equalToConstant: 0.8),
-                
-                stackView.topAnchor.constraint(equalTo: bottomSheetView.topAnchor,
-                                               constant: UIScreen.main.bounds.height * 0.025),
-                stackView.leadingAnchor.constraint(equalTo: bottomSheetView.leadingAnchor),
-                stackView.trailingAnchor.constraint(equalTo: bottomSheetView.trailingAnchor),
-                stackView.bottomAnchor.constraint(equalTo: seperateLine2.topAnchor)
-            ])
+            modifyDeleteTypeLayout()
         }
     }
     private func showBottomSheet() {
@@ -292,6 +201,107 @@ public final class BottomSheetView: UIViewController {
         }
     }
 }
+extension BottomSheetView {
+    private func homeTypeLayout() {
+        HomeSheetType.allCases.forEach { title in
+            let button = makeStackButton(title: title.rawValue)
+            button.setBackgroundColor(.white, for: .normal)
+            button.setBackgroundColor(.color(.dittoLettoColor(.main)), for: .highlighted)
+            button.tag = title.hashValue
+            button.addTarget(self, action: #selector(valueButtonTapped(_:)), for: .touchUpInside)
+            stackView.addArrangedSubview(button)
+        }
+        numberOrFriendLabel.translatesAutoresizingMaskIntoConstraints = false
+        seperateLine1.translatesAutoresizingMaskIntoConstraints = false
+        seperateLine2.translatesAutoresizingMaskIntoConstraints = false
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            numberOrFriendLabel.leadingAnchor.constraint(equalTo: bottomSheetView.leadingAnchor,
+                                                         constant: UIScreen.main.bounds.height * 0.03),
+            numberOrFriendLabel.topAnchor.constraint(equalTo: bottomSheetView.topAnchor,
+                                                     constant: UIScreen.main.bounds.height * 0.025),
+            
+            seperateLine1.leadingAnchor.constraint(equalTo: bottomSheetView.leadingAnchor),
+            seperateLine1.trailingAnchor.constraint(equalTo: bottomSheetView.trailingAnchor),
+            seperateLine1.topAnchor.constraint(equalTo: numberOrFriendLabel.bottomAnchor,
+                                              constant: UIScreen.main.bounds.height * 0.02),
+            seperateLine1.heightAnchor.constraint(equalToConstant: 0.8),
+            
+            seperateLine2.leadingAnchor.constraint(equalTo: bottomSheetView.leadingAnchor),
+            seperateLine2.trailingAnchor.constraint(equalTo: bottomSheetView.trailingAnchor),
+            seperateLine2.topAnchor.constraint(equalTo: deleteSheetButton.topAnchor),
+            seperateLine2.heightAnchor.constraint(equalToConstant: 0.8),
+            
+            stackView.topAnchor.constraint(equalTo: seperateLine1.bottomAnchor),
+            stackView.leadingAnchor.constraint(equalTo: bottomSheetView.leadingAnchor),
+            stackView.trailingAnchor.constraint(equalTo: bottomSheetView.trailingAnchor),
+            stackView.bottomAnchor.constraint(equalTo: seperateLine2.topAnchor)
+        ])
+    }
+    private func setNumberTypeLayout() {
+        SetNumberSheetType.allCases.forEach { title in
+            let button = makeStackButton(title: title.rawValue)
+            button.setBackgroundColor(.white, for: .normal)
+            button.setBackgroundColor(.color(.dittoLettoColor(.main)), for: .highlighted)
+            button.tag = title.hashValue
+            button.addTarget(self, action: #selector(valueButtonTapped(_:)), for: .touchUpInside)
+            stackView.addArrangedSubview(button)
+        }
+        numberOrFriendLabel.translatesAutoresizingMaskIntoConstraints = false
+        seperateLine1.translatesAutoresizingMaskIntoConstraints = false
+        seperateLine2.translatesAutoresizingMaskIntoConstraints = false
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            numberOrFriendLabel.leadingAnchor.constraint(equalTo: bottomSheetView.leadingAnchor,
+                                                         constant: UIScreen.main.bounds.height * 0.03),
+            numberOrFriendLabel.topAnchor.constraint(equalTo: bottomSheetView.topAnchor,
+                                                     constant: UIScreen.main.bounds.height * 0.025),
+            
+            seperateLine1.leadingAnchor.constraint(equalTo: bottomSheetView.leadingAnchor),
+            seperateLine1.trailingAnchor.constraint(equalTo: bottomSheetView.trailingAnchor),
+            seperateLine1.topAnchor.constraint(equalTo: numberOrFriendLabel.bottomAnchor,
+                                              constant: UIScreen.main.bounds.height * 0.02),
+            seperateLine1.heightAnchor.constraint(equalToConstant: 0.8),
+            
+            seperateLine2.leadingAnchor.constraint(equalTo: bottomSheetView.leadingAnchor),
+            seperateLine2.trailingAnchor.constraint(equalTo: bottomSheetView.trailingAnchor),
+            seperateLine2.topAnchor.constraint(equalTo: deleteSheetButton.topAnchor),
+            seperateLine2.heightAnchor.constraint(equalToConstant: 0.8),
+            
+            stackView.topAnchor.constraint(equalTo: seperateLine1.bottomAnchor),
+            stackView.leadingAnchor.constraint(equalTo: bottomSheetView.leadingAnchor),
+            stackView.trailingAnchor.constraint(equalTo: bottomSheetView.trailingAnchor),
+            stackView.bottomAnchor.constraint(equalTo: seperateLine2.topAnchor)
+        ])
+    }
+    private func modifyDeleteTypeLayout() {
+        ModifyDeleteSheetType.allCases.forEach { title in
+            let button = makeStackButton(title: title.rawValue)
+            button.setBackgroundColor(.white, for: .normal)
+            button.setBackgroundColor(.color(.dittoLettoColor(.main)), for: .highlighted)
+            button.tag = title.hashValue
+            button.addTarget(self, action: #selector(valueButtonTapped(_:)), for: .touchUpInside)
+            stackView.addArrangedSubview(button)
+        }
+        seperateLine2.translatesAutoresizingMaskIntoConstraints = false
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            seperateLine2.leadingAnchor.constraint(equalTo: bottomSheetView.leadingAnchor),
+            seperateLine2.trailingAnchor.constraint(equalTo: bottomSheetView.trailingAnchor),
+            seperateLine2.topAnchor.constraint(equalTo: deleteSheetButton.topAnchor),
+            seperateLine2.heightAnchor.constraint(equalToConstant: 0.8),
+            
+            stackView.topAnchor.constraint(equalTo: bottomSheetView.topAnchor,
+                                           constant: UIScreen.main.bounds.height * 0.025),
+            stackView.leadingAnchor.constraint(equalTo: bottomSheetView.leadingAnchor),
+            stackView.trailingAnchor.constraint(equalTo: bottomSheetView.trailingAnchor),
+            stackView.bottomAnchor.constraint(equalTo: seperateLine2.topAnchor)
+        ])
+    }
+}
+
 // button hilighting 색상 처리
 extension UIButton {
     func setBackgroundColor(_ color: UIColor, for state: UIControl.State) {
