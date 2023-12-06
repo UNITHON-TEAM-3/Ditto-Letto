@@ -177,10 +177,23 @@ public final class BottomSheetView: UIViewController {
         let dimmedTap = UITapGestureRecognizer(target: self, action: #selector(dimmedViewTapped(_:)))
         dimmedView.addGestureRecognizer(dimmedTap)
         dimmedView.isUserInteractionEnabled = true
+        let swipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(panGesture(_:)))
+        swipeGesture.direction = .down
+        view.addGestureRecognizer(swipeGesture)
         deleteSheetButton.addTarget(self, action: #selector(valueButtonTapped(_:)), for: .touchUpInside)
     }
     @objc private func dimmedViewTapped(_ tapRecognizer: UITapGestureRecognizer) {
         hideBottomSheet()
+    }
+    @objc func panGesture(_ recognizer: UISwipeGestureRecognizer) {
+        if recognizer.state == .ended {
+            switch recognizer.direction {
+            case .down:
+                hideBottomSheet()
+            default:
+                break
+            }
+        }
     }
     @objc private func valueButtonTapped(_ sender: UIButton) {
         switch sender.tag {
@@ -316,7 +329,6 @@ extension BottomSheetView {
         ])
     }
 }
-
 // button hilighting 색상 처리
 extension UIButton {
     func setBackgroundColor(_ color: UIColor, for state: UIControl.State) {
