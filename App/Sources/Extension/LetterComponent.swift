@@ -62,25 +62,21 @@ extension UIView {
         backView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
-
         lineView1.snp.makeConstraints { make in
             make.top.bottom.equalToSuperview()
             make.leading.equalTo(backView.snp.trailing).multipliedBy(0.2)
             make.width.equalTo(1)
         }
-
         lineView2.snp.makeConstraints { make in
             make.top.bottom.equalToSuperview()
             make.leading.equalTo(backView.snp.trailing).multipliedBy(0.4)
             make.width.equalTo(1)
         }
-
         lineView3.snp.makeConstraints { make in
             make.top.bottom.equalToSuperview()
             make.leading.equalTo(backView.snp.trailing).multipliedBy(0.6)
             make.width.equalTo(1)
         }
-
         lineView4.snp.makeConstraints { make in
             make.top.bottom.equalToSuperview()
             make.leading.equalTo(backView.snp.trailing).multipliedBy(0.8)

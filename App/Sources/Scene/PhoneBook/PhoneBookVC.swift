@@ -5,7 +5,7 @@ import RxSwift
 import RxCocoa
 
 class PhoneBookVC: BaseVC {
-    let viewModel = PhoneBookVM()
+    private let viewModel = PhoneBookVM()
     // MARK: Properties
     private let phoneBookInfoView: PhoneBookInfoView = {
         $0.layer.shadowColor = UIColor.black.cgColor
@@ -70,7 +70,7 @@ class PhoneBookVC: BaseVC {
         let output = viewModel.transform(input)
         phoneBookInfoView.pencilButton.rx.tap
             .bind {
-                print("pencil Tap")
+                
             }.disposed(by: disposeBag)
         phoneBookView.tableView.rx.contentOffset
             .observe(on: MainScheduler.instance)
@@ -116,10 +116,10 @@ extension PhoneBookVC: BottomSheetDelegate {
         return
     }
     func modify() {
-        print("modi")
+        
     }
     func delete() {
-        print("del")
+        
     }
     func number(num: String) {
         return
