@@ -50,7 +50,11 @@ final class IndicatorView: UIView {
         self.backgroundColor = .white
         self.layer.borderColor = UIColor.color(.dittoLettoColor(.gray2)).cgColor
         self.layer.borderWidth = 0.5
-        [triangleView, trackView, reverseTriangleView].forEach {
+        [
+            triangleView,
+            trackView, 
+            reverseTriangleView
+        ].forEach {
             addSubview($0)
         }
         trackView.addSubview(trackTintView)

@@ -43,24 +43,28 @@ class PhoneBookInfoView: UIView {
     }
     // MARK: - Set UI
     private func addView() {
-        [emptyView1,
-         emptyView2,
-         emptyView3,
-         emptyView4,
-         emptyView5,
-         emptyView6].forEach {
+        [
+            emptyView1,
+            emptyView2,
+            emptyView3,
+            emptyView4,
+            emptyView5,
+            emptyView6
+        ].forEach {
             $0.backgroundColor = .color(.dittoLettoColor(.bg))
         }
         addSubview(backgroundView)
-        [emptyView1,
-         emptyView2,
-         emptyView3,
-         emptyView4,
-         emptyView5,
-         emptyView6,
-         myNumberLabel,
-         numberLabel,
-         pencilButton].forEach {
+        [
+            emptyView1,
+            emptyView2,
+            emptyView3,
+            emptyView4,
+            emptyView5,
+            emptyView6,
+            myNumberLabel,
+            numberLabel,
+            pencilButton
+        ].forEach {
             backgroundView.addSubview($0)
         }
     }

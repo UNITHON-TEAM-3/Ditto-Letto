@@ -56,7 +56,12 @@ extension UIView {
             return $0
         }(UIView())
         addSubview(backView)
-        [lineView1, lineView2, lineView3, lineView4].forEach {
+        [
+            lineView1,
+            lineView2,
+            lineView3,
+            lineView4
+        ].forEach {
             backView.addSubview($0)
         }
         backView.snp.makeConstraints { make in
@@ -105,7 +110,10 @@ extension UITextField {
             self.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 78, height: 76))
             self.leftViewMode = .always
 
-            [profile, privateImage].forEach { self.addSubview($0) }
+            [
+                profile,
+                privateImage
+            ].forEach { self.addSubview($0) }
 
             profile.snp.makeConstraints {
                 $0.width.height.equalTo(50)

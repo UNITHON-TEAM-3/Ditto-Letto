@@ -40,10 +40,12 @@ class PhoneBookTableViewCell: BaseTC {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
     }
     override func addView() {
-        [emoziImageView, 
-         nameLabel,
-         numberLabel,
-         settingButton].forEach {
+        [
+            emoziImageView,
+            nameLabel,
+            numberLabel,
+            settingButton
+        ].forEach {
             contentView.addSubview($0)
         }
     }

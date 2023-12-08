@@ -37,17 +37,21 @@ class PhoneBookView: UIView {
     }
     // MARK: - Set UI
     private func addView() {
-        [backgroundNoteView, 
-         springView1,
-         springView2, 
-         springView3,
-         springView4,
-         springView5,
-         springView6].forEach {
+        [
+            backgroundNoteView,
+            springView1,
+            springView2, 
+            springView3,
+            springView4,
+            springView5,
+            springView6
+        ].forEach {
             addSubview($0)
         }
-        [tableView, 
-         indicatorView].forEach {
+        [
+            tableView,
+            indicatorView
+        ].forEach {
             backgroundNoteView.addSubview($0)
         }
     }

@@ -44,12 +44,14 @@ class HomeTableViewCell: BaseTC {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
     }
     override func addView() {
-        [titleImageView, 
-         titleLabel,
-         subTitleLabel,
-         transportationImageView,
-         transportationState,
-         replyButton].forEach {
+        [
+            titleImageView,
+            titleLabel,
+            subTitleLabel,
+            transportationImageView,
+            transportationState,
+            replyButton
+        ].forEach {
             contentView.addSubview($0)
         }
         setLayout(type: .sendingFriend)
