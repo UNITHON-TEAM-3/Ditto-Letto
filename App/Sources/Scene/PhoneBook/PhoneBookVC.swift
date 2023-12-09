@@ -39,8 +39,8 @@ class PhoneBookVC: BaseVC {
     // MARK: - Set UI
     override func addView() {
         [
-        phoneBookInfoView,
-        phoneBookView
+            phoneBookInfoView,
+            phoneBookView
         ].forEach({
             view.addSubview($0)
         })
