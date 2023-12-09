@@ -2,8 +2,13 @@ import UIKit
 import DesignSystem
 import SnapKit
 
+protocol HomeTableViewCellDelegate: AnyObject {
+    func replyButtonTap()
+}
+
 class HomeTableViewCell: BaseTC {
     static let identifier = "HomeTableViewCell"
+    weak var delegate: HomeTableViewCellDelegate?
     // MARK: - Properties
     private let titleImageView = UIImageView()
     private let titleLabel: UILabel = {
@@ -20,6 +25,7 @@ class HomeTableViewCell: BaseTC {
     private let transportationState = UIImageView()
     private let replyButton: UIButton = {
         $0.setImage(.Image.replyButton, for: .normal)
+        $0.addTarget(self, action: #selector(replyButtonTap), for: .touchUpInside)
         return $0
     }(UIButton())
     var type: HomeCellType? {
@@ -38,8 +44,15 @@ class HomeTableViewCell: BaseTC {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
     }
     override func addView() {
-        [titleImageView, titleLabel, subTitleLabel, transportationImageView, transportationState, replyButton].forEach {
-            addSubview($0)
+        [
+            titleImageView,
+            titleLabel,
+            subTitleLabel,
+            transportationImageView,
+            transportationState,
+            replyButton
+        ].forEach {
+            contentView.addSubview($0)
         }
         setLayout(type: .sendingFriend)
     }
@@ -80,6 +93,9 @@ class HomeTableViewCell: BaseTC {
         // 임시
         transportationState.image = .Image.state7
         transportationImageView.image = .Image.airplaneIcon
+    }
+    @objc private func replyButtonTap() {
+        delegate?.replyButtonTap()
     }
 }
 

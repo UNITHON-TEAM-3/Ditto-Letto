@@ -2,14 +2,9 @@ import UIKit
 import DesignSystem
 import SnapKit
 
-final class IndicatorView: UIView {
+final class PhoneBookIndicatorView: UIView {
     // MARK: - UI
-    private let triangleView = MyLetterTriangleView()
-    private let reverseTriangleView = MyLetterReverseTriangleView()
-    private let trackView: UIView = {
-        $0.backgroundColor = .lightGray.withAlphaComponent(0.3)
-        return $0
-    }(UIView())
+    private lazy var trackView = makePhoneBookIndicatorBackView()
     private let trackTintView: UIView = {
         $0.backgroundColor = UIColor.color(.dittoLettoColor(.gray2))
         return $0
@@ -20,7 +15,7 @@ final class IndicatorView: UIView {
         didSet {
             guard let heightRatio = heightRatio else { return }
             self.trackTintView.snp.remakeConstraints {
-                $0.leading.trailing.equalToSuperview()
+                $0.leading.trailing.equalToSuperview().inset(UIScreen.main.bounds.width * 0.012)
                 $0.height.equalToSuperview().multipliedBy(heightRatio)
                 $0.top.greaterThanOrEqualToSuperview()
                 $0.bottom.lessThanOrEqualToSuperview()
@@ -50,33 +45,12 @@ final class IndicatorView: UIView {
         self.backgroundColor = .white
         self.layer.borderColor = UIColor.color(.dittoLettoColor(.gray2)).cgColor
         self.layer.borderWidth = 0.5
-        [
-            triangleView,
-            trackView, 
-            reverseTriangleView
-        ].forEach {
-            addSubview($0)
-        }
+        addSubview(trackView)
         trackView.addSubview(trackTintView)
     }
     private func setLayout() {
-        triangleView.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.top.equalToSuperview().inset(UIScreen.main.bounds.height * 0.004)
-            make.width.equalToSuperview().multipliedBy(0.67)
-            make.height.equalToSuperview().multipliedBy(0.025)
-        }
-        reverseTriangleView.snp.makeConstraints { make in
-            make.bottom.equalToSuperview().inset(UIScreen.main.bounds.height * 0.004)
-            make.height.equalTo(triangleView.snp.height)
-            make.leading.equalTo(triangleView.snp.leading)
-            make.trailing.equalTo(triangleView.snp.trailing)
-        }
         trackView.snp.makeConstraints { make in
-            make.top.equalTo(triangleView.snp.bottom).offset(UIScreen.main.bounds.height * 0.004)
-            make.bottom.equalTo(reverseTriangleView.snp.top).inset(-(UIScreen.main.bounds.height * 0.004))
-            make.leading.equalTo(triangleView.snp.leading)
-            make.trailing.equalTo(triangleView.snp.trailing)
+            make.edges.equalToSuperview()
         }
     }
 }

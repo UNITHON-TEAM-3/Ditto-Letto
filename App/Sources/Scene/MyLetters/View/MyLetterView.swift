@@ -46,7 +46,15 @@ class MyLetterView: UIView {
         layer.borderColor = UIColor.black.cgColor
     }
     private func addView() {
-        [redButton, blueButton, yelloButton, title, line, tableView, indicatorView]
+        [
+            redButton,
+            blueButton,
+            yelloButton,
+            title,
+            line,
+            tableView,
+            indicatorView
+        ]
             .forEach {
                 addSubview($0)
             }

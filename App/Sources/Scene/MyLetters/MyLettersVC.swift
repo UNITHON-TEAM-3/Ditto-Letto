@@ -13,7 +13,12 @@ class MyLetterVC: BaseVC {
         $0.setMainButton(color: .main)
         return $0
     }(UIButton())
-    private let emptyView = HomeEmptyView()
+    private let emptyView = HomeEmptyView(
+        text: """
+            나에게 마음을 전달할 수 있도록\n
+            편지를 보내볼까요?
+            """
+    )
     // MARK: - Life Cycles
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,7 +31,6 @@ class MyLetterVC: BaseVC {
     override func addView() {
         view.addSubview(sendButton)
         view.addSubview(myLetterView)
-        view.addSubview(emptyView)
     }
     override func setLayout() {
         sendButton.snp.makeConstraints { make in
@@ -41,9 +45,13 @@ class MyLetterVC: BaseVC {
             make.width.equalToSuperview().multipliedBy(0.9)
             make.bottom.equalTo(sendButton.snp.top).inset(-(UIScreen.main.bounds.height * 0.02))
         }
-        emptyView.snp.makeConstraints { make in
-            make.edges.equalTo(myLetterView.tableView.snp.edges)
-        }
+    }
+    override func configureVC() {
+        myLetterView.tableView.backgroundView = emptyView
+        sendButton.rx.tap
+            .subscribe(onNext: {
+                self.navigationController?.pushViewController(NewLetterVC(), animated: true)
+            }).disposed(by: disposeBag)
     }
     // MARK: - bind
     override func bind() {
@@ -65,7 +73,7 @@ class MyLetterVC: BaseVC {
             }.disposed(by: disposeBag)
         output.letterMyData
             .do(onNext: { [weak self] data in
-                self?.emptyView.isHidden = !data.outBoxLetters.isEmpty
+                self?.myLetterView.tableView.backgroundView?.isHidden = !data.outBoxLetters.isEmpty
             })
             .map { $0.outBoxLetters }
             .bind(to: myLetterView.tableView.rx.items) { tableView, index, item in
@@ -75,6 +83,7 @@ class MyLetterVC: BaseVC {
                         for: IndexPath(row: index, section: 0)
                     ) as? HomeTableViewCell else { return UITableViewCell() }
                 cell.selectionStyle = .none
+                cell.delegate = self
                 cell.model = item
                 return cell
             }.disposed(by: disposeBag)
@@ -89,11 +98,9 @@ class MyLetterVC: BaseVC {
                 }
             }.disposed(by: disposeBag)
     }
-    override func configureVC() {
-        navigationController?.isNavigationBarHidden = true
-        sendButton.rx.tap
-            .subscribe(onNext: {
-                self.navigationController?.pushViewController(NewLetterVC(), animated: true)
-            }).disposed(by: disposeBag)
+}
+extension MyLetterVC: HomeTableViewCellDelegate {
+    func replyButtonTap() {
+        
     }
 }

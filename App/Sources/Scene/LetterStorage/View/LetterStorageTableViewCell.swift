@@ -31,7 +31,12 @@ class LetterStorageTableViewCell: BaseTC {
     }
     // MARK: - Set UI
     override func addView() {
-        [titleLabel, transportationImageView, dateLabel, deleteButton].forEach {
+        [
+            titleLabel, 
+            transportationImageView,
+            dateLabel,
+            deleteButton
+        ].forEach {
             addSubview($0)
         }
     }
