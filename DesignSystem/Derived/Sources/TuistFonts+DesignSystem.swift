@@ -24,7 +24,7 @@ public enum DesignSystemFontFamily {
     public static let all: [DesignSystemFontConvertible] = [regular]
   }
   public enum YoonDongJu2 {
-    public static let regular = DesignSystemFontConvertible(name: "YOON-DONG-JU2", family: "YOON-DONG-JU2", path: "독립서체_윤동주_서시_GS.otf")
+    public static let regular = DesignSystemFontConvertible(name: "YOON-DONG-JU2", family: "YOON-DONG-JU2", path: "독립서체_윤동주_서시_GS.otf")
     public static let all: [DesignSystemFontConvertible] = [regular]
   }
   public static let allCustomFonts: [DesignSystemFontConvertible] = [Ramche.all, YoonDongJu2.all].flatMap { $0 }
@@ -61,7 +61,7 @@ public struct DesignSystemFontConvertible {
       fatalError("Unable to initialize font '\(name)' (\(family))")
     }
     #if os(macOS)
-    return SwiftUI.Font.custom(font.fontName, size: font.pointSize)
+    return SwiftUI.Font.custom(font.fontName, size: font.size)
     #elseif os(iOS) || os(tvOS) || os(watchOS)
     return SwiftUI.Font(font)
     #endif
