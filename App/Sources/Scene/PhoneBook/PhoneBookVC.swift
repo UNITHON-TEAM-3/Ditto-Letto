@@ -13,7 +13,7 @@ class PhoneBookVC: BaseVC {
         $0.layer.shadowOffset = CGSize(width: 0, height: 2)
         $0.layer.shadowRadius = 4
         return $0
-    }(PhoneBookInfoView())
+    }(PhoneBookInfoView(type: .normal))
     private let phoneBookView = PhoneBookView()
     private let emptyView = HomeEmptyView(
         text: """
@@ -118,10 +118,10 @@ extension PhoneBookVC: BottomSheetDelegate {
         return
     }
     func modify() {
-        
+        return
     }
     func delete() {
-        
+        return
     }
     func number(num: String) {
         return

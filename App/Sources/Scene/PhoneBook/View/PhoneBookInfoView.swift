@@ -3,6 +3,11 @@ import DesignSystem
 import SnapKit
 
 class PhoneBookInfoView: UIView {
+    enum PhoneBookInfoViewType: CaseIterable {
+        case normal
+        case add
+        case modify
+    }
     // MARK: - Properties
     private let backgroundView: UIView = {
         $0.backgroundColor = .white
@@ -30,9 +35,28 @@ class PhoneBookInfoView: UIView {
         $0.setImage(UIImage(asset: DesignSystemAsset.Image.pen), for: .normal)
         return $0
     }(UIButton())
-
+    private let characterImageView: UIImageView = {
+        $0.layer.cornerRadius = 5
+        $0.image = .Image.profileImage
+        $0.clipsToBounds = true
+        return $0
+    }(UIImageView())
+    let numberTextField: UITextField = {
+        $0.placeholder = "번호를 입력해주세요."
+        $0.textColor = .black
+        $0.font = .ramche(.subheadline)
+        return $0
+    }(UITextField())
+    private let nameLabel: UILabel = {
+        $0.text = "내 베프>_<"
+        $0.font = .ramche(.subheadline)
+        $0.textColor = .color(.dittoLettoColor(.dark))
+        return $0
+    }(UILabel())
+    let type: PhoneBookInfoViewType
     // MARK: - Life Cycles
-    init() {
+    init(type: PhoneBookInfoViewType) {
+        self.type = type
         super.init(frame: .zero)
         backgroundColor = .clear
         addView()
@@ -60,12 +84,35 @@ class PhoneBookInfoView: UIView {
             emptyView3,
             emptyView4,
             emptyView5,
-            emptyView6,
-            myNumberLabel,
-            numberLabel,
-            pencilButton
+            emptyView6
         ].forEach {
             backgroundView.addSubview($0)
+        }
+        switch type {
+        case .normal:
+            [
+                myNumberLabel,
+                numberLabel,
+                pencilButton
+            ].forEach {
+                backgroundView.addSubview($0)
+            }
+        case .add:
+            [
+                characterImageView,
+                numberTextField
+            ].forEach {
+                backgroundView.addSubview($0)
+            }
+        case .modify:
+            numberLabel.font = .ramche(.caption1)
+            [
+                characterImageView,
+                nameLabel,
+                numberLabel
+            ].forEach {
+                backgroundView.addSubview($0)
+            }
         }
     }
     private func setLayout() {
@@ -108,6 +155,16 @@ class PhoneBookInfoView: UIView {
             make.width.equalTo(UIScreen.main.bounds.width * 0.04)
             make.leading.equalTo(emptyView5.snp.trailing).offset(UIScreen.main.bounds.width * 0.058)
         }
+        switch type {
+        case .normal:
+            normalTypeLayout()
+        case .add:
+            addTypeLayout()
+        case .modify:
+            modifyTypeLayout()
+        }
+    }
+    private func normalTypeLayout() {
         myNumberLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().inset(UIScreen.main.bounds.height * 0.045)
             make.leading.equalToSuperview().inset(UIScreen.main.bounds.width * 0.061)
@@ -120,6 +177,33 @@ class PhoneBookInfoView: UIView {
             make.centerY.equalTo(numberLabel.snp.centerY)
             make.trailing.equalToSuperview().inset(UIScreen.main.bounds.width * 0.049)
             make.width.height.equalTo(UIScreen.main.bounds.width * 0.042)
+        }
+    }
+    private func addTypeLayout() {
+        characterImageView.snp.makeConstraints { make in
+            make.bottom.equalToSuperview().inset(UIScreen.main.bounds.height * 0.022)
+            make.width.height.equalTo(UIScreen.main.bounds.width * 0.133)
+            make.leading.equalToSuperview().inset(UIScreen.main.bounds.width * 0.047)
+        }
+        numberTextField.snp.makeConstraints { make in
+            make.centerY.equalTo(characterImageView.snp.centerY)
+            make.leading.equalTo(characterImageView.snp.trailing).inset(-(UIScreen.main.bounds.width * 0.03))
+            make.trailing.equalToSuperview().inset(UIScreen.main.bounds.width * 0.3)
+        }
+    }
+    private func modifyTypeLayout() {
+        characterImageView.snp.makeConstraints { make in
+            make.bottom.equalToSuperview().inset(UIScreen.main.bounds.height * 0.022)
+            make.width.height.equalTo(UIScreen.main.bounds.width * 0.133)
+            make.leading.equalToSuperview().inset(UIScreen.main.bounds.width * 0.047)
+        }
+        nameLabel.snp.makeConstraints { make in
+            make.top.equalTo(characterImageView.snp.top).inset(UIScreen.main.bounds.height * 0.0045)
+            make.leading.equalTo(characterImageView.snp.trailing).inset(-(UIScreen.main.bounds.width * 0.04))
+        }
+        numberLabel.snp.makeConstraints { make in
+            make.bottom.equalTo(characterImageView.snp.bottom).inset(UIScreen.main.bounds.height * 0.0045)
+            make.leading.equalTo(characterImageView.snp.trailing).inset(-(UIScreen.main.bounds.width * 0.04))
         }
     }
 }
