@@ -61,12 +61,16 @@ class MyLetterView: UIView {
     }
     private func setTableView(identifier: String) {
         if identifier == HomeTableViewCell.identifier {
-            tableView.register(HomeTableViewCell.self, 
-                               forCellReuseIdentifier: HomeTableViewCell.identifier)
+            tableView.register(
+                HomeTableViewCell.self,
+                forCellReuseIdentifier: HomeTableViewCell.identifier
+            )
         }
         if identifier == LetterStorageTableViewCell.identifier {
-            tableView.register(LetterStorageTableViewCell.self,
-                               forCellReuseIdentifier: LetterStorageTableViewCell.identifier)
+            tableView.register(
+                LetterStorageTableViewCell.self,
+                forCellReuseIdentifier: LetterStorageTableViewCell.identifier
+            )
         }
     }
     private func setLayout() {

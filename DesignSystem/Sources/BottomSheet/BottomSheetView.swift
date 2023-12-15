@@ -111,19 +111,19 @@ public final class BottomSheetView: UIViewController {
         bottomSheetView.translatesAutoresizingMaskIntoConstraints = false
         deleteSheetButton.translatesAutoresizingMaskIntoConstraints = false
         let topConstant = view.safeAreaInsets.bottom + view.safeAreaLayoutGuide.layoutFrame.height
-        bottomSheetViewTopConstraint = bottomSheetView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor,
-                                                                            constant: topConstant)
+        bottomSheetViewTopConstraint = bottomSheetView.topAnchor.constraint(
+            equalTo: view.safeAreaLayoutGuide.topAnchor,
+            constant: topConstant
+        )
         NSLayoutConstraint.activate([
             dimmedView.topAnchor.constraint(equalTo: view.topAnchor),
             dimmedView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             dimmedView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             dimmedView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-        
             bottomSheetView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             bottomSheetView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             bottomSheetView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             bottomSheetViewTopConstraint,
-            
             deleteSheetButton.leadingAnchor.constraint(equalTo: bottomSheetView.leadingAnchor),
             deleteSheetButton.trailingAnchor.constraint(equalTo: bottomSheetView.trailingAnchor),
             deleteSheetButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
@@ -243,24 +243,26 @@ extension BottomSheetView {
         seperateLine1.translatesAutoresizingMaskIntoConstraints = false
         seperateLine2.translatesAutoresizingMaskIntoConstraints = false
         stackView.translatesAutoresizingMaskIntoConstraints = false
-        
         NSLayoutConstraint.activate([
-            numberOrFriendLabel.leadingAnchor.constraint(equalTo: bottomSheetView.leadingAnchor,
-                                                         constant: UIScreen.main.bounds.height * 0.03),
-            numberOrFriendLabel.topAnchor.constraint(equalTo: bottomSheetView.topAnchor,
-                                                     constant: UIScreen.main.bounds.height * 0.025),
-            
+            numberOrFriendLabel.leadingAnchor.constraint(
+                equalTo: bottomSheetView.leadingAnchor,
+                constant: UIScreen.main.bounds.height * 0.03
+            ),
+            numberOrFriendLabel.topAnchor.constraint(
+                equalTo: bottomSheetView.topAnchor,
+                constant: UIScreen.main.bounds.height * 0.025
+            ),
             seperateLine1.leadingAnchor.constraint(equalTo: bottomSheetView.leadingAnchor),
             seperateLine1.trailingAnchor.constraint(equalTo: bottomSheetView.trailingAnchor),
-            seperateLine1.topAnchor.constraint(equalTo: numberOrFriendLabel.bottomAnchor,
-                                              constant: UIScreen.main.bounds.height * 0.02),
+            seperateLine1.topAnchor.constraint(
+                equalTo: numberOrFriendLabel.bottomAnchor,
+                constant: UIScreen.main.bounds.height * 0.02
+            ),
             seperateLine1.heightAnchor.constraint(equalToConstant: 0.8),
-            
             seperateLine2.leadingAnchor.constraint(equalTo: bottomSheetView.leadingAnchor),
             seperateLine2.trailingAnchor.constraint(equalTo: bottomSheetView.trailingAnchor),
             seperateLine2.topAnchor.constraint(equalTo: deleteSheetButton.topAnchor),
             seperateLine2.heightAnchor.constraint(equalToConstant: 0.8),
-            
             stackView.topAnchor.constraint(equalTo: seperateLine1.bottomAnchor),
             stackView.leadingAnchor.constraint(equalTo: bottomSheetView.leadingAnchor),
             stackView.trailingAnchor.constraint(equalTo: bottomSheetView.trailingAnchor),
@@ -280,24 +282,27 @@ extension BottomSheetView {
         seperateLine1.translatesAutoresizingMaskIntoConstraints = false
         seperateLine2.translatesAutoresizingMaskIntoConstraints = false
         stackView.translatesAutoresizingMaskIntoConstraints = false
-        
+
         NSLayoutConstraint.activate([
-            numberOrFriendLabel.leadingAnchor.constraint(equalTo: bottomSheetView.leadingAnchor,
-                                                         constant: UIScreen.main.bounds.height * 0.03),
-            numberOrFriendLabel.topAnchor.constraint(equalTo: bottomSheetView.topAnchor,
-                                                     constant: UIScreen.main.bounds.height * 0.025),
-            
+            numberOrFriendLabel.leadingAnchor.constraint(
+                equalTo: bottomSheetView.leadingAnchor,
+                constant: UIScreen.main.bounds.height * 0.03
+            ),
+            numberOrFriendLabel.topAnchor.constraint(
+                equalTo: bottomSheetView.topAnchor,
+                constant: UIScreen.main.bounds.height * 0.025
+            ),
             seperateLine1.leadingAnchor.constraint(equalTo: bottomSheetView.leadingAnchor),
             seperateLine1.trailingAnchor.constraint(equalTo: bottomSheetView.trailingAnchor),
-            seperateLine1.topAnchor.constraint(equalTo: numberOrFriendLabel.bottomAnchor,
-                                              constant: UIScreen.main.bounds.height * 0.02),
+            seperateLine1.topAnchor.constraint(
+                equalTo: numberOrFriendLabel.bottomAnchor,
+                constant: UIScreen.main.bounds.height * 0.02
+            ),
             seperateLine1.heightAnchor.constraint(equalToConstant: 0.8),
-            
             seperateLine2.leadingAnchor.constraint(equalTo: bottomSheetView.leadingAnchor),
             seperateLine2.trailingAnchor.constraint(equalTo: bottomSheetView.trailingAnchor),
             seperateLine2.topAnchor.constraint(equalTo: deleteSheetButton.topAnchor),
             seperateLine2.heightAnchor.constraint(equalToConstant: 0.8),
-            
             stackView.topAnchor.constraint(equalTo: seperateLine1.bottomAnchor),
             stackView.leadingAnchor.constraint(equalTo: bottomSheetView.leadingAnchor),
             stackView.trailingAnchor.constraint(equalTo: bottomSheetView.trailingAnchor),
@@ -320,9 +325,10 @@ extension BottomSheetView {
             seperateLine2.trailingAnchor.constraint(equalTo: bottomSheetView.trailingAnchor),
             seperateLine2.topAnchor.constraint(equalTo: deleteSheetButton.topAnchor),
             seperateLine2.heightAnchor.constraint(equalToConstant: 0.8),
-            
-            stackView.topAnchor.constraint(equalTo: bottomSheetView.topAnchor,
-                                           constant: UIScreen.main.bounds.height * 0.025),
+            stackView.topAnchor.constraint(
+                equalTo: bottomSheetView.topAnchor,
+                constant: UIScreen.main.bounds.height * 0.025
+            ),
             stackView.leadingAnchor.constraint(equalTo: bottomSheetView.leadingAnchor),
             stackView.trailingAnchor.constraint(equalTo: bottomSheetView.trailingAnchor),
             stackView.bottomAnchor.constraint(equalTo: seperateLine2.topAnchor)

@@ -34,6 +34,7 @@ extension UIView {
         }
         return springView
     }
+    // swiftlint:disable function_body_length
     func makePhoneBookIndicatorBackView() -> UIView {
         let backView: UIView = {
             $0.backgroundColor = .color(.dittoLettoColor(.gray1))
@@ -89,6 +90,7 @@ extension UIView {
         }
         return backView
     }
+    // swiftlint:enable function_body_length
 }
 
 extension UITextField {
@@ -129,10 +131,13 @@ extension UITextField {
             generalImage.removeFromSuperview()
 
             self.backgroundColor = .color(.dittoLettoColor(.dark))
-            self.attributedPlaceholder = NSAttributedString(string: "번호를 입력해주세요.", attributes: [
-                .foregroundColor: UIColor.color(.dittoLettoColor(.gray2)),
-                .font: UIFont.ramche(.body)
-            ])
+            self.attributedPlaceholder = NSAttributedString(
+                string: "번호를 입력해주세요.",
+                attributes: [
+                    .foregroundColor: UIColor.color(.dittoLettoColor(.gray2)),
+                    .font: UIFont.ramche(.body)
+                ]
+            )
             self.font = .ramche(.body)
             self.textColor = .color(.dittoLettoColor(.white))
             self.rightView = UIView(frame: CGRect(x: 0, y: 0, width: 68, height: 50))
@@ -150,10 +155,13 @@ extension UITextField {
             self.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 22, height: 25))
             self.leftViewMode = ViewMode.always
             self.backgroundColor = .white
-            self.attributedPlaceholder = NSAttributedString(string: "번호를 입력해주세요.", attributes: [
-                .foregroundColor: UIColor.color(.dittoLettoColor(.gray2)),
-                .font: UIFont.yoondongju(.body)
-            ])
+            self.attributedPlaceholder = NSAttributedString(
+                string: "번호를 입력해주세요.",
+                attributes: [
+                    .foregroundColor: UIColor.color(.dittoLettoColor(.gray2)),
+                    .font: UIFont.yoondongju(.body)
+                ]
+            )
             self.font = .yoondongju(.body)
             self.textColor = .black
         }
