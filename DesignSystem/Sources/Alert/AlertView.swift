@@ -5,13 +5,13 @@ public enum AlertType {
     case yesNo
 }
 
-public protocol AlertDelegate {
+public protocol AlertDelegate: AnyObject {
     func exit()
     func yes()
 }
 
 public final class AlertView: UIViewController {
-    var delegate: AlertDelegate?
+    weak var delegate: AlertDelegate?
     public var alertType: AlertType = .confirm
     private let pinkCircle = Circle(.bg, 0.5, 3)
     private let blueCircle = Circle(.third, 0.5, 3)

@@ -52,7 +52,7 @@ final class IndicatorView: UIView {
         self.layer.borderWidth = 0.5
         [
             triangleView,
-            trackView, 
+            trackView,
             reverseTriangleView
         ].forEach {
             addSubview($0)

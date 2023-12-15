@@ -5,7 +5,7 @@ public enum BottomSheetType: CaseIterable {
     case setNumber
     case modifyDelete
 }
-public protocol BottomSheetDelegate {
+public protocol BottomSheetDelegate: AnyObject {
     func save()
     func modify()
     func delete()
@@ -28,7 +28,7 @@ public final class BottomSheetView: UIViewController {
         case delete = "삭제하기"
     }
     public var bottomSheetType: BottomSheetType = .home
-    public var delegate: BottomSheetDelegate?
+    public weak var delegate: BottomSheetDelegate?
     // MARK: - Properties
     private let dimmedView: UIView = {
         $0.backgroundColor = UIColor.black.withAlphaComponent(0.7)

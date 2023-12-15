@@ -14,6 +14,10 @@ public final class MyPageContentView: UIView {
         return $0
     }(UIView())
     private lazy var contentStackView = VStackView(spacing: 0) {
-        
+        ZStackView {
+            headerView
+            leftBar
+            rightBar
+        }
     }
 }

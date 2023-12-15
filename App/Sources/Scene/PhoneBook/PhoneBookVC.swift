@@ -72,7 +72,6 @@ class PhoneBookVC: BaseVC {
         let output = viewModel.transform(input)
         phoneBookInfoView.pencilButton.rx.tap
             .bind {
-                
             }.disposed(by: disposeBag)
         phoneBookView.tableView.rx.contentOffset
             .observe(on: MainScheduler.instance)

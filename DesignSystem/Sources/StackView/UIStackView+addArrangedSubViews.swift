@@ -31,7 +31,8 @@ public struct UIViewSubviewsBuilder {
     public static func buildExpression<C: Collection>(_ expression: C) -> [Element] where C.Element == Element {
         Array(expression)
     }
-    public static func buildExpression<C: Collection>(_ expression: C) -> [Element] where C.Element == Optional<Element> {
+    public static func buildExpression<C: Collection>(_ expression: C) ->
+    [Element] where C.Element == Element? {
         expression.compactMap { $0 }
     }
     public static func buildLimitedAvailability(_ component: [Element]) -> [Element] {
