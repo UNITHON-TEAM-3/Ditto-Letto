@@ -14,10 +14,6 @@ class HomeEmptyView: UIView {
         return $0
     }(UIImageView())
     private let questionLabel: UILabel = {
-        $0.text = """
-            나에게 마음을 전달할 수 있도록\n
-            편지를 보내볼까요?
-        """
         $0.font = .ramche(.body)
         $0.textAlignment = .center
         $0.numberOfLines = 0
@@ -25,8 +21,9 @@ class HomeEmptyView: UIView {
     }(UILabel())
 
     // MARK: - Life Cycles
-    init() {
+    init(text: String) {
         super.init(frame: .zero)
+        questionLabel.text = text
         addView()
         setLayout()
     }
