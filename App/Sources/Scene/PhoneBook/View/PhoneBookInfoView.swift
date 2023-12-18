@@ -53,7 +53,7 @@ class PhoneBookInfoView: UIView {
         $0.textColor = .color(.dittoLettoColor(.dark))
         return $0
     }(UILabel())
-    let type: PhoneBookInfoViewType
+    var type: PhoneBookInfoViewType
     // MARK: - Life Cycles
     init(type: PhoneBookInfoViewType) {
         self.type = type

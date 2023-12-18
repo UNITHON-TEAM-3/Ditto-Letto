@@ -74,6 +74,13 @@ class PhoneBookVC: BaseVC {
             .bind {
                 
             }.disposed(by: disposeBag)
+        output.moveToAddOrModiView
+            .bind { [weak self] addOrModiVC in
+                // 변경 예정
+                guard let self = self,
+                      let addOrModiVC = addOrModiVC else { return }
+                self.navigationController?.pushViewController(addOrModiVC, animated: true)
+            }.disposed(by: disposeBag)
         phoneBookView.tableView.rx.contentOffset
             .observe(on: MainScheduler.instance)
             .bind { [weak self] contentOffset in

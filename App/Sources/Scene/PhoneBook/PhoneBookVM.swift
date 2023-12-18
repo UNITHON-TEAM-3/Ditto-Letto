@@ -25,6 +25,7 @@ class PhoneBookVM: BaseVM {
             PhoneBookModel(phoneBookImage: "", phoneBookName: "내 베프 ><", phoneBookNumber: "010-1234-5678"),
             PhoneBookModel(phoneBookImage: "", phoneBookName: "내 베프 ><", phoneBookNumber: "010-1234-5678")
         ])
+        let moveToAddOrModiView = BehaviorRelay<UIViewController?>(value: nil)
     }
 
     // MARK: - Translate
@@ -33,7 +34,9 @@ class PhoneBookVM: BaseVM {
         let output = Output()
         input.tableHeaderViewTapped
             .bind { _ in
-                
+                // 향후 Coordinator로 연결할거라 임시 output 바인딩
+                let addOrModiSomeoneVC = AddOrModifySomeoneVC(type: .modify)
+                output.moveToAddOrModiView.accept(addOrModiSomeoneVC)
             }.disposed(by: disposeBag)
         Observable
             .combineLatest(input.tableViewModelSelected, output.phoneBookData)
