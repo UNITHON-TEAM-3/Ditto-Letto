@@ -25,8 +25,7 @@ class AddOrModifySomeoneVC: BaseVC {
         return $0
     }(PhoneBookInfoView(type: .add))
     private let setCharaterAndNameView = SetCharacterAndNameView()
-    private let addButton: UIButton = {
-        $0.setTitle("추가하기", for: .normal)
+    private let addOrModifyButton: UIButton = {
         $0.setMainButton(color: .main)
         return $0
     }(UIButton())
@@ -38,8 +37,10 @@ class AddOrModifySomeoneVC: BaseVC {
         switch type {
         case .add:
             self.phoneBookInfoView.type = .add
+            addOrModifyButton.setTitle("추가하기", for: .normal)
         case .modify:
             self.phoneBookInfoView.type = .modify
+            addOrModifyButton.setTitle("수정하기", for: .normal)
         }
     }
     required init?(coder: NSCoder) {
@@ -58,7 +59,7 @@ class AddOrModifySomeoneVC: BaseVC {
         [
             phoneBookInfoView,
             setCharaterAndNameView,
-            addButton
+            addOrModifyButton
         ].forEach {
             view.addSubview($0)
         }
@@ -69,7 +70,7 @@ class AddOrModifySomeoneVC: BaseVC {
             make.leading.trailing.equalToSuperview().inset(UIScreen.main.bounds.width * 0.053)
             make.height.equalToSuperview().multipliedBy(0.13)
         }
-        addButton.snp.makeConstraints { make in
+        addOrModifyButton.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.width.equalToSuperview().multipliedBy(0.9)
             make.height.equalTo(UIScreen.main.bounds.height * 0.075)
@@ -79,7 +80,7 @@ class AddOrModifySomeoneVC: BaseVC {
             make.leading.equalTo(phoneBookInfoView.snp.leading)
             make.trailing.equalTo(phoneBookInfoView.snp.trailing)
             make.top.equalTo(phoneBookInfoView.snp.bottom).inset(-(UIScreen.main.bounds.height * 0.022))
-            make.bottom.equalTo(addButton.snp.top).inset(-(UIScreen.main.bounds.height * 0.025))
+            make.bottom.equalTo(addOrModifyButton.snp.top).inset(-(UIScreen.main.bounds.height * 0.025))
         }
     }
     override func configureVC() {
