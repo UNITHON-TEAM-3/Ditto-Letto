@@ -57,6 +57,8 @@ final class SetCharacterAndNameView: UIView {
         return $0
     }(UITextField())
     var selectedButton: UIButton?
+    let selectedCharacterType = BehaviorRelay<CharacterType?>(value: nil)
+    var selectedButtonTapped: ((CharacterType) -> Void)?
     var disposeBag = DisposeBag()
     // MARK: - Life Cycles
     init() {
@@ -156,14 +158,10 @@ final class SetCharacterAndNameView: UIView {
                     self?.selectedButton?.isSelected = false
                     self?.selectedButton = button
                     button.isSelected.toggle()
+                    self?.selectedCharacterType.accept(type)
                 })
                 .disposed(by: disposeBag)
             setCharacterStackView.addArrangedSubview(button)
-            // 초기 selected 값
-            if type == .normal {
-                button.isSelected = true
-                selectedButton = button
-            }
         }
     }
 }

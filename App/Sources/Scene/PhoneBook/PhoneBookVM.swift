@@ -35,7 +35,7 @@ class PhoneBookVM: BaseVM {
         input.tableHeaderViewTapped
             .bind { _ in
                 // 향후 Coordinator로 연결할거라 임시 output 바인딩
-                let addOrModiSomeoneVC = AddOrModifySomeoneVC(type: .modify)
+                let addOrModiSomeoneVC = AddOrModifySomeoneVC(type: .modify, viewModel: AddOrModifySomeoneVM(type: .modify))
                 output.moveToAddOrModiView.accept(addOrModiSomeoneVC)
             }.disposed(by: disposeBag)
         Observable

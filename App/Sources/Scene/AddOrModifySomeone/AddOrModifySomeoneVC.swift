@@ -1,45 +1,40 @@
-//
-//  AddOrModifySomeoneVC.swift
-//  Ditto-Letto
-//
-//  Created by 박현준 on 12/18/23.
-//  Copyright © 2023 com.UNITHON-Team3. All rights reserved.
-//
-
 import UIKit
+import DesignSystem
 import SnapKit
 import RxSwift
 import RxCocoa
 
 class AddOrModifySomeoneVC: BaseVC {
-    enum AddOrModifySomeoneType: CaseIterable {
-        case add
-        case modify
-    }
     // MARK: Properties
     private lazy var phoneBookInfoView: PhoneBookInfoView = {
-        $0.layer.shadowColor = UIColor.black.cgColor
-        $0.layer.shadowOpacity = 0.2
-        $0.layer.shadowOffset = CGSize(width: 0, height: 2)
-        $0.layer.shadowRadius = 4
-        return $0
-    }(PhoneBookInfoView(type: .add))
+        switch type {
+        case .add:
+            let view = PhoneBookInfoView(type: .add)
+            view.makeShadowView()
+            return view
+        case .modify:
+            let view = PhoneBookInfoView(type: .modify)
+            view.makeShadowView()
+            return view
+        }
+    }()
     private let setCharaterAndNameView = SetCharacterAndNameView()
     private let addOrModifyButton: UIButton = {
-        $0.setMainButton(color: .main)
+        $0.setMainButton(color: .gray2)
+        $0.isEnabled = false
         return $0
     }(UIButton())
+    private let viewModel: AddOrModifySomeoneVM
     let type: AddOrModifySomeoneType
     // MARK: - Life Cycles
-    init(type: AddOrModifySomeoneType) {
+    init(type: AddOrModifySomeoneType, viewModel: AddOrModifySomeoneVM) {
         self.type = type
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
         switch type {
         case .add:
-            self.phoneBookInfoView.type = .add
             addOrModifyButton.setTitle("추가하기", for: .normal)
         case .modify:
-            self.phoneBookInfoView.type = .modify
             addOrModifyButton.setTitle("수정하기", for: .normal)
         }
     }
@@ -48,11 +43,6 @@ class AddOrModifySomeoneVC: BaseVC {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(phoneBookInfoView.type)
-    }
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
     }
     // MARK: - Set UI
     override func addView() {
@@ -83,7 +73,18 @@ class AddOrModifySomeoneVC: BaseVC {
             make.bottom.equalTo(addOrModifyButton.snp.top).inset(-(UIScreen.main.bounds.height * 0.025))
         }
     }
-    override func configureVC() {
+    override func bind() {
+        let input = AddOrModifySomeoneVM.Input(
+            selectedCharacterType: setCharaterAndNameView.selectedCharacterType.asObservable(),
+                nameTextFieldText: setCharaterAndNameView.nameTextField.rx.text.orEmpty.asObservable()
+        )
+        let output = viewModel.transform(input)
         
+        output.addOrModifyButtonIsEnabled
+            .observe(on: MainScheduler.instance)
+            .bind { [weak self] bool in
+                bool ? self?.addOrModifyButton.setMainButton(color: .main) : self?.addOrModifyButton.setMainButton(color: .gray2)
+                self?.addOrModifyButton.isEnabled = bool
+            }.disposed(by: disposeBag)
     }
 }

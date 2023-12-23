@@ -25,7 +25,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             if Storage.isFirstTime() {
                 window?.rootViewController = UINavigationController(rootViewController: OnboardingVC())
             } else {
-                window?.rootViewController = UINavigationController(rootViewController: PhoneBookVC())
+                window?.rootViewController = UINavigationController(rootViewController: MyLetterVC())
             }
         }
 
