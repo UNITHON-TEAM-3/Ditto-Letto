@@ -40,6 +40,7 @@ public enum DesignSystemAsset {
     public static let bikeIcon = DesignSystemImages(name: "bikeIcon")
     public static let car = DesignSystemImages(name: "car")
     public static let carIcon = DesignSystemImages(name: "carIcon")
+    public static let cursor = DesignSystemImages(name: "cursor")
     public static let diaryOff = DesignSystemImages(name: "diary_off")
     public static let diaryOn = DesignSystemImages(name: "diary_on")
     public static let emptyFolder = DesignSystemImages(name: "emptyFolder")
