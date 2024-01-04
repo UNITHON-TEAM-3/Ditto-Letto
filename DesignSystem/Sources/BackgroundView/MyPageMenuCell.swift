@@ -1,6 +1,5 @@
 import UIKit
 
-
 class MyPageMenuCell: UITableViewCell {
     private let titleLabel: UILabel = {
         $0.textColor = .color(.dittoLettoColor(.dark))
@@ -16,6 +15,8 @@ class MyPageMenuCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.addView()
         self.setLayout()
+        self.backgroundColor = .color(.dittoLettoColor(.gray2))
+//        self.selectionStyle = .
     }
     @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
@@ -28,9 +29,11 @@ class MyPageMenuCell: UITableViewCell {
             cursorImageView
         ].forEach { addSubview($0) }
     }
+
     func setLayout() {
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         cursorImageView.translatesAutoresizingMaskIntoConstraints = false
+
         NSLayoutConstraint.activate([
             titleLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor),
             titleLabel.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 10),

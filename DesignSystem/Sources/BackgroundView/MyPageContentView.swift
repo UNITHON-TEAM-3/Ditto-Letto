@@ -11,35 +11,46 @@ public final class MyPageContentView: UIView {
     private let headerView: UIView = {
         $0.layer.borderColor = UIColor.color(.dittoLettoColor(.dark)).cgColor
         $0.layer.borderWidth = 1
+        $0.translatesAutoresizingMaskIntoConstraints = false
         return $0
     }(UIView())
     private let leftBar: UIView = {
+        $0.translatesAutoresizingMaskIntoConstraints = false
         return $0
     }(UIView())
     private let rightBar: UIView = {
+        $0.translatesAutoresizingMaskIntoConstraints = false
         return $0
     }(UIView())
     private let contentView: UIView = {
+        $0.translatesAutoresizingMaskIntoConstraints = false
         return $0
     }(UIView())
-    private lazy var contentStackView = VStackView(spacing: 0) {
-        ZStackView {
-            headerView
-            leftBar
-            rightBar
-        }
-        contentView
-    }
+    let headerTitleLabel: UILabel = {
+        $0.font = .ramche(.body)
+        return $0
+    }(UILabel())
+    let snsImageView: UIImageView = {
+        return $0
+    }(UIImageView())
+    private let withdrawalLabel: UILabel = {
+        $0.text = "탈퇴하기"
+        $0.font = .ramche(.body)
+        $0.textColor = .color(.dittoLettoColor(.dark))
+        return $0
+    }(UILabel())
+    let noticeTextView: UITextView = {
+        $0.font = .ramche(.subheadline)
+        $0.textColor = .color(.dittoLettoColor(.white))
+        $0.textAlignment = .left
+        $0.isEditable = false
+        $0.isSelectable = false
+        $0.isScrollEnabled = false
+        return $0
+    }(UITextView())
 
-    public init(
-        type: MyPageViewType
-    ) {
+    public init(_ type: MyPageViewType) {
         super.init(frame: .zero)
-
-        headerView.translatesAutoresizingMaskIntoConstraints = false
-        leftBar.translatesAutoresizingMaskIntoConstraints = false
-        rightBar.translatesAutoresizingMaskIntoConstraints = false
-        contentView.translatesAutoresizingMaskIntoConstraints = false
 
         switch type {
         case .table:
@@ -60,10 +71,20 @@ public final class MyPageContentView: UIView {
 
 extension MyPageContentView {
     func setTableType() {
+        lazy var contentStackView = VStackView(spacing: 0) {
+            ZStackView {
+                headerView
+                leftBar
+                rightBar
+            }
+            contentView
+        }
+
         headerView.backgroundColor = .color(.dittoLettoColor(.third))
         contentView.backgroundColor = .color(.dittoLettoColor(.gray1))
         leftBar.backgroundColor = .color(.dittoLettoColor(.dark))
         rightBar.backgroundColor = .color(.dittoLettoColor(.dark))
+
         NSLayoutConstraint.activate([
             headerView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height * 0.03),
             rightBar.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width * 0.061),
@@ -73,14 +94,20 @@ extension MyPageContentView {
             leftBar.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width * 0.061),
             leftBar.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height * 0.01),
             leftBar.centerYAnchor.constraint(equalTo: headerView.centerYAnchor),
-            leftBar.rightAnchor.constraint(equalTo: rightBar.leftAnchor, constant: 8)
+            leftBar.rightAnchor.constraint(equalTo: rightBar.leftAnchor, constant: 8),
+            contentView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height * 0.542),
+            contentView.topAnchor.constraint(equalTo: headerView.bottomAnchor),
+            contentView.leftAnchor.constraint(equalTo: headerView.leftAnchor),
+            contentView.rightAnchor.constraint(equalTo: headerView.rightAnchor)
         ])
     }
+
     func setAuthType() {
         headerView.backgroundColor = .color(.dittoLettoColor(.gray1))
         contentView.backgroundColor = .color(.dittoLettoColor(.white))
         leftBar.backgroundColor = .color(.dittoLettoColor(.gray2))
         rightBar.backgroundColor = .color(.dittoLettoColor(.gray2))
+
         NSLayoutConstraint.activate([
             headerView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height * 0.064),
             rightBar.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width * 0.061),
@@ -90,31 +117,20 @@ extension MyPageContentView {
             leftBar.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width * 0.061),
             leftBar.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height * 0.01),
             leftBar.centerYAnchor.constraint(equalTo: headerView.centerYAnchor),
-            leftBar.rightAnchor.constraint(equalTo: rightBar.leftAnchor, constant: UIScreen.main.bounds.width * 0.042)
+            leftBar.rightAnchor.constraint(equalTo: rightBar.leftAnchor, constant: UIScreen.main.bounds.width * 0.042),
+            contentView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height * 0.135),
+            contentView.topAnchor.constraint(equalTo: headerView.bottomAnchor),
+            contentView.leftAnchor.constraint(equalTo: headerView.leftAnchor),
+            contentView.rightAnchor.constraint(equalTo: headerView.rightAnchor)
         ])
     }
-    func setNoticeType() {
-        headerView.backgroundColor = .color(.dittoLettoColor(.third))
-        contentView.backgroundColor = .color(.dittoLettoColor(.dark))
-        leftBar.backgroundColor = .color(.dittoLettoColor(.dark))
-        rightBar.backgroundColor = .color(.dittoLettoColor(.dark))
-        NSLayoutConstraint.activate([
-            headerView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height * 0.064),
-            rightBar.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width * 0.061),
-            rightBar.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height * 0.024),
-            rightBar.centerYAnchor.constraint(equalTo: headerView.centerYAnchor),
-            rightBar.rightAnchor.constraint(equalTo: headerView.rightAnchor, constant: UIScreen.main.bounds.width * 0.053),
-            leftBar.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width * 0.061),
-            leftBar.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height * 0.01),
-            leftBar.centerYAnchor.constraint(equalTo: headerView.centerYAnchor),
-            leftBar.rightAnchor.constraint(equalTo: rightBar.leftAnchor, constant: UIScreen.main.bounds.width * 0.042)
-        ])
-    }
+    
     func setWithdrawalType() {
         headerView.backgroundColor = .color(.dittoLettoColor(.gray1))
         contentView.backgroundColor = .color(.dittoLettoColor(.white))
         leftBar.backgroundColor = .color(.dittoLettoColor(.gray2))
         rightBar.backgroundColor = .color(.dittoLettoColor(.gray2))
+
         NSLayoutConstraint.activate([
             headerView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height * 0.03),
             rightBar.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width * 0.037),
@@ -124,7 +140,64 @@ extension MyPageContentView {
             leftBar.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width * 0.037),
             leftBar.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height * 0.012),
             leftBar.centerYAnchor.constraint(equalTo: headerView.centerYAnchor),
-            leftBar.rightAnchor.constraint(equalTo: rightBar.leftAnchor, constant: UIScreen.main.bounds.width * 0.016)
+            leftBar.rightAnchor.constraint(equalTo: rightBar.leftAnchor, constant: UIScreen.main.bounds.width * 0.016),
+            contentView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height * 0.542),
+            contentView.topAnchor.constraint(equalTo: headerView.bottomAnchor),
+            contentView.leftAnchor.constraint(equalTo: headerView.leftAnchor),
+            contentView.rightAnchor.constraint(equalTo: headerView.rightAnchor)
         ])
+    }
+
+    func setNoticeType() {
+        headerView.backgroundColor = .color(.dittoLettoColor(.third))
+        contentView.backgroundColor = .color(.dittoLettoColor(.dark))
+        leftBar.backgroundColor = .color(.dittoLettoColor(.dark))
+        rightBar.backgroundColor = .color(.dittoLettoColor(.dark))
+
+        NSLayoutConstraint.activate([
+            headerView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height * 0.064),
+            rightBar.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width * 0.061),
+            rightBar.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height * 0.024),
+            rightBar.centerYAnchor.constraint(equalTo: headerView.centerYAnchor),
+            rightBar.rightAnchor.constraint(equalTo: headerView.rightAnchor, constant: UIScreen.main.bounds.width * 0.053),
+            leftBar.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width * 0.061),
+            leftBar.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height * 0.01),
+            leftBar.centerYAnchor.constraint(equalTo: headerView.centerYAnchor),
+            leftBar.rightAnchor.constraint(equalTo: rightBar.leftAnchor, constant: UIScreen.main.bounds.width * 0.042),
+            contentView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height * 0.542),
+            contentView.topAnchor.constraint(equalTo: headerView.bottomAnchor),
+            contentView.leftAnchor.constraint(equalTo: headerView.leftAnchor),
+            contentView.rightAnchor.constraint(equalTo: headerView.rightAnchor)
+        ])
+    }
+}
+
+extension CALayer {
+    func addBorder(
+        _ edges: [UIRectEdge],
+        _ color: UIColor,
+        _ width: CGFloat
+    ) {
+        for edge in edges {
+            let border = CALayer()
+            switch edge {
+            case UIRectEdge.top:
+                border.frame = CGRect.init(x: 0, y: 0, width: frame.width, height: width)
+                break
+            case UIRectEdge.bottom:
+                border.frame = CGRect.init(x: 0, y: frame.height - width, width: frame.width, height: width)
+                break
+            case UIRectEdge.left:
+                border.frame = CGRect.init(x: 0, y: 0, width: width, height: frame.height)
+                break
+            case UIRectEdge.right:
+                border.frame = CGRect.init(x: frame.width - width, y: 0, width: width, height: frame.height)
+                break
+            default:
+                break
+            }
+            border.backgroundColor = color.cgColor;
+            self.addSublayer(border)
+        }
     }
 }
