@@ -75,11 +75,11 @@ class PhoneBookVC: BaseVC {
                 
             }.disposed(by: disposeBag)
         output.moveToAddOrModiView
-            .bind { [weak self] addOrModiVC in
+            .bind { [weak self] addVC in
                 // 변경 예정
                 guard let self = self,
-                      let addOrModiVC = addOrModiVC else { return }
-                self.navigationController?.pushViewController(addOrModiVC, animated: true)
+                      let addVC = addVC else { return }
+                self.navigationController?.pushViewController(addVC, animated: true)
             }.disposed(by: disposeBag)
         phoneBookView.tableView.rx.contentOffset
             .observe(on: MainScheduler.instance)
@@ -125,7 +125,9 @@ extension PhoneBookVC: BottomSheetDelegate {
         return
     }
     func modify() {
-        return
+        let modiVM = AddOrModifySomeoneVM(type: .modify)
+        let modiVC = AddOrModifySomeoneVC(type: .modify, viewModel: modiVM)
+        self.navigationController?.pushViewController(modiVC, animated: true)
     }
     func delete() {
         return
