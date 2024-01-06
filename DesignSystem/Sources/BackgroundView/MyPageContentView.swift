@@ -27,19 +27,23 @@ public final class MyPageContentView: UIView {
         return $0
     }(UIView())
     let headerTitleLabel: UILabel = {
+        $0.translatesAutoresizingMaskIntoConstraints = false
         $0.font = .ramche(.body)
         return $0
     }(UILabel())
     let snsImageView: UIImageView = {
+        $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.contentMode = .scaleAspectFit
+        $0.backgroundColor = .clear
         return $0
     }(UIImageView())
-    private let withdrawalLabel: UILabel = {
-        $0.text = "탈퇴하기"
-        $0.font = .ramche(.body)
+    let textLabel: UILabel = {
+        $0.translatesAutoresizingMaskIntoConstraints = false
         $0.textColor = .color(.dittoLettoColor(.dark))
         return $0
     }(UILabel())
     let noticeTextView: UITextView = {
+        $0.translatesAutoresizingMaskIntoConstraints = false
         $0.font = .ramche(.subheadline)
         $0.textColor = .color(.dittoLettoColor(.white))
         $0.textAlignment = .left
@@ -79,6 +83,7 @@ extension MyPageContentView {
             }
             contentView
         }
+        self.addSubview(contentStackView)
 
         headerView.backgroundColor = .color(.dittoLettoColor(.third))
         contentView.backgroundColor = .color(.dittoLettoColor(.gray1))
@@ -103,10 +108,25 @@ extension MyPageContentView {
     }
 
     func setAuthType() {
+        lazy var contentStackView = VStackView(spacing: 0) {
+            ZStackView {
+                headerView
+                leftBar
+                rightBar
+            }
+            ZStackView {
+                contentView
+                snsImageView
+                textLabel
+            }
+        }
+        self.addSubview(contentStackView)
+
         headerView.backgroundColor = .color(.dittoLettoColor(.gray1))
         contentView.backgroundColor = .color(.dittoLettoColor(.white))
         leftBar.backgroundColor = .color(.dittoLettoColor(.gray2))
         rightBar.backgroundColor = .color(.dittoLettoColor(.gray2))
+        textLabel.font = .ramche(.subheadline)
 
         NSLayoutConstraint.activate([
             headerView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height * 0.064),
@@ -121,15 +141,33 @@ extension MyPageContentView {
             contentView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height * 0.135),
             contentView.topAnchor.constraint(equalTo: headerView.bottomAnchor),
             contentView.leftAnchor.constraint(equalTo: headerView.leftAnchor),
-            contentView.rightAnchor.constraint(equalTo: headerView.rightAnchor)
+            contentView.rightAnchor.constraint(equalTo: headerView.rightAnchor),
+            snsImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            snsImageView.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 20),
+            snsImageView.widthAnchor.constraint(equalToConstant: 20)
         ])
     }
     
     func setWithdrawalType() {
+        lazy var contentStackView = VStackView(spacing: 0) {
+            ZStackView {
+                headerView
+                leftBar
+                rightBar
+            }
+            ZStackView {
+                contentView
+                textLabel
+            }
+        }
+        self.addSubview(contentStackView)
+
         headerView.backgroundColor = .color(.dittoLettoColor(.gray1))
         contentView.backgroundColor = .color(.dittoLettoColor(.white))
         leftBar.backgroundColor = .color(.dittoLettoColor(.gray2))
         rightBar.backgroundColor = .color(.dittoLettoColor(.gray2))
+        textLabel.text = "탈퇴하기"
+        textLabel.font = .ramche(.body)
 
         NSLayoutConstraint.activate([
             headerView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height * 0.03),
@@ -144,11 +182,26 @@ extension MyPageContentView {
             contentView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height * 0.542),
             contentView.topAnchor.constraint(equalTo: headerView.bottomAnchor),
             contentView.leftAnchor.constraint(equalTo: headerView.leftAnchor),
-            contentView.rightAnchor.constraint(equalTo: headerView.rightAnchor)
+            contentView.rightAnchor.constraint(equalTo: headerView.rightAnchor),
+            textLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 10),
+            textLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
         ])
     }
 
     func setNoticeType() {
+        lazy var contentStackView = VStackView(spacing: 0) {
+            ZStackView {
+                headerView
+                leftBar
+                rightBar
+            }
+            ZStackView {
+                contentView
+                noticeTextView
+            }
+        }
+        self.addSubview(contentStackView)
+
         headerView.backgroundColor = .color(.dittoLettoColor(.third))
         contentView.backgroundColor = .color(.dittoLettoColor(.dark))
         leftBar.backgroundColor = .color(.dittoLettoColor(.dark))
@@ -167,7 +220,8 @@ extension MyPageContentView {
             contentView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height * 0.542),
             contentView.topAnchor.constraint(equalTo: headerView.bottomAnchor),
             contentView.leftAnchor.constraint(equalTo: headerView.leftAnchor),
-            contentView.rightAnchor.constraint(equalTo: headerView.rightAnchor)
+            contentView.rightAnchor.constraint(equalTo: headerView.rightAnchor),
+            noticeTextView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
         ])
     }
 }
