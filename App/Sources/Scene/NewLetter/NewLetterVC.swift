@@ -30,10 +30,9 @@ class NewLetterVC: BaseVC {
         $0.layer.borderWidth = 1.0
         $0.backgroundColor = .white
         $0.text = "전하고 싶은 말을 입력해주세요."
-        $0.textColor = .color(.dittoLettoColor(.gray2))
         $0.textContainerInset = UIEdgeInsets(top: 20, left: 20, bottom: 54, right: 20)
         $0.autocorrectionType = .no
-        $0.setLineAndLetterSpacing()
+        $0.setLineAndLetterSpacing(5, .color(.dittoLettoColor(.gray2)))
     }
     private let textCountLabel = UILabel().then {
         $0.text = "0 / 144"

@@ -7,7 +7,8 @@ public enum MyPageViewType: String {
     case notice
 }
 
-public final class MyPageContentView: UIView {
+public class MyPageContentView: UIView {
+    public var noticeTypeHeight = CGFloat()
     private let headerView: UIView = {
         $0.layer.borderColor = UIColor.color(.dittoLettoColor(.dark)).cgColor
         $0.layer.borderWidth = 1
@@ -24,29 +25,29 @@ public final class MyPageContentView: UIView {
     }(UIView())
     private let contentView: UIView = {
         $0.translatesAutoresizingMaskIntoConstraints = false
-//        $0.layer.addBorder([.top, .left], .color(.dittoLettoColor(.dark)), UIScreen.main.bounds.width * 0.003)
-//        $0.layer.addBorder([.right, .bottom], .color(.dittoLettoColor(.dark)), UIScreen.main.bounds.width * 0.005)
-        $0.layer.borderColor = UIColor.color(.dittoLettoColor(.dark)).cgColor
-        $0.layer.borderWidth = 2
+        $0.layer.addBorder([.top, .left], .color(.dittoLettoColor(.dark)), UIScreen.main.bounds.width * 0.003)
+        $0.layer.addBorder([.right, .bottom], .color(.dittoLettoColor(.dark)), UIScreen.main.bounds.width * 0.005)
         return $0
     }(UIView())
-    let headerTitleLabel: UILabel = {
+    public let headerTitleLabel: UILabel = {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.font = .ramche(.body)
+        $0.backgroundColor = .clear
         return $0
     }(UILabel())
-    let snsImageView: UIImageView = {
+    public let snsImageView: UIImageView = {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.contentMode = .scaleAspectFit
         $0.backgroundColor = .clear
         return $0
     }(UIImageView())
-    let textLabel: UILabel = {
+    public let textLabel: UILabel = {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.textColor = .color(.dittoLettoColor(.dark))
+        $0.backgroundColor = .clear
         return $0
     }(UILabel())
-    let noticeTextView: UITextView = {
+    public let noticeTextView: UITextView = {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.font = .ramche(.subheadline)
         $0.textColor = .color(.dittoLettoColor(.white))
@@ -54,6 +55,7 @@ public final class MyPageContentView: UIView {
         $0.isEditable = false
         $0.isSelectable = false
         $0.isScrollEnabled = false
+        $0.backgroundColor = .clear
         return $0
     }(UITextView())
 
@@ -68,7 +70,7 @@ public final class MyPageContentView: UIView {
         case .withdrawal:
             setWithdrawalType()
         case .notice:
-            setNoticeType()
+            setNoticeType(self.noticeTypeHeight)
         }
     }
 
@@ -77,6 +79,7 @@ public final class MyPageContentView: UIView {
     }
 }
 
+// swiftlint:disable function_body_length
 extension MyPageContentView {
     func setTableType() {
         lazy var contentStackView = VStackView(spacing: 0) {
@@ -121,6 +124,7 @@ extension MyPageContentView {
         lazy var contentStackView = VStackView(spacing: 0) {
             ZStackView {
                 headerView
+                headerTitleLabel
                 leftBar
                 rightBar
             }
@@ -137,31 +141,38 @@ extension MyPageContentView {
         contentView.backgroundColor = .color(.dittoLettoColor(.white))
         leftBar.backgroundColor = .color(.dittoLettoColor(.gray2))
         rightBar.backgroundColor = .color(.dittoLettoColor(.gray2))
+        headerTitleLabel.text = "SNS 연동"
+        headerTitleLabel.textColor = .color(.dittoLettoColor(.dark))
         textLabel.font = .ramche(.subheadline)
 
         NSLayoutConstraint.activate([
+            contentStackView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            contentStackView.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width * 0.893),
+            contentStackView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height * 0.198),
             headerView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height * 0.064),
-            rightBar.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width * 0.061),
-            rightBar.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height * 0.024),
+            headerTitleLabel.centerYAnchor.constraint(equalTo: headerView.centerYAnchor),
+            headerTitleLabel.leftAnchor.constraint(equalTo: contentStackView.leftAnchor, constant: 0.056),
+            rightBar.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width * 0.049),
+            rightBar.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height * 0.019),
             rightBar.centerYAnchor.constraint(equalTo: headerView.centerYAnchor),
             rightBar.rightAnchor.constraint(
-                equalTo: headerView.rightAnchor,
-                constant: UIScreen.main.bounds.width * 0.053
+                equalTo: contentStackView.rightAnchor,
+                constant: -UIScreen.main.bounds.width * 0.055
             ),
-            leftBar.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width * 0.061),
+            leftBar.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width * 0.049),
             leftBar.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height * 0.01),
             leftBar.centerYAnchor.constraint(equalTo: headerView.centerYAnchor),
-            leftBar.rightAnchor.constraint(equalTo: rightBar.leftAnchor, constant: UIScreen.main.bounds.width * 0.042),
+            leftBar.rightAnchor.constraint(equalTo: rightBar.leftAnchor, constant: -UIScreen.main.bounds.width * 0.042),
             contentView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height * 0.135),
             contentView.topAnchor.constraint(equalTo: headerView.bottomAnchor),
             contentView.leftAnchor.constraint(equalTo: headerView.leftAnchor),
             contentView.rightAnchor.constraint(equalTo: headerView.rightAnchor),
             snsImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            snsImageView.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 20),
+            snsImageView.leftAnchor.constraint(equalTo: contentStackView.leftAnchor, constant: 20),
             snsImageView.widthAnchor.constraint(equalToConstant: 20),
             textLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             textLabel.leftAnchor.constraint(equalTo: snsImageView.rightAnchor, constant: 20),
-            textLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -50)
+            textLabel.rightAnchor.constraint(equalTo: contentStackView.rightAnchor, constant: -50)
         ])
     }
 
@@ -188,6 +199,9 @@ extension MyPageContentView {
         textLabel.font = .ramche(.body)
 
         NSLayoutConstraint.activate([
+            contentStackView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            contentStackView.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width * 0.48),
+            contentStackView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height * 0.127),
             headerView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height * 0.03),
             rightBar.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width * 0.037),
             rightBar.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height * 0.007),
@@ -209,10 +223,11 @@ extension MyPageContentView {
         ])
     }
 
-    func setNoticeType() {
+    func setNoticeType(_ height: CGFloat) {
         lazy var contentStackView = VStackView(spacing: 0) {
             ZStackView {
                 headerView
+                headerTitleLabel
                 leftBar
                 rightBar
             }
@@ -228,29 +243,52 @@ extension MyPageContentView {
         contentView.backgroundColor = .color(.dittoLettoColor(.dark))
         leftBar.backgroundColor = .color(.dittoLettoColor(.dark))
         rightBar.backgroundColor = .color(.dittoLettoColor(.dark))
+        headerTitleLabel.textColor = .color(.dittoLettoColor(.white))
 
         NSLayoutConstraint.activate([
+            contentStackView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            contentStackView.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width * 0.893),
+            headerView.leftAnchor.constraint(equalTo: contentStackView.leftAnchor),
+            headerView.rightAnchor.constraint(equalTo: contentStackView.rightAnchor),
             headerView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height * 0.064),
-            rightBar.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width * 0.061),
-            rightBar.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height * 0.024),
-            rightBar.centerYAnchor.constraint(equalTo: headerView.centerYAnchor),
-            rightBar.rightAnchor.constraint(
-                equalTo: headerView.rightAnchor,
+            headerTitleLabel.centerYAnchor.constraint(equalTo: headerView.centerYAnchor),
+            headerTitleLabel.leftAnchor.constraint(
+                equalTo: contentStackView.leftAnchor,
                 constant: UIScreen.main.bounds.width * 0.053
             ),
-            leftBar.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width * 0.061),
+            rightBar.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width * 0.049),
+            rightBar.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height * 0.019),
+            rightBar.centerYAnchor.constraint(equalTo: headerView.centerYAnchor),
+            rightBar.rightAnchor.constraint(
+                equalTo: contentStackView.rightAnchor,
+                constant: -UIScreen.main.bounds.width * 0.055
+            ),
+            leftBar.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width * 0.049),
             leftBar.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height * 0.01),
             leftBar.centerYAnchor.constraint(equalTo: headerView.centerYAnchor),
-            leftBar.rightAnchor.constraint(equalTo: rightBar.leftAnchor, constant: UIScreen.main.bounds.width * 0.042),
-            contentView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height * 0.542),
+            leftBar.rightAnchor.constraint(
+                equalTo: rightBar.leftAnchor,
+                constant: -UIScreen.main.bounds.width * 0.042
+            ),
             contentView.topAnchor.constraint(equalTo: headerView.bottomAnchor),
             contentView.leftAnchor.constraint(equalTo: headerView.leftAnchor),
             contentView.rightAnchor.constraint(equalTo: headerView.rightAnchor),
-//            noticeTextView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            noticeTextView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 20),
-            noticeTextView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20),
-            noticeTextView.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 20),
-            noticeTextView.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -20)
+            noticeTextView.topAnchor.constraint(
+                equalTo: contentView.topAnchor,
+                constant: UIScreen.main.bounds.height * 0.03
+            ),
+            noticeTextView.bottomAnchor.constraint(
+                equalTo: contentView.bottomAnchor,
+                constant: -UIScreen.main.bounds.height * 0.03
+            ),
+            noticeTextView.leftAnchor.constraint(
+                equalTo: contentStackView.leftAnchor,
+                constant: UIScreen.main.bounds.width * 0.053
+            ),
+            noticeTextView.rightAnchor.constraint(
+                equalTo: contentStackView.rightAnchor,
+                constant: -UIScreen.main.bounds.width * 0.053
+            )
         ])
     }
 }
@@ -275,8 +313,10 @@ extension CALayer {
             default:
                 break
             }
-            border.backgroundColor = color.cgColor
+            borderColor = UIColor.color(.dittoLettoColor(.dark)).cgColor
+            borderWidth = width
             self.addSublayer(border)
         }
     }
 }
+// swiftlint:enable function_body_length

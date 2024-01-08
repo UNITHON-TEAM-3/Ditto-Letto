@@ -177,10 +177,12 @@ extension UITextView {
             self.font = .ramche(.headline)
         }
     }
-
-    func setLineAndLetterSpacing() {
+    
+// MARK:  1. Put Text  ->  2. Set Spacing  ->  3. Set Font
+// This Function must be written at the second.
+    func setLineAndLetterSpacing(_ lineSpacing: CGFloat, _ color: UIColor) {
         let style = NSMutableParagraphStyle()
-        style.lineSpacing = 5
+        style.lineSpacing = lineSpacing
         let attributedString = NSMutableAttributedString(string: self.text)
         attributedString.addAttribute(
             NSAttributedString.Key.kern,
@@ -193,7 +195,7 @@ extension UITextView {
             range: NSRange(location: 0, length: attributedString.length)
         )
         self.attributedText = attributedString
-        self.textColor = .color(.dittoLettoColor(.gray2))
+        self.textColor = color
     }
 }
 
