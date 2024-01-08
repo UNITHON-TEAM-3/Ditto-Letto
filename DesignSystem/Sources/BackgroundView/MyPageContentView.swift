@@ -8,7 +8,6 @@ public enum MyPageViewType: String {
 }
 
 public class MyPageContentView: UIView {
-    public var noticeTypeHeight = CGFloat()
     private let headerView: UIView = {
         $0.layer.borderColor = UIColor.color(.dittoLettoColor(.dark)).cgColor
         $0.layer.borderWidth = 1
@@ -88,7 +87,7 @@ public class MyPageContentView: UIView {
         case .withdrawal:
             setWithdrawalType()
         case .notice:
-            setNoticeType(self.noticeTypeHeight)
+            setNoticeType()
         }
     }
 
@@ -309,7 +308,7 @@ extension MyPageContentView {
         ])
     }
 
-    func setNoticeType(_ height: CGFloat) {
+    func setNoticeType() {
         lazy var contentStackView = VStackView(spacing: 0) {
             ZStackView {
                 headerView
@@ -371,19 +370,19 @@ extension MyPageContentView {
             contentView.rightAnchor.constraint(equalTo: headerView.rightAnchor),
             noticeTextView.topAnchor.constraint(
                 equalTo: contentView.topAnchor,
-                constant: UIScreen.main.bounds.height * 0.03
+                constant: UIScreen.main.bounds.height * 0.029
             ),
             noticeTextView.bottomAnchor.constraint(
                 equalTo: contentView.bottomAnchor,
-                constant: -UIScreen.main.bounds.height * 0.03
+                constant: -UIScreen.main.bounds.height * 0.029
             ),
             noticeTextView.leftAnchor.constraint(
                 equalTo: contentStackView.leftAnchor,
-                constant: UIScreen.main.bounds.width * 0.053
+                constant: UIScreen.main.bounds.width * 0.051
             ),
             noticeTextView.rightAnchor.constraint(
                 equalTo: contentStackView.rightAnchor,
-                constant: -UIScreen.main.bounds.width * 0.053
+                constant: -UIScreen.main.bounds.width * 0.051
             ),
             bottomBorderView.topAnchor.constraint(equalTo: contentView.bottomAnchor),
             bottomBorderView.widthAnchor.constraint(equalTo: contentStackView.widthAnchor),
