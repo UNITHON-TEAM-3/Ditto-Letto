@@ -60,12 +60,14 @@ public final class AlertView: UIViewController {
         $0.backgroundColor = .color(.dittoLettoColor(.gray2))
         return $0
     }(UIView())
+
     public override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .black.withAlphaComponent(0.3)
         addView()
         setLayout()
     }
+
     func addView() {
         view.addSubview(alertBackView)
         [
@@ -88,6 +90,7 @@ public final class AlertView: UIViewController {
             delegate?.exit()
         }
     }
+
     func setLayout() {
         pinkCircle.translatesAutoresizingMaskIntoConstraints = false
         blueCircle.translatesAutoresizingMaskIntoConstraints = false
@@ -123,11 +126,12 @@ public final class AlertView: UIViewController {
             titleLabel.leftAnchor.constraint(equalTo: alertBackView.leftAnchor, constant: self.view.frame.width * 0.09),
             titleLabel.rightAnchor.constraint(
                 equalTo: alertBackView.rightAnchor,
-                constant: (-1) * self.view.frame.width * 0.09
+                constant: -self.view.frame.width * 0.09
             ),
             titleLabel.topAnchor.constraint(equalTo: headerView.bottomAnchor, constant: 20)
         ])
     }
+
     func setUpConfirm() {
         confirmButton.setTitle("확인", for: .normal)
 
@@ -146,6 +150,7 @@ public final class AlertView: UIViewController {
             confirmButton.bottomAnchor.constraint(equalTo: alertBackView.bottomAnchor, constant: -10)
         ])
     }
+
     func setUpYesNo() {
         confirmButton.setTitle("네", for: .normal)
         cancelButton.setTitle("아니오", for: .normal)
@@ -173,7 +178,7 @@ public final class AlertView: UIViewController {
             ),
             messageLabel.rightAnchor.constraint(
                 equalTo: alertBackView.rightAnchor,
-                constant: (-1) * self.view.frame.width * 0.122
+                constant: -self.view.frame.width * 0.122
             ),
 
             horizontalLine.widthAnchor.constraint(equalToConstant: self.view.frame.width * 0.72),
@@ -187,7 +192,7 @@ public final class AlertView: UIViewController {
 
             confirmButton.centerXAnchor.constraint(
                 equalTo: alertBackView.centerXAnchor,
-                constant: (-1) * self.view.frame.width * 0.75 * 0.25
+                constant: -self.view.frame.width * 0.75 * 0.25
             ),
             confirmButton.topAnchor.constraint(equalTo: horizontalLine.bottomAnchor, constant: 10),
             confirmButton.bottomAnchor.constraint(equalTo: alertBackView.bottomAnchor, constant: -10),
