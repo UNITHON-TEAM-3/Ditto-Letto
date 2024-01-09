@@ -11,7 +11,6 @@ class NewLetterVC: BaseVC {
     private let letterViewModel = NewLetterVM()
     private let getCount = BehaviorRelay<Void>(value: ())
     private let type = BehaviorRelay<String>(value: "CODE")
-
     private let privateDiaryButton = UIButton().then {
         $0.selectTypeButton(title: "암호 편지")
     }

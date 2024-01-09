@@ -8,7 +8,7 @@ public enum MyPageViewType: String {
 }
 
 public class MyPageContentView: UIView {
-    private let headerView: UIView = {
+    public let headerView: UIView = {
         $0.layer.borderColor = UIColor.color(.dittoLettoColor(.dark)).cgColor
         $0.layer.borderWidth = 1
         $0.translatesAutoresizingMaskIntoConstraints = false
@@ -97,6 +97,7 @@ public class MyPageContentView: UIView {
 }
 
 // swiftlint:disable function_body_length
+// swiftlint:disable file_length
 extension MyPageContentView {
     func setBasicType() {
         lazy var contentStackView = VStackView(spacing: 0) {
@@ -122,18 +123,31 @@ extension MyPageContentView {
         NSLayoutConstraint.activate([
             contentStackView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
             contentStackView.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width * 0.893),
-            contentStackView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height * 0.572),
+//            contentStackView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height * 0.572),
             headerView.leftAnchor.constraint(equalTo: contentStackView.leftAnchor),
             headerView.rightAnchor.constraint(equalTo: contentStackView.rightAnchor),
-            headerView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height * 0.03),
+//            headerView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height * 0.03),
             rightBar.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width * 0.061),
             rightBar.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height * 0.01),
-            rightBar.centerYAnchor.constraint(equalTo: headerView.centerYAnchor),
-            rightBar.rightAnchor.constraint(equalTo: headerView.rightAnchor, constant: -12),
+            rightBar.topAnchor.constraint(
+                equalTo: headerView.topAnchor,
+                constant: UIScreen.main.bounds.height * 0.01
+            ),
+            rightBar.bottomAnchor.constraint(
+                equalTo: headerView.bottomAnchor,
+                constant: -UIScreen.main.bounds.height * 0.01
+            ),
+            rightBar.rightAnchor.constraint(
+                equalTo: headerView.rightAnchor,
+                constant: -UIScreen.main.bounds.width * 0.032
+            ),
             leftBar.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width * 0.061),
             leftBar.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height * 0.01),
             leftBar.centerYAnchor.constraint(equalTo: headerView.centerYAnchor),
-            leftBar.rightAnchor.constraint(equalTo: rightBar.leftAnchor, constant: -8),
+            leftBar.rightAnchor.constraint(
+                equalTo: rightBar.leftAnchor,
+                constant: -UIScreen.main.bounds.width * 0.021
+            ),
             contentView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height * 0.542),
             contentView.topAnchor.constraint(equalTo: headerView.bottomAnchor),
             contentView.leftAnchor.constraint(equalTo: headerView.leftAnchor),
@@ -395,3 +409,4 @@ extension MyPageContentView {
     }
 }
 // swiftlint:enable function_body_length
+// swiftlint:enable file_length
