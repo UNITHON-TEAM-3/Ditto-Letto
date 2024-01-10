@@ -43,6 +43,7 @@ class PhoneBookInfoView: UIView {
     }(UIImageView())
     let numberTextField: UITextField = {
         $0.placeholder = "번호를 입력해주세요."
+        $0.keyboardType = .numberPad
         $0.textColor = .black
         $0.font = .ramche(.subheadline)
         return $0

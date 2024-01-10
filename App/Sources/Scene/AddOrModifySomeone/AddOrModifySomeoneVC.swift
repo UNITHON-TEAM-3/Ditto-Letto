@@ -76,14 +76,21 @@ class AddOrModifySomeoneVC: BaseVC {
     override func bind() {
         let input = AddOrModifySomeoneVM.Input(
             selectedCharacterType: setCharaterAndNameView.selectedCharacterType.asObservable(),
-                nameTextFieldText: setCharaterAndNameView.nameTextField.rx.text.orEmpty.asObservable()
+            nameTextFieldText: setCharaterAndNameView.nameTextField.rx.text.orEmpty.asObservable(),
+            phoneNumberText: phoneBookInfoView.numberTextField.rx.text.orEmpty.asObservable()
         )
         let output = viewModel.transform(input)
-        
+        output.formattedPhoneNumberText
+            .bind(to: phoneBookInfoView.numberTextField.rx.text)
+            .disposed(by: disposeBag)
         output.addOrModifyButtonIsEnabled
             .observe(on: MainScheduler.instance)
             .bind { [weak self] bool in
-                bool ? self?.addOrModifyButton.setMainButton(color: .main) : self?.addOrModifyButton.setMainButton(color: .gray2)
+                if bool {
+                    self?.addOrModifyButton.setMainButton(color: .main)
+                } else {
+                    self?.addOrModifyButton.setMainButton(color: .gray2)
+                }
                 self?.addOrModifyButton.isEnabled = bool
             }.disposed(by: disposeBag)
     }

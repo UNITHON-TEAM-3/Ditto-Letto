@@ -14,10 +14,12 @@ class AddOrModifySomeoneVM: BaseVM {
     struct Input {
         let selectedCharacterType: Observable<CharacterType?>
         let nameTextFieldText: Observable<String>
+        let phoneNumberText: Observable<String>
     }
 
     struct Output {
         let addOrModifyButtonIsEnabled = BehaviorRelay<Bool>(value: false)
+        let formattedPhoneNumberText = BehaviorRelay<String>(value: "")
     }
 
     // MARK: - Translate
@@ -27,6 +29,22 @@ class AddOrModifySomeoneVM: BaseVM {
         let isTypeValid = BehaviorSubject(value: false)
         let isTextfieldValid = BehaviorSubject(value: false)
         
+        input.phoneNumberText
+            .bind { text in
+                let digits = text.components(separatedBy: CharacterSet.decimalDigits.inverted).joined()
+                var formattedText = ""
+                let digitCount = digits.count
+                let maxDigits = 11
+                let hyphenIndices = [3, 7]
+                for txt in 0..<min(digitCount, maxDigits) {
+                    if hyphenIndices.contains(txt) {
+                        formattedText.append("-")
+                    }
+                    let index = digits.index(digits.startIndex, offsetBy: txt)
+                    formattedText.append(digits[index])
+                }
+                output.formattedPhoneNumberText.accept(formattedText)
+            }.disposed(by: disposeBag)
         input.selectedCharacterType
             .bind { characterType in
                 guard characterType != nil else { return }
