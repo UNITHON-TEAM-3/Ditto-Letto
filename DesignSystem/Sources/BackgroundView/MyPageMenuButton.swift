@@ -4,13 +4,15 @@ public class MyPageMenuButton: UIButton {
     public var text: String {
         get { textLabel.text ?? "" }
         set { textLabel.text = newValue }
-    }    
+    }
     private let textLabel: UILabel = {
+        $0.translatesAutoresizingMaskIntoConstraints = false
         $0.textColor = .color(.dittoLettoColor(.dark))
-        $0.font = .ramche(.body)
+        $0.font = .ramche(.headline)
         return $0
     }(UILabel())
     private let cursorImageView: UIImageView = {
+        $0.translatesAutoresizingMaskIntoConstraints = false
         $0.image = .Image.cursor
         $0.contentMode = .scaleAspectFit
         return $0
@@ -21,6 +23,7 @@ public class MyPageMenuButton: UIButton {
         self.backgroundColor = .color(.dittoLettoColor(.gray1))
         self.addView()
         self.setLayout()
+        self.translatesAutoresizingMaskIntoConstraints = false
     }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -30,6 +33,7 @@ public class MyPageMenuButton: UIButton {
         super.draw(rect)
         self.setBackgroundColor(.color(.dittoLettoColor(.gray2)), for: .highlighted)
     }
+
     func addView() {
         [
             cursorImageView,
@@ -41,27 +45,25 @@ public class MyPageMenuButton: UIButton {
     }
 
     func setLayout() {
-        textLabel.translatesAutoresizingMaskIntoConstraints = false
-        cursorImageView.translatesAutoresizingMaskIntoConstraints = false
-
         NSLayoutConstraint.activate([
-            cursorImageView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height * 0.044),
-            cursorImageView.topAnchor.constraint(
-                equalTo: self.topAnchor,
-                constant: UIScreen.main.bounds.height * 0.03
-            ),
-            cursorImageView.bottomAnchor.constraint(
-                equalTo: self.bottomAnchor,
-                constant: -UIScreen.main.bounds.height * 0.03
-            ),
-            cursorImageView.rightAnchor.constraint(
-                equalTo: self.rightAnchor,
-                constant: -UIScreen.main.bounds.width * 0.08
-            ),
             textLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor),
             textLabel.leftAnchor.constraint(
                 equalTo: self.leftAnchor,
-                constant: UIScreen.main.bounds.width * 0.026
+                constant: UIScreen.main.bounds.width * 0.032
+            ),
+            textLabel.topAnchor.constraint(
+                equalTo: self.topAnchor,
+                constant: UIScreen.main.bounds.height * 0.04
+            ),
+            textLabel.bottomAnchor.constraint(
+                equalTo: self.bottomAnchor,
+                constant: -UIScreen.main.bounds.height * 0.04
+            ),
+            cursorImageView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height * 0.044),
+            cursorImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+            cursorImageView.rightAnchor.constraint(
+                equalTo: self.rightAnchor,
+                constant: -UIScreen.main.bounds.width * 0.085
             )
         ])
     }

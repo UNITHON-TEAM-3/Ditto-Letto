@@ -7,6 +7,7 @@ import DesignSystem
 
 class NewLetterVC: BaseVC {
     private let isPrivate = BehaviorRelay<Bool>(value: true)
+    private let isEntering = BehaviorRelay<Bool>(value: false)
     private let countViewModel = GetCountVM()
     private let letterViewModel = NewLetterVM()
     private let getCount = BehaviorRelay<Void>(value: ())
@@ -22,16 +23,16 @@ class NewLetterVC: BaseVC {
     }
     private let letterTextField = UITextField().then {
         $0.layer.borderColor = UIColor.black.cgColor
-        $0.layer.borderWidth = 1.0
+        $0.layer.borderWidth = UIScreen.main.bounds.width * 0.003
     }
     private let letterTextView = UITextView().then {
         $0.layer.borderColor = UIColor.color(.dittoLettoColor(.dark)).cgColor
-        $0.layer.borderWidth = 1.0
+        $0.layer.borderWidth = UIScreen.main.bounds.width * 0.003
         $0.backgroundColor = .white
         $0.text = "전하고 싶은 말을 입력해주세요."
-        $0.textContainerInset = UIEdgeInsets(top: 20, left: 20, bottom: 54, right: 20)
         $0.autocorrectionType = .no
-        $0.setLineAndLetterSpacing(5, .color(.dittoLettoColor(.gray2)))
+        $0.tintColor = .color(.dittoLettoColor(.dark))
+        $0.setLineAndLetterSpacing(8, .color(.dittoLettoColor(.gray2)))
     }
     private let textCountLabel = UILabel().then {
         $0.text = "0 / 144"
@@ -117,10 +118,12 @@ class NewLetterVC: BaseVC {
             .subscribe(onNext: {
                 self.isPrivate.accept(!self.isPrivate.value)
             }).disposed(by: disposeBag)
+        
         generalDiaryButton.rx.tap
             .subscribe(onNext: {
                 self.isPrivate.accept(!self.isPrivate.value)
             }).disposed(by: disposeBag)
+        
         isPrivate
             .subscribe(onNext: { [self] in
                 letterTextField.setTextField($0)
@@ -132,7 +135,10 @@ class NewLetterVC: BaseVC {
                     type.accept("CODE")
                     privateDiaryButton.setEnabled()
                     generalDiaryButton.setDisabled()
+                    letterTextView.setLineAndLetterSpacing(8, isEntering.value ?
+                        .color(.dittoLettoColor(.dark)) : .color(.dittoLettoColor(.gray2)))
                     letterTextView.font = .ramche(.headline)
+                    letterTextView.textContainerInset = UIEdgeInsets(top: 25, left: 20, bottom: 54, right: 20)
                     textCountLabel.font = .ramche(.caption1)
 
                     sendCountLabel.snp.updateConstraints {
@@ -147,7 +153,10 @@ class NewLetterVC: BaseVC {
                     type.accept("BASIC")
                     generalDiaryButton.setEnabled()
                     privateDiaryButton.setDisabled()
+                    letterTextView.setLineAndLetterSpacing(-3, isEntering.value ?
+                        .color(.dittoLettoColor(.dark)) : .color(.dittoLettoColor(.gray2)))
                     letterTextView.font = .yoondongju(.headline)
+                    letterTextView.textContainerInset = UIEdgeInsets(top: 17, left: 20, bottom: 54, right: 20)
                     textCountLabel.font = .yoondongju(.caption)
 
                     sendCountLabel.snp.updateConstraints {
@@ -177,9 +186,11 @@ class NewLetterVC: BaseVC {
             }).disposed(by: disposeBag)
         letterTextView.rx.didBeginEditing
             .bind(onNext: { [self] in
+                letterTextView.textColor = .color(.dittoLettoColor(.dark))
                 if letterTextView.text == "전하고 싶은 말을 입력해주세요." {
                     letterTextView.text = ""
                     letterTextView.textColor = .color(.dittoLettoColor(.dark))
+                    isEntering.accept(true)
                 }
             }).disposed(by: disposeBag)
         letterTextView.rx.didEndEditing
@@ -191,32 +202,33 @@ class NewLetterVC: BaseVC {
                 }
             }).disposed(by: disposeBag)
     }
+
     // swiftlint:enable function_body_length
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.letterTextView.resignFirstResponder()
     }
+
     override func setLayout() {
         privateDiaryButton.snp.makeConstraints {
-            $0.width.equalTo((UIScreen.main.bounds.width-40)/2)
-            $0.height.equalTo(43)
-            $0.leading.equalToSuperview().inset(20)
-            $0.top.equalTo(view.safeAreaLayoutGuide).inset(15)
+            $0.width.equalTo((UIScreen.main.bounds.width * 0.893)/2)
+            $0.height.equalTo(UIScreen.main.bounds.height * 0.064)
+            $0.leading.equalToSuperview().inset(UIScreen.main.bounds.width * 0.053)
+            $0.top.equalTo(view.snp.centerY).offset(-UIScreen.main.bounds.height * 0.363)
         }
         generalDiaryButton.snp.makeConstraints {
-            $0.height.equalTo(43)
-            $0.leading.equalTo(privateDiaryButton.snp.trailing).offset(0)
-            $0.trailing.equalToSuperview().inset(20)
-            $0.top.equalTo(view.safeAreaLayoutGuide).inset(15)
+            $0.height.equalTo(UIScreen.main.bounds.height * 0.064)
+            $0.leading.equalTo(privateDiaryButton.snp.trailing)
+            $0.trailing.equalToSuperview().inset(UIScreen.main.bounds.width * 0.053)
+            $0.top.equalTo(view.snp.centerY).offset(-UIScreen.main.bounds.height * 0.363)
         }
         separatorView.snp.makeConstraints {
-            $0.horizontalEdges.equalToSuperview().inset(20)
+            $0.horizontalEdges.equalToSuperview().inset(UIScreen.main.bounds.width * 0.053)
             $0.top.equalTo(privateDiaryButton.snp.bottom)
-            $0.height.equalTo(9)
+            $0.height.equalToSuperview().multipliedBy(0.014)
         }
         letterTextField.snp.makeConstraints {
             $0.horizontalEdges.equalToSuperview().inset(20)
             $0.top.equalTo(separatorView.snp.bottom)
-            $0.height.equalTo(76)
         }
         sendCountLabel.snp.makeConstraints {
             $0.top.equalToSuperview().inset(17)
@@ -228,8 +240,8 @@ class NewLetterVC: BaseVC {
         }
         letterTextView.snp.makeConstraints {
             $0.horizontalEdges.equalToSuperview().inset(20)
-            $0.top.equalTo(letterTextField.snp.bottom).offset(0)
-            $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(120)
+            $0.top.equalTo(letterTextField.snp.bottom)
+            $0.height.equalToSuperview().multipliedBy(0.412)
         }
         textCountLabel.snp.makeConstraints {
             $0.left.equalToSuperview().inset(40)
