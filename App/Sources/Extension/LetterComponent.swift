@@ -11,11 +11,13 @@ extension UIView {
         return rx.methodInvoked(#selector(UIView.touchesEnded(_:with:)))
             .map { _ in }
     }
+
     func setSeparatorView() {
         self.backgroundColor = .color(.dittoLettoColor(.main))
         self.layer.borderColor = UIColor.color(.dittoLettoColor(.dark)).cgColor
-        self.layer.borderWidth = 1.0
+        self.layer.borderWidth = UIScreen.main.bounds.width * 0.003
     }
+
     func makeSpringView() -> UIView {
         let springView: UIView = {
             $0.backgroundColor = UIColor.black
@@ -34,6 +36,7 @@ extension UIView {
         }
         return springView
     }
+
     // swiftlint:disable function_body_length
     func makePhoneBookIndicatorBackView() -> UIView {
         let backView: UIView = {
@@ -115,29 +118,17 @@ extension UITextField {
             $0.height.equalTo(UIScreen.main.bounds.height * 0.11)
         }
         if isPrivate {
-            self.leftView = UIView(
-                frame: CGRect(
-                    x: 0,
-                    y: 0,
-                    width: UIScreen.main.bounds.width * 0.208,
-                    height: UIScreen.main.bounds.height * 0.1
-                )
-            )
-            self.leftViewMode = .always
-
             [
                 profile,
                 privateImage
             ].forEach {
                 self.addSubview($0)
-                generalImage.removeFromSuperview()
             }
 
             profile.snp.makeConstraints {
                 $0.width.height.equalTo(UIScreen.main.bounds.width * 0.133)
                 $0.left.equalToSuperview().inset(UIScreen.main.bounds.width * 0.04)
                 $0.centerY.equalToSuperview()
-//                $0.verticalEdges.equalToSuperview().inset(UIScreen.main.bounds.height * 0.019)
             }
             privateImage.snp.makeConstraints {
                 $0.width.equalToSuperview().multipliedBy(0.181)
@@ -146,6 +137,7 @@ extension UITextField {
                 $0.centerY.equalToSuperview()
             }
 
+            self.viewWithTag(222)?.removeFromSuperview()
             self.backgroundColor = .color(.dittoLettoColor(.dark))
             self.attributedPlaceholder = NSAttributedString(
                 string: "번호를 입력해주세요.",
@@ -156,6 +148,15 @@ extension UITextField {
             )
             self.font = .ramche(.body)
             self.textColor = .color(.dittoLettoColor(.white))
+            self.leftView = UIView(
+                frame: CGRect(
+                    x: 0,
+                    y: 0,
+                    width: UIScreen.main.bounds.width * 0.208,
+                    height: UIScreen.main.bounds.height * 0.1
+                )
+            )
+            self.leftViewMode = .always
             self.rightView = UIView(
                 frame: CGRect(
                     x: 0,
@@ -175,16 +176,8 @@ extension UITextField {
             }
             self.viewWithTag(100)?.removeFromSuperview()
             self.viewWithTag(111)?.removeFromSuperview()
-            self.leftView = UIView(
-                frame: CGRect(
-                    x: 0,
-                    y: 0,
-                    width: UIScreen.main.bounds.width * 0.059,
-                    height: UIScreen.main.bounds.height * 0.037
-                )
-            )
-            self.leftViewMode = .always
-            self.backgroundColor = .white
+
+            self.backgroundColor = .color(.dittoLettoColor(.white))
             self.attributedPlaceholder = NSAttributedString(
                 string: "번호를 입력해주세요.",
                 attributes: [
@@ -194,6 +187,15 @@ extension UITextField {
             )
             self.font = .yoondongju(.body)
             self.textColor = .black
+            self.leftView = UIView(
+                frame: CGRect(
+                    x: 0,
+                    y: 0,
+                    width: UIScreen.main.bounds.width * 0.059,
+                    height: UIScreen.main.bounds.height * 0.037
+                )
+            )
+            self.leftViewMode = .always
         }
     }
     // swiftlint:enable function_body_length
@@ -210,7 +212,7 @@ extension UITextView {
 
 // MARK: 1. Put Text  ->  2. Set Spacing  ->  3. Set Font
 // This Function must be written at the second.
-    func setLineAndLetterSpacing(_ lineSpacing: CGFloat, _ color: UIColor) {
+    func setLineAndLetterSpacing(_ lineSpacing: CGFloat, _ color: UIColor.Colors.Colors) {
         let style = NSMutableParagraphStyle()
         style.lineSpacing = lineSpacing
         let attributedString = NSMutableAttributedString(string: self.text)
@@ -225,7 +227,7 @@ extension UITextView {
             range: NSRange(location: 0, length: attributedString.length)
         )
         self.attributedText = attributedString
-        self.textColor = color
+        self.textColor = .color(.dittoLettoColor(color))
     }
 }
 

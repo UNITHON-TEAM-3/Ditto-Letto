@@ -33,7 +33,7 @@ class BaseNC: UINavigationController {
         appearance.backgroundColor = .clear
 
         appearance.configureWithTransparentBackground()
-        appearance2.configureWithDefaultBackground()
+        appearance2.configureWithTransparentBackground()
         appearance.backButtonAppearance = backButtonAppearance
         appearance2.backButtonAppearance = backButtonAppearance
         navigationBar.standardAppearance = appearance2
