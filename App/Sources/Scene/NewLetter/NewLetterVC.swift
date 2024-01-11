@@ -21,18 +21,12 @@ class NewLetterVC: BaseVC {
     private let separatorView = UIView().then {
         $0.setSeparatorView()
     }
-    private let letterTextField = UITextField().then {
-        $0.layer.borderColor = UIColor.black.cgColor
-        $0.layer.borderWidth = UIScreen.main.bounds.width * 0.003
-    }
+    private let letterTextField = UITextField()
     private let letterTextView = UITextView().then {
-        $0.layer.borderColor = UIColor.color(.dittoLettoColor(.dark)).cgColor
-        $0.layer.borderWidth = UIScreen.main.bounds.width * 0.003
         $0.backgroundColor = .white
         $0.text = "전하고 싶은 말을 입력해주세요."
         $0.autocorrectionType = .no
         $0.tintColor = .color(.dittoLettoColor(.dark))
-        $0.setLineAndLetterSpacing(8, .color(.dittoLettoColor(.gray2)))
     }
     private let textCountLabel = UILabel().then {
         $0.text = "0 / 144"
@@ -51,25 +45,6 @@ class NewLetterVC: BaseVC {
         $0.textAlignment = .left
     }
 
-    override func addView() {
-        [
-            sendCountLabel,
-            receiveCountLabel
-        ].forEach {
-            letterTextField.addSubview($0)
-        }
-        [
-            privateDiaryButton,
-            generalDiaryButton,
-            separatorView,
-            letterTextField,
-            letterTextView,
-            textCountLabel,
-            sendButton
-        ].forEach {
-            view.addSubview($0)
-        }
-    }
     override func bind() {
         letterTextField.rx.text.orEmpty
             .subscribe(onNext: { [self] in
@@ -109,21 +84,49 @@ class NewLetterVC: BaseVC {
             }).disposed(by: disposeBag)
     }
 
-    // swiftlint:disable function_body_length
+    override func addView() {
+        [
+            sendCountLabel,
+            receiveCountLabel
+        ].forEach {
+            letterTextField.addSubview($0)
+        }
+        [
+            privateDiaryButton,
+            generalDiaryButton,
+            separatorView,
+            letterTextField,
+            letterTextView,
+            textCountLabel,
+            sendButton
+        ].forEach {
+            view.addSubview($0)
+        }
+    }
+
+// swiftlint:disable function_body_length
     override func configureVC() {
         self.navigationController?.navigationBar.topItem?.title = ""
         self.navigationController?.navigationBar.tintColor = .black
+
+        self.hideKeyboardWhenTappedAround()
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillHide),
+            name: UIResponder.keyboardWillHideNotification,
+            object: nil
+        )
 
         privateDiaryButton.rx.tap
             .subscribe(onNext: {
                 self.isPrivate.accept(!self.isPrivate.value)
             }).disposed(by: disposeBag)
-        
+
         generalDiaryButton.rx.tap
             .subscribe(onNext: {
                 self.isPrivate.accept(!self.isPrivate.value)
             }).disposed(by: disposeBag)
-        
+
         isPrivate
             .subscribe(onNext: { [self] in
                 letterTextField.setTextField($0)
@@ -135,11 +138,8 @@ class NewLetterVC: BaseVC {
                     type.accept("CODE")
                     privateDiaryButton.setEnabled()
                     generalDiaryButton.setDisabled()
-                    letterTextView.setLineAndLetterSpacing(8, isEntering.value ?
-                        .color(.dittoLettoColor(.dark)) : .color(.dittoLettoColor(.gray2)))
-                    letterTextView.font = .ramche(.headline)
-                    letterTextView.textContainerInset = UIEdgeInsets(top: 25, left: 20, bottom: 54, right: 20)
-                    textCountLabel.font = .ramche(.caption1)
+                    setTextFieldAndView($0)
+                    addBorder($0)
 
                     sendCountLabel.snp.updateConstraints {
                         $0.top.equalToSuperview().inset(17)
@@ -153,11 +153,8 @@ class NewLetterVC: BaseVC {
                     type.accept("BASIC")
                     generalDiaryButton.setEnabled()
                     privateDiaryButton.setDisabled()
-                    letterTextView.setLineAndLetterSpacing(-3, isEntering.value ?
-                        .color(.dittoLettoColor(.dark)) : .color(.dittoLettoColor(.gray2)))
-                    letterTextView.font = .yoondongju(.headline)
-                    letterTextView.textContainerInset = UIEdgeInsets(top: 17, left: 20, bottom: 54, right: 20)
-                    textCountLabel.font = .yoondongju(.caption)
+                    setTextFieldAndView($0)
+                    addBorder($0)
 
                     sendCountLabel.snp.updateConstraints {
                         $0.top.equalToSuperview().inset(15)
@@ -186,10 +183,15 @@ class NewLetterVC: BaseVC {
             }).disposed(by: disposeBag)
         letterTextView.rx.didBeginEditing
             .bind(onNext: { [self] in
-                letterTextView.textColor = .color(.dittoLettoColor(.dark))
+//                letterTextView.textColor = .color(.dittoLettoColor(.dark))
                 if letterTextView.text == "전하고 싶은 말을 입력해주세요." {
                     letterTextView.text = ""
-                    letterTextView.textColor = .color(.dittoLettoColor(.dark))
+                    NotificationCenter.default.addObserver(
+                        self,
+                        selector: #selector(keyboardWillShow),
+                        name: UIResponder.keyboardWillShowNotification,
+                        object: nil
+                    )
                     isEntering.accept(true)
                 }
             }).disposed(by: disposeBag)
@@ -203,10 +205,9 @@ class NewLetterVC: BaseVC {
             }).disposed(by: disposeBag)
     }
 
-    // swiftlint:enable function_body_length
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.letterTextView.resignFirstResponder()
-    }
+//    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+//        self.letterTextView.resignFirstResponder()
+//    }
 
     override func setLayout() {
         privateDiaryButton.snp.makeConstraints {
@@ -223,11 +224,11 @@ class NewLetterVC: BaseVC {
         }
         separatorView.snp.makeConstraints {
             $0.horizontalEdges.equalToSuperview().inset(UIScreen.main.bounds.width * 0.053)
-            $0.top.equalTo(privateDiaryButton.snp.bottom)
+            $0.top.equalTo(privateDiaryButton.snp.bottom).offset(-1)
             $0.height.equalToSuperview().multipliedBy(0.014)
         }
         letterTextField.snp.makeConstraints {
-            $0.horizontalEdges.equalToSuperview().inset(20)
+            $0.horizontalEdges.equalToSuperview().inset(UIScreen.main.bounds.width * 0.053)
             $0.top.equalTo(separatorView.snp.bottom)
         }
         sendCountLabel.snp.makeConstraints {
@@ -239,19 +240,73 @@ class NewLetterVC: BaseVC {
             $0.right.equalToSuperview().inset(16)
         }
         letterTextView.snp.makeConstraints {
-            $0.horizontalEdges.equalToSuperview().inset(20)
+            $0.horizontalEdges.equalToSuperview().inset(UIScreen.main.bounds.width * 0.053)
             $0.top.equalTo(letterTextField.snp.bottom)
             $0.height.equalToSuperview().multipliedBy(0.412)
         }
         textCountLabel.snp.makeConstraints {
-            $0.left.equalToSuperview().inset(40)
-            $0.height.equalTo(16)
-            $0.bottom.equalTo(letterTextView.snp.bottom).inset(22)
+            $0.left.equalTo(letterTextView.snp.left).inset(UIScreen.main.bounds.width * 0.059)
+            $0.height.equalTo(17)
+            $0.bottom.equalTo(letterTextView.snp.bottom).inset(UIScreen.main.bounds.height * 0.033)
         }
         sendButton.snp.makeConstraints {
-            $0.left.right.equalToSuperview().inset(20)
-            $0.top.equalTo(letterTextView.snp.bottom).offset(14)
-            $0.height.equalTo(55)
+            $0.horizontalEdges.equalToSuperview().inset(UIScreen.main.bounds.width * 0.053)
+            $0.top.equalTo(letterTextView.snp.bottom).offset(UIScreen.main.bounds.width * 0.025)
+            $0.height.equalToSuperview().multipliedBy(0.08)
         }
     }
 }
+
+extension NewLetterVC {
+    func setTextFieldAndView(_ isCode: Bool) {
+        switch isCode {
+        case true:
+            letterTextView.setLineAndLetterSpacing(8, isEntering.value ? .dark : .gray2)
+            letterTextView.font = .ramche(.headline)
+            letterTextView.textContainerInset = UIEdgeInsets(top: 25, left: 20, bottom: 54, right: 20)
+            textCountLabel.font = .ramche(.caption1)
+        case false:
+            letterTextView.setLineAndLetterSpacing(-3, isEntering.value ? .dark : .gray2)
+            letterTextView.font = .yoondongju(.headline)
+            letterTextView.textContainerInset = UIEdgeInsets(top: 17, left: 20, bottom: 54, right: 20)
+            textCountLabel.font = .yoondongju(.caption)
+        }
+    }
+    func addBorder(_ isCode: Bool) {
+        switch isCode {
+        case true:
+            letterTextField.addTopBorder(.dark)
+            letterTextField.addBottomBorder(.dark, 0)
+            letterTextField.addLeftBorder(.dark)
+            letterTextField.addRightBorder(.dark, 0.003)
+            letterTextView.addLeftBorder(.dark)
+            letterTextView.addRightBorder(.dark, 0.003)
+            letterTextView.addBottomBorder(.dark, 0.003)
+        case false:
+            letterTextField.addTopBorder(.gray2)
+            letterTextField.addBottomBorder(.gray2, 0)
+            letterTextField.addLeftBorder(.gray2)
+            letterTextField.addRightBorder(.dark, 0)
+            letterTextView.addLeftBorder(.gray2)
+            letterTextView.addRightBorder(.dark, 0)
+            letterTextView.addBottomBorder(.dark, 0)
+        }
+        letterTextField.layoutSubviews()
+    }
+
+    @objc func keyboardWillShow(notification: NSNotification) {
+        if let keyboardSize = (
+            notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue
+        )?.cgRectValue {
+            if self.view.frame.origin.y == 0 {
+                self.view.frame.origin.y -= keyboardSize.height/3
+            }
+        }
+    }
+    @objc func keyboardWillHide(notification: NSNotification) {
+        if self.view.frame.origin.y != 0 {
+            self.view.frame.origin.y = 0
+        }
+    }
+}
+// swiftlint:enable function_body_length
