@@ -61,11 +61,18 @@ public final class AlertView: UIViewController {
         return $0
     }(UIView())
 
-    public override func viewDidLoad() {
-        super.viewDidLoad()
+    public init(delegate: AlertDelegate? = nil, alertType: AlertType) {
+        super.init(nibName: nil, bundle: nil)
+        self.delegate = delegate
+        self.alertType = alertType
         view.backgroundColor = .black.withAlphaComponent(0.3)
         addView()
         setLayout()
+
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 
     func addView() {

@@ -1,41 +1,51 @@
 import UIKit
-import SnapKit
-import Then
+import ThirdPartyLib
 import DesignSystem
 
 class MyPageVC: BaseVC {
-    private let contentView = MyPageContentView(.withdrawal)
+    private let contentView = MyPageContentView(.table)
 
     override func addView() {
-        [
-            contentView
-        ].forEach {
-            view.addSubview($0)
-        }
+        self.view.addSubview(contentView)
     }
 
-    override func configureVC() {
-//        contentView.snsImageView.image = .Image.appleLogo
-//        contentView.textLabel.text = "ch12345@naver.com"
-//        contentView.noticeTypeHeight = UIScreen.main.bounds.height * 0.372
-//        contentView.headerTitleLabel.text = "탈퇴 신청 전 확인해주세요."
-//        contentView.noticeTextView.text = """
-//
-//        탈퇴 이후 회원 정보 및 이용기록은 모두 삭제되며,
-//        여러분의 설레이는 편지는 다시 복구할 수 없어요.
-//
-//        정말 탈퇴하시겠어요?
-//        ㅇㅠ^ㅠㅇ
-//
-//        """
-//        contentView.noticeTextView.setLineAndLetterSpacing(8, .color(.dittoLettoColor(.white)))
-//        contentView.noticeTextView.font = .ramche(.subheadline)
+    override func bind() {
+        contentView.myInfoButton.rx.tap
+            .subscribe(onNext: {
+                print("myInfo")
+            }).disposed(by: disposeBag)
+        contentView.inquiryButton.rx.tap
+            .subscribe(onNext: {
+                print("inquiry")
+            }).disposed(by: disposeBag)
+        contentView.termsButton.rx.tap
+            .subscribe(onNext: {
+                print("terms")
+            }).disposed(by: disposeBag)
+        contentView.policyButton.rx.tap
+            .subscribe(onNext: {
+                print("policy")
+            }).disposed(by: disposeBag)
+        contentView.signOutButton.rx.tap
+            .subscribe(onNext: {
+                let alert = AlertView(delegate: self, alertType: .yesNo)
+                self.present(alert, animated: true)
+            }).disposed(by: disposeBag)
     }
 
     override func setLayout() {
         contentView.snp.makeConstraints {
             $0.centerX.equalTo(view.snp.centerX)
-            $0.top.equalTo(view.safeAreaLayoutGuide).inset(100)
+            $0.top.equalTo(view.snp.centerY).offset(-UIScreen.main.bounds.height * 0.35)
         }
+    }
+}
+
+extension MyPageVC: AlertDelegate {
+    func exit() {
+        self.dismiss(animated: true)
+    }
+    func yes() {
+        self.dismiss(animated: true)
     }
 }
