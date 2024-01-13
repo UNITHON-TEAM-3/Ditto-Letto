@@ -138,6 +138,7 @@ extension MyPageContentView {
             rightBorderView
         ].forEach { self.addSubview($0) }
         contentStackView.translatesAutoresizingMaskIntoConstraints = false
+        contentStackView.isUserInteractionEnabled = true
 
         headerView.backgroundColor = .color(.dittoLettoColor(.third))
         contentView.backgroundColor = .color(.dittoLettoColor(.gray1))
@@ -211,6 +212,7 @@ extension MyPageContentView {
             rightBorderView
         ].forEach { self.addSubview($0) }
         contentStackView.translatesAutoresizingMaskIntoConstraints = false
+        contentStackView.isUserInteractionEnabled = true
 
         headerView.backgroundColor = .color(.dittoLettoColor(.third))
         contentView.backgroundColor = .color(.dittoLettoColor(.gray1))
@@ -291,6 +293,7 @@ extension MyPageContentView {
             rightBorderView
         ].forEach { self.addSubview($0) }
         contentStackView.translatesAutoresizingMaskIntoConstraints = false
+        contentStackView.isUserInteractionEnabled = true
 
         headerView.backgroundColor = .color(.dittoLettoColor(.gray1))
         contentView.backgroundColor = .color(.dittoLettoColor(.white))
@@ -375,6 +378,7 @@ extension MyPageContentView {
             rightBorderView
         ].forEach { self.addSubview($0) }
         contentStackView.translatesAutoresizingMaskIntoConstraints = false
+        contentStackView.isUserInteractionEnabled = true
 
         headerView.backgroundColor = .color(.dittoLettoColor(.gray1))
         contentView.backgroundColor = .color(.dittoLettoColor(.white))
@@ -451,6 +455,7 @@ extension MyPageContentView {
             rightBorderView
         ].forEach { self.addSubview($0) }
         contentStackView.translatesAutoresizingMaskIntoConstraints = false
+        contentStackView.isUserInteractionEnabled = true
 
         headerView.backgroundColor = .color(.dittoLettoColor(.third))
         contentView.backgroundColor = .color(.dittoLettoColor(.dark))

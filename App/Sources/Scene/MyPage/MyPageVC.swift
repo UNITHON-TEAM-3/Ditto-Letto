@@ -1,36 +1,41 @@
 import UIKit
-import ThirdPartyLib
+import RxSwift
+import RxCocoa
 import DesignSystem
 
 class MyPageVC: BaseVC {
-    private let contentView = MyPageContentView(.table)
+    private let contentView = MyPageContentView(.withdrawal)
 
     override func addView() {
         self.view.addSubview(contentView)
     }
 
     override func bind() {
-        contentView.myInfoButton.rx.tap
+        contentView.withdrawalButton.rx.tap
             .subscribe(onNext: {
-                print("myInfo")
+                print("withdrawal")
             }).disposed(by: disposeBag)
-        contentView.inquiryButton.rx.tap
-            .subscribe(onNext: {
-                print("inquiry")
-            }).disposed(by: disposeBag)
-        contentView.termsButton.rx.tap
-            .subscribe(onNext: {
-                print("terms")
-            }).disposed(by: disposeBag)
-        contentView.policyButton.rx.tap
-            .subscribe(onNext: {
-                print("policy")
-            }).disposed(by: disposeBag)
-        contentView.signOutButton.rx.tap
-            .subscribe(onNext: {
-                let alert = AlertView(delegate: self, alertType: .yesNo)
-                self.present(alert, animated: true)
-            }).disposed(by: disposeBag)
+//        contentView.myInfoButton.rx.tap
+//            .subscribe(onNext: {
+//                print("myInfo")
+//            }).disposed(by: disposeBag)
+//        contentView.inquiryButton.rx.tap
+//            .subscribe(onNext: {
+//                print("inquiry")
+//            }).disposed(by: disposeBag)
+//        contentView.termsButton.rx.tap
+//            .subscribe(onNext: {
+//                print("terms")
+//            }).disposed(by: disposeBag)
+//        contentView.policyButton.rx.tap
+//            .subscribe(onNext: {
+//                print("policy")
+//            }).disposed(by: disposeBag)
+//        contentView.signOutButton.rx.tap
+//            .subscribe(onNext: {
+//                let alert = AlertView(delegate: self, alertType: .yesNo)
+//                self.present(alert, animated: true)
+//            }).disposed(by: disposeBag)
     }
 
     override func setLayout() {

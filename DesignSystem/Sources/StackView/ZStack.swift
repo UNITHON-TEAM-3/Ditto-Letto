@@ -9,6 +9,7 @@ public final class ZStackView: UIStackView {
             .forEach { container.addSubview($0) }
 
         addArrangedSubview(container)
+        self.isUserInteractionEnabled = true
     }
 
     required init(coder: NSCoder) {

@@ -10,6 +10,7 @@ public final class VStackView: UIStackView {
         self.spacing = spacing
 
         self.addArrangedSubViews(views())
+        self.isUserInteractionEnabled = true
     }
 
     public required init(coder: NSCoder) {
