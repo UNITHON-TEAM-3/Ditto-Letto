@@ -2,7 +2,6 @@ import UIKit
 
 public enum MyPageViewType: String {
     case basic
-    case table
     case auth
     case withdrawal
     case notice
@@ -25,6 +24,7 @@ public class MyPageContentView: UIView {
         get { noticeTextView.text ?? "" }
         set { noticeTextView.text = newValue }
     }
+    public var contentViewHeight: CGFloat?
     private let headerView: UIView = {
         $0.layer.borderColor = UIColor.color(.dittoLettoColor(.dark)).cgColor
         $0.layer.borderWidth = 1
@@ -39,7 +39,7 @@ public class MyPageContentView: UIView {
         $0.translatesAutoresizingMaskIntoConstraints = false
         return $0
     }(UIView())
-    public let contentView: UIView = {
+    public lazy var contentView: UIView = {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.layer.borderColor = UIColor.color(.dittoLettoColor(.dark)).cgColor
         $0.layer.borderWidth = UIScreen.main.bounds.width * 0.003
@@ -62,20 +62,12 @@ public class MyPageContentView: UIView {
         $0.backgroundColor = .clear
         return $0
     }(UIImageView())
-    private let textLabel: UILabel = {
+    public let textLabel: UILabel = {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.textColor = .color(.dittoLettoColor(.dark))
         $0.backgroundColor = .clear
         return $0
     }(UILabel())
-    public let withdrawalButton: UIButton = {
-        $0.translatesAutoresizingMaskIntoConstraints = false
-        $0.backgroundColor = .clear
-        $0.setTitle("탈퇴하기", for: .normal)
-        $0.setTitleColor(.color(.dittoLettoColor(.dark)), for: .normal)
-        $0.titleLabel?.font = .ramche(.body)
-        return $0
-    }(UIButton(type: .system))
     public let noticeTextView: UITextView = {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.font = .ramche(.subheadline)
@@ -89,23 +81,25 @@ public class MyPageContentView: UIView {
     }(UITextView())
     private let bottomBorderView: UIView = {
         $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.isUserInteractionEnabled = true
         $0.backgroundColor = .color(.dittoLettoColor(.dark))
         return $0
     }(UIView())
     private let rightBorderView: UIView = {
         $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.isUserInteractionEnabled = true
         $0.backgroundColor = .color(.dittoLettoColor(.dark))
         return $0
     }(UIView())
 
-    public init(_ type: MyPageViewType) {
+    public init(_ type: MyPageViewType, _ contentViewHeight: CGFloat? = 0.542) {
         super.init(frame: .zero)
+//        self.isUserInteractionEnabled = true
+        self.contentViewHeight = contentViewHeight
 
         switch type {
         case .basic:
             setBasicType()
-        case .table:
-            setTableType()
         case .auth:
             setAuthType()
         case .withdrawal:
@@ -171,7 +165,9 @@ extension MyPageContentView {
                 equalTo: rightBar.leftAnchor,
                 constant: -UIScreen.main.bounds.width * 0.021
             ),
-            contentView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height * 0.67),
+            contentView.heightAnchor.constraint(
+                equalToConstant: UIScreen.main.bounds.height * (contentViewHeight ?? 0.542)
+            ),
             contentView.topAnchor.constraint(equalTo: headerView.bottomAnchor),
             contentView.leftAnchor.constraint(equalTo: headerView.leftAnchor),
             contentView.rightAnchor.constraint(equalTo: headerView.rightAnchor),
@@ -190,6 +186,11 @@ extension MyPageContentView {
         termsButton.text = "이용약관"
         policyButton.text = "개인정보처리방침"
         signOutButton.text = "로그아웃"
+        myInfoButton.isUserInteractionEnabled = true
+        inquiryButton.isUserInteractionEnabled = true
+        termsButton.isUserInteractionEnabled = true
+        policyButton.isUserInteractionEnabled = true
+        signOutButton.isUserInteractionEnabled = true
 
         lazy var contentStackView = VStackView(spacing: 0) {
             ZStackView {
@@ -338,18 +339,27 @@ extension MyPageContentView {
             contentView.leftAnchor.constraint(equalTo: headerView.leftAnchor),
             contentView.rightAnchor.constraint(equalTo: headerView.rightAnchor),
             snsImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            snsImageView.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 20),
-            snsImageView.widthAnchor.constraint(equalToConstant: 20),
+            snsImageView.leftAnchor.constraint(
+                equalTo: contentView.leftAnchor,
+                constant: UIScreen.main.bounds.width * 0.06
+            ),
+            snsImageView.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width * 0.053),
+            textLabel.leftAnchor.constraint(
+                equalTo: snsImageView.rightAnchor,
+                constant: UIScreen.main.bounds.width * 0.055
+            ),
             textLabel.topAnchor.constraint(
                 equalTo: contentView.topAnchor,
-                constant: 33
+                constant: UIScreen.main.bounds.height * 0.044
             ),
             textLabel.bottomAnchor.constraint(
                 equalTo: contentView.bottomAnchor,
-                constant: -33
+                constant: -UIScreen.main.bounds.height * 0.044
             ),
-            textLabel.leftAnchor.constraint(equalTo: snsImageView.rightAnchor, constant: 20),
-            textLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -50),
+//            textLabel.rightAnchor.constraint(
+//                equalTo: contentView.rightAnchor,
+//                constant: -UIScreen.main.bounds.height * 0.133
+//            ),
             bottomBorderView.topAnchor.constraint(equalTo: contentView.bottomAnchor),
             bottomBorderView.widthAnchor.constraint(equalTo: contentStackView.widthAnchor),
             bottomBorderView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.width * 0.002),
@@ -367,10 +377,7 @@ extension MyPageContentView {
                 rightBar
                 leftBar
             }
-            ZStackView {
-                contentView
-                withdrawalButton
-            }
+            contentView
             bottomBorderView
         }
         [
@@ -414,18 +421,7 @@ extension MyPageContentView {
             contentView.topAnchor.constraint(equalTo: headerView.bottomAnchor),
             contentView.leftAnchor.constraint(equalTo: headerView.leftAnchor),
             contentView.rightAnchor.constraint(equalTo: headerView.rightAnchor),
-            withdrawalButton.leftAnchor.constraint(
-                equalTo: contentView.leftAnchor,
-                constant: UIScreen.main.bounds.width * 0.026
-            ),
-            withdrawalButton.topAnchor.constraint(
-                equalTo: contentView.topAnchor,
-                constant: UIScreen.main.bounds.height * 0.026
-            ),
-            withdrawalButton.bottomAnchor.constraint(
-                equalTo: contentView.bottomAnchor,
-                constant: -UIScreen.main.bounds.height * 0.026
-            ),
+            contentView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height * 0.074),
             bottomBorderView.topAnchor.constraint(equalTo: contentView.bottomAnchor),
             bottomBorderView.widthAnchor.constraint(equalTo: contentStackView.widthAnchor),
             bottomBorderView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.width * 0.002),

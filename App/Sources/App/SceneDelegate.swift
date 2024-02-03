@@ -19,15 +19,18 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 //        UserDefaults().removeObject(forKey: "first")
         print("Token = \(Token.accessToken ?? "NOTHING RECEIVED")")
 
-        if Token.accessToken == nil {
-            window?.rootViewController = LoginVC()
-        } else {
-            if Storage.isFirstTime() {
-                window?.rootViewController = UINavigationController(rootViewController: OnboardingVC())
-            } else {
-                window?.rootViewController = UINavigationController(rootViewController: MyLetterVC())
-            }
-        }
+//        if Token.accessToken == nil {
+//            window?.rootViewController = LoginVC()
+//        } else {
+//            if Storage.isFirstTime() {
+//                window?.rootViewController = UINavigationController(rootViewController: OnboardingVC())
+//            } else {
+//                window?.rootViewController = BaseNC(rootViewController: MyLetterVC())
+//                window?.rootViewController = BaseNC(rootViewController: MyPageVC())
+        window?.rootViewController = UINavigationController(rootViewController: PolicyVC())
+//                window?.rootViewController = BaseNC(rootViewController: NewLetterVC())
+//            }
+//        }
 
         window?.makeKeyAndVisible()
     }

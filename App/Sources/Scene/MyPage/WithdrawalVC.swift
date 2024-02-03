@@ -3,8 +3,12 @@ import RxSwift
 import RxCocoa
 import DesignSystem
 
-class MyPageVC: BaseVC {
-    private let contentView = MyPageContentView(.basic, 0.542)
+class WithdrawalVC: BaseVC {
+    private let contentView = MyPageContentView(.notice)
+    private let sendButton = UIButton().then {
+        $0.setTitle("전송하기", for: .normal)
+        $0.setMainButton(color: .gray1)
+    }
 
     override func addView() {
         self.view.addSubview(contentView)
@@ -27,15 +31,11 @@ class MyPageVC: BaseVC {
 //            .subscribe(onNext: {
 //                print("policy")
 //            }).disposed(by: disposeBag)
-//        contentView.signOutButton.rx.tap
-//            .subscribe(onNext: {
-//                let alert = AlertView(delegate: self, alertType: .yesNo)
-//                self.present(alert, animated: true)
-//            }).disposed(by: disposeBag)
-    }
-
-    override func configureVC() {
-        contentView.contentViewHeight = 0.542
+        sendButton.rx.tap
+            .subscribe(onNext: {
+                let alert = AlertView(delegate: self, alertType: .yesNo)
+                self.present(alert, animated: true)
+            }).disposed(by: disposeBag)
     }
 
     override func setLayout() {
@@ -46,7 +46,7 @@ class MyPageVC: BaseVC {
     }
 }
 
-extension MyPageVC: AlertDelegate {
+extension WithdrawalVC: AlertDelegate {
     func exit() {
         self.dismiss(animated: true)
     }

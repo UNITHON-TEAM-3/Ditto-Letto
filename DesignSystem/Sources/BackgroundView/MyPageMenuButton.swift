@@ -1,6 +1,7 @@
 import UIKit
 
 public class MyPageMenuButton: UIButton {
+    private var didTap: (() -> Void)?
     public var text: String {
         get { textLabel.text ?? "" }
         set { textLabel.text = newValue }
@@ -24,6 +25,7 @@ public class MyPageMenuButton: UIButton {
         self.addView()
         self.setLayout()
         self.translatesAutoresizingMaskIntoConstraints = false
+//        self.isUserInteractionEnabled = true
     }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

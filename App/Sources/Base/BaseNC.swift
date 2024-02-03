@@ -30,7 +30,7 @@ class BaseNC: UINavigationController {
         navigationBar.tintColor = .color(.dittoLettoColor(.dark))
         appearance.setBackIndicatorImage(backButtonImage, transitionMaskImage: backButtonImage)
         appearance2.setBackIndicatorImage(backButtonImage, transitionMaskImage: backButtonImage)
-        appearance.backgroundColor = .color(.dittoLettoColor(.bg))
+        appearance.backgroundColor = .clear
 
         appearance.configureWithTransparentBackground()
         appearance2.configureWithTransparentBackground()

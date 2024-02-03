@@ -9,6 +9,7 @@ public final class ZStackView: UIStackView {
             .forEach { container.addSubview($0) }
 
         addArrangedSubview(container)
+        self.translatesAutoresizingMaskIntoConstraints = false
         self.isUserInteractionEnabled = true
     }
 
