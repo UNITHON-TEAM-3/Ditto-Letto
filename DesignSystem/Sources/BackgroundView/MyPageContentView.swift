@@ -45,11 +45,6 @@ public class MyPageContentView: UIView {
         $0.layer.borderWidth = UIScreen.main.bounds.width * 0.003
         return $0
     }(UIView())
-    public let myInfoButton = MyPageMenuButton()
-    public let inquiryButton = MyPageMenuButton()
-    public let termsButton = MyPageMenuButton()
-    public let policyButton = MyPageMenuButton()
-    public let signOutButton = MyPageMenuButton()
     private let headerTitleLabel: UILabel = {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.font = .ramche(.body)
@@ -94,7 +89,6 @@ public class MyPageContentView: UIView {
 
     public init(_ type: MyPageViewType, _ contentViewHeight: CGFloat? = 0.542) {
         super.init(frame: .zero)
-//        self.isUserInteractionEnabled = true
         self.contentViewHeight = contentViewHeight
 
         switch type {
@@ -171,100 +165,6 @@ extension MyPageContentView {
             contentView.topAnchor.constraint(equalTo: headerView.bottomAnchor),
             contentView.leftAnchor.constraint(equalTo: headerView.leftAnchor),
             contentView.rightAnchor.constraint(equalTo: headerView.rightAnchor),
-            bottomBorderView.widthAnchor.constraint(equalTo: contentStackView.widthAnchor),
-            bottomBorderView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.width * 0.002),
-            rightBorderView.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width * 0.002),
-            rightBorderView.leftAnchor.constraint(equalTo: contentStackView.rightAnchor),
-            rightBorderView.topAnchor.constraint(equalTo: headerView.topAnchor),
-            rightBorderView.bottomAnchor.constraint(equalTo: contentStackView.bottomAnchor)
-        ])
-    }
-
-    func setTableType() {
-        myInfoButton.text = "내 정보"
-        inquiryButton.text = "문의하기"
-        termsButton.text = "이용약관"
-        policyButton.text = "개인정보처리방침"
-        signOutButton.text = "로그아웃"
-        myInfoButton.isUserInteractionEnabled = true
-        inquiryButton.isUserInteractionEnabled = true
-        termsButton.isUserInteractionEnabled = true
-        policyButton.isUserInteractionEnabled = true
-        signOutButton.isUserInteractionEnabled = true
-
-        lazy var contentStackView = VStackView(spacing: 0) {
-            ZStackView {
-                headerView
-                leftBar
-                rightBar
-            }
-            ZStackView {
-                contentView
-                myInfoButton
-                inquiryButton
-                termsButton
-                policyButton
-                signOutButton
-            }
-            bottomBorderView
-        }
-        [
-            contentStackView,
-            rightBorderView
-        ].forEach { self.addSubview($0) }
-        contentStackView.translatesAutoresizingMaskIntoConstraints = false
-        contentStackView.isUserInteractionEnabled = true
-
-        headerView.backgroundColor = .color(.dittoLettoColor(.third))
-        contentView.backgroundColor = .color(.dittoLettoColor(.gray1))
-        leftBar.backgroundColor = .color(.dittoLettoColor(.dark))
-        rightBar.backgroundColor = .color(.dittoLettoColor(.dark))
-
-        NSLayoutConstraint.activate([
-            contentStackView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            contentStackView.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width * 0.893),
-            headerView.leftAnchor.constraint(equalTo: contentStackView.leftAnchor),
-            headerView.rightAnchor.constraint(equalTo: contentStackView.rightAnchor),
-            rightBar.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width * 0.061),
-            rightBar.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height * 0.01),
-            rightBar.topAnchor.constraint(
-                equalTo: headerView.topAnchor,
-                constant: UIScreen.main.bounds.height * 0.01
-            ),
-            rightBar.bottomAnchor.constraint(
-                equalTo: headerView.bottomAnchor,
-                constant: -UIScreen.main.bounds.height * 0.01
-            ),
-            rightBar.rightAnchor.constraint(
-                equalTo: headerView.rightAnchor,
-                constant: -UIScreen.main.bounds.width * 0.032
-            ),
-            leftBar.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width * 0.061),
-            leftBar.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height * 0.01),
-            leftBar.centerYAnchor.constraint(equalTo: headerView.centerYAnchor),
-            leftBar.rightAnchor.constraint(
-                equalTo: rightBar.leftAnchor,
-                constant: -UIScreen.main.bounds.width * 0.021
-            ),
-            contentView.topAnchor.constraint(equalTo: headerView.bottomAnchor),
-            contentView.leftAnchor.constraint(equalTo: headerView.leftAnchor),
-            contentView.rightAnchor.constraint(equalTo: headerView.rightAnchor),
-            myInfoButton.leftAnchor.constraint(equalTo: contentView.leftAnchor),
-            myInfoButton.rightAnchor.constraint(equalTo: contentView.rightAnchor),
-            myInfoButton.topAnchor.constraint(equalTo: contentView.topAnchor),
-            inquiryButton.leftAnchor.constraint(equalTo: contentView.leftAnchor),
-            inquiryButton.rightAnchor.constraint(equalTo: contentView.rightAnchor),
-            inquiryButton.topAnchor.constraint(equalTo: myInfoButton.bottomAnchor, constant: -1),
-            termsButton.leftAnchor.constraint(equalTo: contentView.leftAnchor),
-            termsButton.rightAnchor.constraint(equalTo: contentView.rightAnchor),
-            termsButton.topAnchor.constraint(equalTo: inquiryButton.bottomAnchor, constant: -1),
-            policyButton.leftAnchor.constraint(equalTo: contentView.leftAnchor),
-            policyButton.rightAnchor.constraint(equalTo: contentView.rightAnchor),
-            policyButton.topAnchor.constraint(equalTo: termsButton.bottomAnchor, constant: -1),
-            signOutButton.leftAnchor.constraint(equalTo: contentView.leftAnchor),
-            signOutButton.rightAnchor.constraint(equalTo: contentView.rightAnchor),
-            signOutButton.topAnchor.constraint(equalTo: policyButton.bottomAnchor, constant: -1),
-            signOutButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
             bottomBorderView.widthAnchor.constraint(equalTo: contentStackView.widthAnchor),
             bottomBorderView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.width * 0.002),
             rightBorderView.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width * 0.002),
