@@ -4,7 +4,7 @@ import RxCocoa
 import DesignSystem
 
 class PolicyVC: BaseVC {
-    private let contentView = MyPageContentView(.basic, 0.674)
+    private let contentView = MyPageContentView(.header)
 
     override func addView() {
         self.view.addSubview(contentView)

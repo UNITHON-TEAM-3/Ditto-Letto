@@ -1,7 +1,7 @@
 import UIKit
 
 public enum MyPageViewType: String {
-    case basic
+    case header
     case auth
     case withdrawal
     case notice
@@ -24,7 +24,6 @@ public class MyPageContentView: UIView {
         get { noticeTextView.text ?? "" }
         set { noticeTextView.text = newValue }
     }
-    public var contentViewHeight: CGFloat?
     private let headerView: UIView = {
         $0.layer.borderColor = UIColor.color(.dittoLettoColor(.dark)).cgColor
         $0.layer.borderWidth = 1
@@ -87,12 +86,10 @@ public class MyPageContentView: UIView {
         return $0
     }(UIView())
 
-    public init(_ type: MyPageViewType, _ contentViewHeight: CGFloat? = 0.542) {
+    public init(_ type: MyPageViewType) {
         super.init(frame: .zero)
-        self.contentViewHeight = contentViewHeight
-
         switch type {
-        case .basic:
+        case .header:
             setBasicType()
         case .auth:
             setAuthType()
@@ -118,12 +115,13 @@ extension MyPageContentView {
                 leftBar
                 rightBar
             }
-            contentView
-            bottomBorderView
+//            contentView
+//            bottomBorderView
         }
         [
-            contentStackView,
-            rightBorderView
+            contentStackView
+//            contentStackView,
+//            rightBorderView
         ].forEach { self.addSubview($0) }
         contentStackView.translatesAutoresizingMaskIntoConstraints = false
         contentStackView.isUserInteractionEnabled = true
@@ -159,18 +157,18 @@ extension MyPageContentView {
                 equalTo: rightBar.leftAnchor,
                 constant: -UIScreen.main.bounds.width * 0.021
             ),
-            contentView.heightAnchor.constraint(
-                equalToConstant: UIScreen.main.bounds.height * (contentViewHeight ?? 0.542)
-            ),
-            contentView.topAnchor.constraint(equalTo: headerView.bottomAnchor),
-            contentView.leftAnchor.constraint(equalTo: headerView.leftAnchor),
-            contentView.rightAnchor.constraint(equalTo: headerView.rightAnchor),
-            bottomBorderView.widthAnchor.constraint(equalTo: contentStackView.widthAnchor),
-            bottomBorderView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.width * 0.002),
-            rightBorderView.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width * 0.002),
-            rightBorderView.leftAnchor.constraint(equalTo: contentStackView.rightAnchor),
-            rightBorderView.topAnchor.constraint(equalTo: headerView.topAnchor),
-            rightBorderView.bottomAnchor.constraint(equalTo: contentStackView.bottomAnchor)
+//            contentView.heightAnchor.constraint(
+//                equalToConstant: UIScreen.main.bounds.height * (contentViewHeight ?? 0.542)
+//            ),
+//            contentView.topAnchor.constraint(equalTo: headerView.bottomAnchor),
+//            contentView.leftAnchor.constraint(equalTo: headerView.leftAnchor),
+//            contentView.rightAnchor.constraint(equalTo: headerView.rightAnchor),
+//            bottomBorderView.widthAnchor.constraint(equalTo: contentStackView.widthAnchor),
+//            bottomBorderView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.width * 0.002),
+//            rightBorderView.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width * 0.002),
+//            rightBorderView.leftAnchor.constraint(equalTo: contentStackView.rightAnchor),
+//            rightBorderView.topAnchor.constraint(equalTo: headerView.topAnchor),
+//            rightBorderView.bottomAnchor.constraint(equalTo: contentStackView.bottomAnchor)
         ])
     }
 
@@ -256,10 +254,6 @@ extension MyPageContentView {
                 equalTo: contentView.bottomAnchor,
                 constant: -UIScreen.main.bounds.height * 0.044
             ),
-//            textLabel.rightAnchor.constraint(
-//                equalTo: contentView.rightAnchor,
-//                constant: -UIScreen.main.bounds.height * 0.133
-//            ),
             bottomBorderView.topAnchor.constraint(equalTo: contentView.bottomAnchor),
             bottomBorderView.widthAnchor.constraint(equalTo: contentStackView.widthAnchor),
             bottomBorderView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.width * 0.002),
