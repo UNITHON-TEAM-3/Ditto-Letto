@@ -27,13 +27,15 @@ class MyAuthVC: BaseVC {
 
     override func configureVC() {
         myAuthView.authImage = .Image.kakaoLogo
-        myAuthView.textLabel.text = "ch12345@naver.com"
+        myAuthView.labelText = "ch12345@naver.com"
     }
 
     override func bind() {
         withdrawalButton.rx.tap
             .subscribe(onNext: {
-                print("드디어 탈퇴 버튼이 생겼습니당")
+                let next = WithdrawalVC()
+                next.navigationController?.navigationBar.topItem?.title = "탈퇴하기"
+                self.navigationController?.pushViewController(next, animated: true)
             }).disposed(by: disposeBag)
     }
 
@@ -49,6 +51,7 @@ class MyAuthVC: BaseVC {
         withdrawalButton.snp.makeConstraints {
             $0.verticalEdges.equalTo(withdrawalView.contentView.snp.verticalEdges)
             $0.left.equalTo(withdrawalView.contentView.snp.left).offset(UIScreen.main.bounds.width * 0.026)
+            $0.right.equalTo(withdrawalView.contentView.snp.right)
         }
     }
 }

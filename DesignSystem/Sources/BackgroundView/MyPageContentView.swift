@@ -13,8 +13,8 @@ public class MyPageContentView: UIView {
         set { headerTitleLabel.text = newValue }
     }
     public var labelText: String {
-        get { textLabel.text ?? "" }
-        set { textLabel.text = newValue }
+        get { snsTextLabel.text ?? "" }
+        set { snsTextLabel.text = newValue }
     }
     public var authImage: UIImage {
         get { snsImageView.image ?? UIImage() }
@@ -56,13 +56,13 @@ public class MyPageContentView: UIView {
         $0.backgroundColor = .clear
         return $0
     }(UIImageView())
-    public let textLabel: UILabel = {
+    private let snsTextLabel: UILabel = {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.textColor = .color(.dittoLettoColor(.dark))
         $0.backgroundColor = .clear
         return $0
     }(UILabel())
-    public let noticeTextView: UITextView = {
+    private let noticeTextView: UITextView = {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.font = .ramche(.subheadline)
         $0.textColor = .color(.dittoLettoColor(.white))
@@ -183,7 +183,7 @@ extension MyPageContentView {
             ZStackView {
                 contentView
                 snsImageView
-                textLabel
+                snsTextLabel
             }
             bottomBorderView
         }
@@ -200,7 +200,7 @@ extension MyPageContentView {
         rightBar.backgroundColor = .color(.dittoLettoColor(.gray2))
         headerTitleLabel.text = "SNS 연동"
         headerTitleLabel.textColor = .color(.dittoLettoColor(.dark))
-        textLabel.font = .ramche(.subheadline)
+        snsTextLabel.font = .ramche(.subheadline)
 
         NSLayoutConstraint.activate([
             contentStackView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
@@ -242,15 +242,15 @@ extension MyPageContentView {
                 constant: UIScreen.main.bounds.width * 0.06
             ),
             snsImageView.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width * 0.053),
-            textLabel.leftAnchor.constraint(
+            snsTextLabel.leftAnchor.constraint(
                 equalTo: snsImageView.rightAnchor,
                 constant: UIScreen.main.bounds.width * 0.055
             ),
-            textLabel.topAnchor.constraint(
+            snsTextLabel.topAnchor.constraint(
                 equalTo: contentView.topAnchor,
                 constant: UIScreen.main.bounds.height * 0.044
             ),
-            textLabel.bottomAnchor.constraint(
+            snsTextLabel.bottomAnchor.constraint(
                 equalTo: contentView.bottomAnchor,
                 constant: -UIScreen.main.bounds.height * 0.044
             ),
@@ -368,14 +368,14 @@ extension MyPageContentView {
             ),
             headerTitleLabel.leftAnchor.constraint(
                 equalTo: contentStackView.leftAnchor,
-                constant: UIScreen.main.bounds.width * 0.053
+                constant: UIScreen.main.bounds.width * 0.042
             ),
             rightBar.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width * 0.049),
             rightBar.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height * 0.017),
             rightBar.centerYAnchor.constraint(equalTo: headerView.centerYAnchor),
             rightBar.rightAnchor.constraint(
                 equalTo: contentStackView.rightAnchor,
-                constant: -UIScreen.main.bounds.width * 0.053
+                constant: -UIScreen.main.bounds.width * 0.042
             ),
             leftBar.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width * 0.049),
             leftBar.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height * 0.009),
@@ -397,11 +397,11 @@ extension MyPageContentView {
             ),
             noticeTextView.leftAnchor.constraint(
                 equalTo: contentStackView.leftAnchor,
-                constant: UIScreen.main.bounds.width * 0.051
+                constant: UIScreen.main.bounds.width * 0.042
             ),
             noticeTextView.rightAnchor.constraint(
                 equalTo: contentStackView.rightAnchor,
-                constant: -UIScreen.main.bounds.width * 0.051
+                constant: -UIScreen.main.bounds.width * 0.042
             ),
             bottomBorderView.topAnchor.constraint(equalTo: contentView.bottomAnchor),
             bottomBorderView.widthAnchor.constraint(equalTo: contentStackView.widthAnchor),
