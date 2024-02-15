@@ -130,7 +130,7 @@ class NewLetterVC: BaseVC {
         isPrivate
             .subscribe(onNext: { [self] in
                 letterTextField.setTextField($0)
-                letterTextView.setTextView($0)
+                letterTextView.setTextViewFont($0)
                 sendCountLabel.setCount($0)
                 receiveCountLabel.setCount($0)
 

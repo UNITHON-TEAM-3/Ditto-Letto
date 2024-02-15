@@ -413,5 +413,12 @@ extension MyPageContentView {
         ])
     }
 }
+
+public extension MyPageContentView {
+    func setTextViewSpacing() {
+        noticeTextView.setLineAndLetterSpacing(8, .white)
+        noticeTextView.font = .ramche(.subheadline)
+    }
+}
 // swiftlint:enable function_body_length
 // swiftlint:enable file_length

@@ -100,7 +100,7 @@ class DetailLetterVC: BaseVC {
                 switch data.type {
                 case "CODE":
                     letterTextField.setTextField(true)
-                    letterTextView.setTextView(true)
+                    letterTextView.setTextViewFont(true)
                     sendCountLabel.text = "\(data.fromCount)"
                     receiveCountLabel.text = "\(data.toCount)"
                     sendCountLabel.setCount(true)
@@ -115,7 +115,7 @@ class DetailLetterVC: BaseVC {
                     }
                 case "BASIC":
                     letterTextField.setTextField(false)
-                    letterTextView.setTextView(false)
+                    letterTextView.setTextViewFont(false)
                     sendCountLabel.text = "\(data.toCount)"
                     receiveCountLabel.text = "\(data.fromCount)"
                     sendCountLabel.setCount(false)

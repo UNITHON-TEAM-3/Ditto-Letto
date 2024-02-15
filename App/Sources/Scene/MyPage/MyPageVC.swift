@@ -68,7 +68,6 @@ class MyPageVC: BaseVC {
     override func setLayout() {
         let width = UIScreen.main.bounds.width * (0.893 - 0.002)
         let height = UIScreen.main.bounds.height * 0.542 / 5
-        let contentViewTop = UIScreen.main.bounds.height * 0.03 + 2
         let borderWidth = -UIScreen.main.bounds.width * 0.003 / 2
         contentView.snp.makeConstraints {
             $0.centerX.equalToSuperview()
