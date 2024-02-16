@@ -96,140 +96,140 @@ extension UIView {
     // swiftlint:enable function_body_length
 }
 
-extension UITextField {
-    // swiftlint:disable function_body_length
-    func setTextField(_ isPrivate: Bool) {
-        let profile = UIImageView().then {
-            $0.image = .Image.profileImage
-            $0.contentMode = .scaleAspectFit
-            $0.tag = 100
-        }
-        let privateImage = UIImageView().then {
-            $0.image = .Image.privateImage
-            $0.contentMode = .scaleAspectFit
-            $0.tag = 111
-        }
-        let generalImage = UIImageView().then {
-            $0.image = .Image.generalImage
-            $0.contentMode = .scaleAspectFit
-            $0.tag = 222
-        }
-        self.snp.makeConstraints {
-            $0.height.equalTo(UIScreen.main.bounds.height * 0.11)
-        }
-        if isPrivate {
-            [
-                profile,
-                privateImage
-            ].forEach {
-                self.addSubview($0)
-            }
+//extension UITextField {
+//    // swiftlint:disable function_body_length
+//    func setTextField(_ isPrivate: Bool) {
+//        let profile = UIImageView().then {
+//            $0.image = .Image.profileImage
+//            $0.contentMode = .scaleAspectFit
+//            $0.tag = 100
+//        }
+//        let privateImage = UIImageView().then {
+//            $0.image = .Image.privateImage
+//            $0.contentMode = .scaleAspectFit
+//            $0.tag = 111
+//        }
+//        let generalImage = UIImageView().then {
+//            $0.image = .Image.generalImage
+//            $0.contentMode = .scaleAspectFit
+//            $0.tag = 222
+//        }
+//        self.snp.makeConstraints {
+//            $0.height.equalTo(UIScreen.main.bounds.height * 0.11)
+//        }
+//        if isPrivate {
+//            [
+//                profile,
+//                privateImage
+//            ].forEach {
+//                self.addSubview($0)
+//            }
+//
+//            profile.snp.makeConstraints {
+//                $0.width.height.equalTo(UIScreen.main.bounds.width * 0.133)
+//                $0.left.equalToSuperview().inset(UIScreen.main.bounds.width * 0.04)
+//                $0.centerY.equalToSuperview()
+//            }
+//            privateImage.snp.makeConstraints {
+//                $0.width.equalToSuperview().multipliedBy(0.181)
+//                $0.height.equalToSuperview().multipliedBy(0.657)
+//                $0.right.equalToSuperview().inset(UIScreen.main.bounds.width * 0.037)
+//                $0.centerY.equalToSuperview()
+//            }
+//
+//            self.viewWithTag(222)?.removeFromSuperview()
+//            self.backgroundColor = .color(.dittoLettoColor(.dark))
+//            self.attributedPlaceholder = NSAttributedString(
+//                string: "번호를 입력해주세요.",
+//                attributes: [
+//                    .foregroundColor: UIColor.color(.dittoLettoColor(.gray2)),
+//                    .font: UIFont.ramche(.body)
+//                ]
+//            )
+//            self.font = .ramche(.body)
+//            self.textColor = .color(.dittoLettoColor(.white))
+//            self.leftView = UIView(
+//                frame: CGRect(
+//                    x: 0,
+//                    y: 0,
+//                    width: UIScreen.main.bounds.width * 0.208,
+//                    height: UIScreen.main.bounds.height * 0.1
+//                )
+//            )
+//            self.leftViewMode = .always
+//            self.rightView = UIView(
+//                frame: CGRect(
+//                    x: 0,
+//                    y: 0,
+//                    width: UIScreen.main.bounds.width * 0.181,
+//                    height: UIScreen.main.bounds.height * 0.1
+//                )
+//            )
+//            self.rightViewMode = .always
+//        } else {
+//            self.addSubview(generalImage)
+//            generalImage.snp.makeConstraints {
+//                $0.centerY.equalToSuperview()
+//                $0.right.equalToSuperview().inset(UIScreen.main.bounds.width * 0.045)
+//                $0.width.equalToSuperview().multipliedBy(0.163)
+//                $0.height.equalToSuperview().multipliedBy(0.578)
+//            }
+//            self.viewWithTag(100)?.removeFromSuperview()
+//            self.viewWithTag(111)?.removeFromSuperview()
+//
+//            self.backgroundColor = .color(.dittoLettoColor(.white))
+//            self.attributedPlaceholder = NSAttributedString(
+//                string: "번호를 입력해주세요.",
+//                attributes: [
+//                    .foregroundColor: UIColor.color(.dittoLettoColor(.gray2)),
+//                    .font: UIFont.yoondongju(.body)
+//                ]
+//            )
+//            self.font = .yoondongju(.body)
+//            self.textColor = .black
+//            self.leftView = UIView(
+//                frame: CGRect(
+//                    x: 0,
+//                    y: 0,
+//                    width: UIScreen.main.bounds.width * 0.059,
+//                    height: UIScreen.main.bounds.height * 0.037
+//                )
+//            )
+//            self.leftViewMode = .always
+//        }
+//    }
+//    // swiftlint:enable function_body_length
+//}
 
-            profile.snp.makeConstraints {
-                $0.width.height.equalTo(UIScreen.main.bounds.width * 0.133)
-                $0.left.equalToSuperview().inset(UIScreen.main.bounds.width * 0.04)
-                $0.centerY.equalToSuperview()
-            }
-            privateImage.snp.makeConstraints {
-                $0.width.equalToSuperview().multipliedBy(0.181)
-                $0.height.equalToSuperview().multipliedBy(0.657)
-                $0.right.equalToSuperview().inset(UIScreen.main.bounds.width * 0.037)
-                $0.centerY.equalToSuperview()
-            }
-
-            self.viewWithTag(222)?.removeFromSuperview()
-            self.backgroundColor = .color(.dittoLettoColor(.dark))
-            self.attributedPlaceholder = NSAttributedString(
-                string: "번호를 입력해주세요.",
-                attributes: [
-                    .foregroundColor: UIColor.color(.dittoLettoColor(.gray2)),
-                    .font: UIFont.ramche(.body)
-                ]
-            )
-            self.font = .ramche(.body)
-            self.textColor = .color(.dittoLettoColor(.white))
-            self.leftView = UIView(
-                frame: CGRect(
-                    x: 0,
-                    y: 0,
-                    width: UIScreen.main.bounds.width * 0.208,
-                    height: UIScreen.main.bounds.height * 0.1
-                )
-            )
-            self.leftViewMode = .always
-            self.rightView = UIView(
-                frame: CGRect(
-                    x: 0,
-                    y: 0,
-                    width: UIScreen.main.bounds.width * 0.181,
-                    height: UIScreen.main.bounds.height * 0.1
-                )
-            )
-            self.rightViewMode = .always
-        } else {
-            self.addSubview(generalImage)
-            generalImage.snp.makeConstraints {
-                $0.centerY.equalToSuperview()
-                $0.right.equalToSuperview().inset(UIScreen.main.bounds.width * 0.045)
-                $0.width.equalToSuperview().multipliedBy(0.163)
-                $0.height.equalToSuperview().multipliedBy(0.578)
-            }
-            self.viewWithTag(100)?.removeFromSuperview()
-            self.viewWithTag(111)?.removeFromSuperview()
-
-            self.backgroundColor = .color(.dittoLettoColor(.white))
-            self.attributedPlaceholder = NSAttributedString(
-                string: "번호를 입력해주세요.",
-                attributes: [
-                    .foregroundColor: UIColor.color(.dittoLettoColor(.gray2)),
-                    .font: UIFont.yoondongju(.body)
-                ]
-            )
-            self.font = .yoondongju(.body)
-            self.textColor = .black
-            self.leftView = UIView(
-                frame: CGRect(
-                    x: 0,
-                    y: 0,
-                    width: UIScreen.main.bounds.width * 0.059,
-                    height: UIScreen.main.bounds.height * 0.037
-                )
-            )
-            self.leftViewMode = .always
-        }
-    }
-    // swiftlint:enable function_body_length
-}
-
-extension UITextView {
-    func setTextView(_ isPrivate: Bool) {
-        if isPrivate {
-            self.font = .ramche(.headline)
-        } else {
-            self.font = .ramche(.headline)
-        }
-    }
-
-// MARK: 1. Put Text  ->  2. Set Spacing  ->  3. Set Font
-// This Function must be written at the second.
-    func setLineAndLetterSpacing(_ lineSpacing: CGFloat, _ color: UIColor.Colors.Colors) {
-        let style = NSMutableParagraphStyle()
-        style.lineSpacing = lineSpacing
-        let attributedString = NSMutableAttributedString(string: self.text)
-        attributedString.addAttribute(
-            NSAttributedString.Key.kern,
-            value: CGFloat(0),
-            range: NSRange(location: 0, length: attributedString.length)
-        )
-        attributedString.addAttribute(
-            NSAttributedString.Key.paragraphStyle,
-            value: style,
-            range: NSRange(location: 0, length: attributedString.length)
-        )
-        self.attributedText = attributedString
-        self.textColor = .color(.dittoLettoColor(color))
-    }
-}
+//extension UITextView {
+//    func setTextView(_ isPrivate: Bool) {
+//        if isPrivate {
+//            self.font = .ramche(.headline)
+//        } else {
+//            self.font = .ramche(.headline)
+//        }
+//    }
+//
+//// MARK: 1. Put Text  ->  2. Set Spacing  ->  3. Set Font
+//// This Function must be written at the second.
+//    func setLineAndLetterSpacing(_ lineSpacing: CGFloat, _ color: UIColor.Colors.Colors) {
+//        let style = NSMutableParagraphStyle()
+//        style.lineSpacing = lineSpacing
+//        let attributedString = NSMutableAttributedString(string: self.text)
+//        attributedString.addAttribute(
+//            NSAttributedString.Key.kern,
+//            value: CGFloat(0),
+//            range: NSRange(location: 0, length: attributedString.length)
+//        )
+//        attributedString.addAttribute(
+//            NSAttributedString.Key.paragraphStyle,
+//            value: style,
+//            range: NSRange(location: 0, length: attributedString.length)
+//        )
+//        self.attributedText = attributedString
+//        self.textColor = .color(.dittoLettoColor(color))
+//    }
+//}
 
 extension UILabel {
     func setCount(_ isPrivate: Bool) {
