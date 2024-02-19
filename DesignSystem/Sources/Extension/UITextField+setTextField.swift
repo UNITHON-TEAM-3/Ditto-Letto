@@ -29,6 +29,7 @@ public extension UITextField {
         self.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height * 0.11).isActive = true
 
         if isPrivate {
+            self.viewWithTag(222)?.removeFromSuperview()
             [
                 profile,
                 privateImage
@@ -43,23 +44,13 @@ public extension UITextField {
                 profile.centerYAnchor.constraint(equalTo: self.centerYAnchor),
                 privateImage.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.181),
                 privateImage.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.657),
-                privateImage.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -UIScreen.main.bounds.width * 0.037),
+                privateImage.rightAnchor.constraint(
+                    equalTo: self.rightAnchor,
+                    constant: -UIScreen.main.bounds.width * 0.037
+                ),
                 privateImage.centerYAnchor.constraint(equalTo: self.centerYAnchor)
             ])
 
-//            profile.snp.makeConstraints {
-//                $0.width.height.equalTo(UIScreen.main.bounds.width * 0.133)
-//                $0.left.equalToSuperview().inset(UIScreen.main.bounds.width * 0.04)
-//                $0.centerY.equalToSuperview()
-//            }
-//            privateImage.snp.makeConstraints {
-//                $0.width.equalToSuperview().multipliedBy(0.181)
-//                $0.height.equalToSuperview().multipliedBy(0.657)
-//                $0.right.equalToSuperview().inset(UIScreen.main.bounds.width * 0.037)
-//                $0.centerY.equalToSuperview()
-//            }
-
-            self.viewWithTag(222)?.removeFromSuperview()
             self.backgroundColor = .color(.dittoLettoColor(.dark))
             self.attributedPlaceholder = NSAttributedString(
                 string: "번호를 입력해주세요.",
@@ -89,22 +80,19 @@ public extension UITextField {
             )
             self.rightViewMode = .always
         } else {
+            self.viewWithTag(100)?.removeFromSuperview()
+            self.viewWithTag(111)?.removeFromSuperview()
             self.addSubview(generalImage)
 
             NSLayoutConstraint.activate([
                 generalImage.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.163),
-                privateImage.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.578),
-                privateImage.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -UIScreen.main.bounds.width * 0.045),
-                privateImage.centerYAnchor.constraint(equalTo: self.centerYAnchor)
+                generalImage.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.578),
+                generalImage.rightAnchor.constraint(
+                    equalTo: self.rightAnchor,
+                    constant: -UIScreen.main.bounds.width * 0.045
+                ),
+                generalImage.centerYAnchor.constraint(equalTo: self.centerYAnchor)
             ])
-//            generalImage.snp.makeConstraints {
-//                $0.centerY.equalToSuperview()
-//                $0.right.equalToSuperview().inset(UIScreen.main.bounds.width * 0.045)
-//                $0.width.equalToSuperview().multipliedBy(0.163)
-//                $0.height.equalToSuperview().multipliedBy(0.578)
-//            }
-            self.viewWithTag(100)?.removeFromSuperview()
-            self.viewWithTag(111)?.removeFromSuperview()
 
             self.backgroundColor = .color(.dittoLettoColor(.white))
             self.attributedPlaceholder = NSAttributedString(
