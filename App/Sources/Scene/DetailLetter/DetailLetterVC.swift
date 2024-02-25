@@ -100,7 +100,8 @@ class DetailLetterVC: BaseVC {
                 switch data.type {
                 case "CODE":
                     letterTextField.setTextField(true)
-                    letterTextView.setTextViewFont(true)
+                    letterTextView.setLineAndLetterSpacing(8, .dark)
+                    letterTextView.font = .ramche(.headline)
                     sendCountLabel.text = "\(data.fromCount)"
                     receiveCountLabel.text = "\(data.toCount)"
                     sendCountLabel.setCount(true)
@@ -115,7 +116,8 @@ class DetailLetterVC: BaseVC {
                     }
                 case "BASIC":
                     letterTextField.setTextField(false)
-                    letterTextView.setTextViewFont(false)
+                    letterTextView.setLineAndLetterSpacing(-3, .dark)
+                    letterTextView.font = .yoondongju(.headline)
                     sendCountLabel.text = "\(data.toCount)"
                     receiveCountLabel.text = "\(data.fromCount)"
                     sendCountLabel.setCount(false)

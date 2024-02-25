@@ -130,7 +130,7 @@ class NewLetterVC: BaseVC {
         isPrivate
             .subscribe(onNext: { [self] in
                 letterTextField.setTextField($0)
-                letterTextView.setTextViewFont($0)
+                setTextFieldAndView($0)
                 sendCountLabel.setCount($0)
                 receiveCountLabel.setCount($0)
 
@@ -138,7 +138,6 @@ class NewLetterVC: BaseVC {
                     type.accept("CODE")
                     privateDiaryButton.setEnabled()
                     generalDiaryButton.setDisabled()
-                    setTextFieldAndView($0)
                     addBorder($0)
 
                     sendCountLabel.snp.updateConstraints {
@@ -153,7 +152,6 @@ class NewLetterVC: BaseVC {
                     type.accept("BASIC")
                     generalDiaryButton.setEnabled()
                     privateDiaryButton.setDisabled()
-                    setTextFieldAndView($0)
                     addBorder($0)
 
                     sendCountLabel.snp.updateConstraints {
@@ -170,29 +168,33 @@ class NewLetterVC: BaseVC {
         letterTextView.rx.text.orEmpty
             .subscribe(onNext: { [self] in
                 textCountLabel.text = "\($0.count) / 144"
+                isEntering.accept(true)
                 if $0.count > 144 {
                     letterTextView.text = String($0[..<$0.index($0.startIndex, offsetBy: 144)])
                     letterTextView.resignFirstResponder()
                 } else if $0.count > 0 && $0.count < 144 {
                     sendButton.backgroundColor = .color(.dittoLettoColor(.main))
+                } else {
+                    isEntering.accept(false)
+                    sendButton.backgroundColor = .color(.dittoLettoColor(.gray1))
                 }
-                if letterTextView.text == "전하고 싶은 말을 입력해주세요." {
-                    textCountLabel.text = "0/144"
+                if $0 == "전하고 싶은 말을 입력해주세요." {
+                    textCountLabel.text = "0 / 144"
+                    isEntering.accept(false)
                     sendButton.backgroundColor = .color(.dittoLettoColor(.gray1))
                 }
             }).disposed(by: disposeBag)
         letterTextView.rx.didBeginEditing
             .bind(onNext: { [self] in
-//                letterTextView.textColor = .color(.dittoLettoColor(.dark))
                 if letterTextView.text == "전하고 싶은 말을 입력해주세요." {
                     letterTextView.text = ""
+                    letterTextView.textColor = .color(.dittoLettoColor(.dark))
                     NotificationCenter.default.addObserver(
                         self,
                         selector: #selector(keyboardWillShow),
                         name: UIResponder.keyboardWillShowNotification,
                         object: nil
                     )
-                    isEntering.accept(true)
                 }
             }).disposed(by: disposeBag)
         letterTextView.rx.didEndEditing
@@ -204,10 +206,6 @@ class NewLetterVC: BaseVC {
                 }
             }).disposed(by: disposeBag)
     }
-
-//    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-//        self.letterTextView.resignFirstResponder()
-//    }
 
     override func setLayout() {
         privateDiaryButton.snp.makeConstraints {
@@ -295,10 +293,11 @@ extension NewLetterVC {
     }
 
     @objc func keyboardWillShow(notification: NSNotification) {
+        let countLabelYPoint = textCountLabel.convert(textCountLabel.bounds, to: view).origin.y
         if let keyboardSize = (
             notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue
         )?.cgRectValue {
-            if self.view.frame.origin.y == 0 {
+            if self.view.frame.origin.y == 0 && keyboardSize.origin.y < countLabelYPoint {
                 self.view.frame.origin.y -= keyboardSize.height/3
             }
         }
