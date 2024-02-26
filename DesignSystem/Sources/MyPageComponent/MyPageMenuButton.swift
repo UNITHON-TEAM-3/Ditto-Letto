@@ -1,7 +1,6 @@
 import UIKit
 
 public class MyPageMenuButton: UIButton {
-    private var didTap: (() -> Void)?
     public var text: String {
         get { textLabel.text ?? "" }
         set { textLabel.text = newValue }

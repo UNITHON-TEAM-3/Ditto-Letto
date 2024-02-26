@@ -115,14 +115,8 @@ extension MyPageContentView {
                 leftBar
                 rightBar
             }
-//            contentView
-//            bottomBorderView
         }
-        [
-            contentStackView
-//            contentStackView,
-//            rightBorderView
-        ].forEach { self.addSubview($0) }
+        self.addSubview(contentStackView)
         contentStackView.translatesAutoresizingMaskIntoConstraints = false
         contentStackView.isUserInteractionEnabled = true
 
@@ -156,19 +150,7 @@ extension MyPageContentView {
             leftBar.rightAnchor.constraint(
                 equalTo: rightBar.leftAnchor,
                 constant: -UIScreen.main.bounds.width * 0.021
-            ),
-//            contentView.heightAnchor.constraint(
-//                equalToConstant: UIScreen.main.bounds.height * (contentViewHeight ?? 0.542)
-//            ),
-//            contentView.topAnchor.constraint(equalTo: headerView.bottomAnchor),
-//            contentView.leftAnchor.constraint(equalTo: headerView.leftAnchor),
-//            contentView.rightAnchor.constraint(equalTo: headerView.rightAnchor),
-//            bottomBorderView.widthAnchor.constraint(equalTo: contentStackView.widthAnchor),
-//            bottomBorderView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.width * 0.002),
-//            rightBorderView.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width * 0.002),
-//            rightBorderView.leftAnchor.constraint(equalTo: contentStackView.rightAnchor),
-//            rightBorderView.topAnchor.constraint(equalTo: headerView.topAnchor),
-//            rightBorderView.bottomAnchor.constraint(equalTo: contentStackView.bottomAnchor)
+            )
         ])
     }
 

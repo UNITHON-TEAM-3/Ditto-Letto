@@ -25,14 +25,13 @@ class WithdrawalVC: BaseVC {
     override func configureVC() {
         contentView.headerText = "탈퇴 신청 전 확인해주세요."
         contentView.textViewText = """
-
         탈퇴 이후 회원 정보 및 이용기록은 모두 삭제되며,
         여러분의 설레이는 편지는 다시 복구할 수 없어요.
 
         정말 탈퇴하시겠어요?
         ㅇㅠ^ㅠㅇ
-
         """
+        contentView.setTextViewSpacing()
     }
 
     override func setLayout() {
