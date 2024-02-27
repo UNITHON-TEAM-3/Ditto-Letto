@@ -5,6 +5,13 @@ import DesignSystem
 
 class WithdrawalVC: BaseVC {
     private let contentView = MyPageContentView(.notice)
+    private let selectTableView = UITableView().then {
+        $0.register(WithdrawalCell.self, forCellReuseIdentifier: "WithdrawalCell")
+        $0.separatorInset.left = 0
+        $0.separatorInset.right = 0
+        $0.separatorColor = .color(.dittoLettoColor(.white))
+        $0.allowsMultipleSelection = false
+    }
     private let sendButton = UIButton().then {
         $0.setTitle("탈퇴하기", for: .normal)
         $0.setMainButton(color: .gray1)
@@ -12,6 +19,12 @@ class WithdrawalVC: BaseVC {
 
     override func addView() {
         self.view.addSubview(contentView)
+        [
+            contentView,
+            selectTableView
+        ].forEach {
+            view.addSubview($0)
+        }
     }
 
     override func bind() {
@@ -36,8 +49,11 @@ class WithdrawalVC: BaseVC {
 
     override func setLayout() {
         contentView.snp.makeConstraints {
-            $0.centerX.equalTo(view.snp.centerX)
+            $0.centerX.equalToSuperview()
             $0.top.equalTo(view.snp.centerY).offset(-UIScreen.main.bounds.height * 0.35)
+        }
+        selectTableView.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
         }
     }
 }
