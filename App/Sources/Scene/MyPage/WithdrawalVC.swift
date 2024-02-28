@@ -5,12 +5,27 @@ import DesignSystem
 
 class WithdrawalVC: BaseVC {
     private let contentView = MyPageContentView(.notice)
+    private let isFirstStepClear = BehaviorRelay<Bool>(value: false)
+    private let firstStepList = BehaviorRelay<[String]>(value: [
+        "아니요, 그냥 사용할게요.",
+        "네, 탈퇴할래요."
+    ])
+    private let secondStepList = BehaviorRelay<[String]>(value: [
+        "편지 기록을 삭제하고 싶어요.",
+        "사용 빈도가 낮아요.",
+        "다른 비슷한 서비스를 사용할 거예요.",
+        "이용이 불편하고 장애가 잦아요.",
+        "콘텐츠에 불만이 있어요.",
+        "이 외 다른 이유로 탈퇴하는 거예요."
+    ])
     private let selectTableView = UITableView().then {
         $0.register(WithdrawalCell.self, forCellReuseIdentifier: "WithdrawalCell")
+        $0.rowHeight = 46
         $0.separatorInset.left = 0
         $0.separatorInset.right = 0
         $0.separatorColor = .color(.dittoLettoColor(.white))
         $0.allowsMultipleSelection = false
+        $0.isScrollEnabled = false
     }
     private let sendButton = UIButton().then {
         $0.setTitle("탈퇴하기", for: .normal)
@@ -18,7 +33,6 @@ class WithdrawalVC: BaseVC {
     }
 
     override func addView() {
-        self.view.addSubview(contentView)
         [
             contentView,
             selectTableView
@@ -28,6 +42,12 @@ class WithdrawalVC: BaseVC {
     }
 
     override func bind() {
+        firstStepList.bind(to: selectTableView.rx.items(
+            cellIdentifier: "WithdrawalCell",
+            cellType: WithdrawalCell.self
+        )) { _, item, cell in
+            cell.text = item
+        }.disposed(by: disposeBag)
         sendButton.rx.tap
             .subscribe(onNext: {
                 let alert = AlertView(delegate: self, alertType: .yesNo)
@@ -53,7 +73,8 @@ class WithdrawalVC: BaseVC {
             $0.top.equalTo(view.snp.centerY).offset(-UIScreen.main.bounds.height * 0.35)
         }
         selectTableView.snp.makeConstraints {
-            $0.centerX.equalToSuperview()
+            $0.horizontalEdges.equalToSuperview().inset(UIScreen.main.bounds.width * 0.053)
+            $0.top.equalTo(contentView.snp.bottom).offset(48/*UIScreen.main.bounds.height * 0.072*/)
         }
     }
 }
