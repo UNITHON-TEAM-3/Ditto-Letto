@@ -41,7 +41,7 @@ public class MyPageContentView: UIView {
     public lazy var contentView: UIView = {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.layer.borderColor = UIColor.color(.dittoLettoColor(.dark)).cgColor
-        $0.layer.borderWidth = UIScreen.main.bounds.width * 0.003
+        $0.layer.borderWidth = 1
         return $0
     }(UIView())
     private let headerTitleLabel: UILabel = {
@@ -126,10 +126,14 @@ extension MyPageContentView {
         rightBar.backgroundColor = .color(.dittoLettoColor(.dark))
 
         NSLayoutConstraint.activate([
-            contentStackView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            contentStackView.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width * 0.893),
+            contentStackView.leftAnchor.constraint(equalTo: self.leftAnchor),
+            contentStackView.rightAnchor.constraint(equalTo: self.rightAnchor),
+            contentStackView.topAnchor.constraint(equalTo: self.topAnchor),
+            contentStackView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
             headerView.leftAnchor.constraint(equalTo: contentStackView.leftAnchor),
             headerView.rightAnchor.constraint(equalTo: contentStackView.rightAnchor),
+            headerView.topAnchor.constraint(equalTo: contentStackView.topAnchor),
+            headerView.bottomAnchor.constraint(equalTo: contentStackView.bottomAnchor),
             rightBar.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width * 0.061),
             rightBar.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height * 0.01),
             rightBar.topAnchor.constraint(
@@ -185,8 +189,11 @@ extension MyPageContentView {
         snsTextLabel.font = .ramche(.subheadline)
 
         NSLayoutConstraint.activate([
-            contentStackView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            contentStackView.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width * 0.893),
+            contentStackView.leftAnchor.constraint(equalTo: self.leftAnchor),
+            contentStackView.rightAnchor.constraint(equalTo: self.rightAnchor),
+            contentStackView.topAnchor.constraint(equalTo: self.topAnchor),
+            contentStackView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
+            headerView.topAnchor.constraint(equalTo: contentStackView.topAnchor),
             headerView.leftAnchor.constraint(equalTo: contentStackView.leftAnchor),
             headerView.rightAnchor.constraint(equalTo: contentStackView.rightAnchor),
             headerTitleLabel.topAnchor.constraint(
@@ -238,10 +245,11 @@ extension MyPageContentView {
             ),
             bottomBorderView.topAnchor.constraint(equalTo: contentView.bottomAnchor),
             bottomBorderView.widthAnchor.constraint(equalTo: contentStackView.widthAnchor),
-            bottomBorderView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.width * 0.002),
-            rightBorderView.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width * 0.002),
+            bottomBorderView.heightAnchor.constraint(equalToConstant: 1),
+            bottomBorderView.bottomAnchor.constraint(equalTo: contentStackView.bottomAnchor),
+            rightBorderView.widthAnchor.constraint(equalToConstant: 1),
             rightBorderView.leftAnchor.constraint(equalTo: contentStackView.rightAnchor),
-            rightBorderView.topAnchor.constraint(equalTo: headerView.topAnchor),
+            rightBorderView.topAnchor.constraint(equalTo: contentStackView.topAnchor),
             rightBorderView.bottomAnchor.constraint(equalTo: contentStackView.bottomAnchor)
         ])
     }
@@ -269,8 +277,11 @@ extension MyPageContentView {
         rightBar.backgroundColor = .color(.dittoLettoColor(.gray2))
 
         NSLayoutConstraint.activate([
-            contentStackView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            contentStackView.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width * 0.48),
+            contentStackView.leftAnchor.constraint(equalTo: self.leftAnchor),
+            contentStackView.rightAnchor.constraint(equalTo: self.rightAnchor),
+            contentStackView.topAnchor.constraint(equalTo: self.topAnchor),
+            contentStackView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
+            headerView.topAnchor.constraint(equalTo: contentStackView.topAnchor),
             headerView.leftAnchor.constraint(equalTo: contentStackView.leftAnchor),
             headerView.rightAnchor.constraint(equalTo: contentStackView.rightAnchor),
             rightBar.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width * 0.037),
@@ -301,9 +312,10 @@ extension MyPageContentView {
             bottomBorderView.topAnchor.constraint(equalTo: contentView.bottomAnchor),
             bottomBorderView.widthAnchor.constraint(equalTo: contentStackView.widthAnchor),
             bottomBorderView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.width * 0.002),
-            rightBorderView.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width * 0.002),
+            bottomBorderView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
+            rightBorderView.widthAnchor.constraint(equalToConstant: 1),
             rightBorderView.leftAnchor.constraint(equalTo: contentStackView.rightAnchor),
-            rightBorderView.topAnchor.constraint(equalTo: headerView.topAnchor),
+            rightBorderView.topAnchor.constraint(equalTo: contentStackView.topAnchor),
             rightBorderView.bottomAnchor.constraint(equalTo: contentStackView.bottomAnchor)
         ])
     }
@@ -336,6 +348,8 @@ extension MyPageContentView {
         headerTitleLabel.textColor = .color(.dittoLettoColor(.white))
 
         NSLayoutConstraint.activate([
+            contentStackView.topAnchor.constraint(equalTo: self.topAnchor),
+            contentStackView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
             contentStackView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
             contentStackView.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width * 0.893),
             headerView.leftAnchor.constraint(equalTo: contentStackView.leftAnchor),

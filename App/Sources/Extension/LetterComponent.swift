@@ -15,7 +15,7 @@ extension UIView {
     func setSeparatorView() {
         self.backgroundColor = .color(.dittoLettoColor(.main))
         self.layer.borderColor = UIColor.color(.dittoLettoColor(.dark)).cgColor
-        self.layer.borderWidth = UIScreen.main.bounds.width * 0.003
+        self.layer.borderWidth = 1
     }
 
     func makeSpringView() -> UIView {

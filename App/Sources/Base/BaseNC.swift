@@ -28,6 +28,10 @@ class BaseNC: UINavigationController {
         let appearance = UINavigationBarAppearance()
         let appearance2 = UINavigationBarAppearance()
         navigationBar.tintColor = .color(.dittoLettoColor(.dark))
+        navigationController?.navigationBar.titleTextAttributes = [
+            NSAttributedString.Key.foregroundColor: UIColor.color(.dittoLettoColor(.dark)),
+            NSAttributedString.Key.font: UIFont.ramche(.body)
+        ]
         appearance.setBackIndicatorImage(backButtonImage, transitionMaskImage: backButtonImage)
         appearance2.setBackIndicatorImage(backButtonImage, transitionMaskImage: backButtonImage)
         appearance.backgroundColor = .clear

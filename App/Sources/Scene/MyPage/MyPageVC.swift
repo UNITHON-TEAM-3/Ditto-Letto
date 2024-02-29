@@ -70,39 +70,33 @@ class MyPageVC: BaseVC {
         let height = UIScreen.main.bounds.height * 0.542 / 5
         let borderWidth = -UIScreen.main.bounds.width * 0.003 / 2
         contentView.snp.makeConstraints {
-            $0.centerX.equalToSuperview()
+            $0.horizontalEdges.equalToSuperview().inset(20)
             $0.top.equalTo(view.snp.centerY).offset(-UIScreen.main.bounds.height * 0.35)
         }
         myInfoButton.snp.makeConstraints {
             $0.top.equalTo(view.snp.centerY).offset(-UIScreen.main.bounds.height * 0.32)
-            $0.centerX.equalToSuperview()
-            $0.width.equalTo(width)
+            $0.horizontalEdges.equalToSuperview().inset(20)
             $0.height.equalTo(height)
         }
         inquiryButton.snp.makeConstraints {
-            $0.centerX.equalToSuperview()
             $0.top.equalTo(myInfoButton.snp.bottom).offset(borderWidth)
-            $0.width.equalTo(width)
+            $0.horizontalEdges.equalToSuperview().inset(20)
             $0.height.equalTo(height)
         }
         termsButton.snp.makeConstraints {
-            $0.centerX.equalToSuperview()
             $0.top.equalTo(inquiryButton.snp.bottom).offset(borderWidth)
-            $0.width.equalTo(width)
+            $0.horizontalEdges.equalToSuperview().inset(20)
             $0.height.equalTo(height)
         }
         policyButton.snp.makeConstraints {
-            $0.centerX.equalToSuperview()
             $0.top.equalTo(termsButton.snp.bottom).offset(borderWidth)
-            $0.width.equalTo(width)
+            $0.horizontalEdges.equalToSuperview().inset(20)
             $0.height.equalTo(height)
         }
         signOutButton.snp.makeConstraints {
-            $0.centerX.equalToSuperview()
             $0.top.equalTo(policyButton.snp.bottom).offset(borderWidth)
-            $0.width.equalTo(width)
+            $0.horizontalEdges.equalToSuperview().inset(20)
             $0.height.equalTo(height)
-//            $0.bottom.equalToSuperview().offset(-UIScreen.main.bounds.width * 0.002)
         }
     }
 }

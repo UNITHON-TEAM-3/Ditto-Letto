@@ -274,20 +274,20 @@ extension NewLetterVC {
         switch isCode {
         case true:
             letterTextField.addTopBorder(.dark)
-            letterTextField.addBottomBorder(.dark, 0)
+            letterTextField.addBottomBorder(.dark, 1)
             letterTextField.addLeftBorder(.dark)
-            letterTextField.addRightBorder(.dark, 0.003)
+            letterTextField.addRightBorder(.dark, 2)
             letterTextView.addLeftBorder(.dark)
-            letterTextView.addRightBorder(.dark, 0.003)
-            letterTextView.addBottomBorder(.dark, 0.003)
+            letterTextView.addRightBorder(.dark, 2)
+            letterTextView.addBottomBorder(.dark, 2)
         case false:
             letterTextField.addTopBorder(.gray2)
-            letterTextField.addBottomBorder(.gray2, 0)
+            letterTextField.addBottomBorder(.gray2, 1)
             letterTextField.addLeftBorder(.gray2)
-            letterTextField.addRightBorder(.dark, 0)
+            letterTextField.addRightBorder(.dark, 1)
             letterTextView.addLeftBorder(.gray2)
-            letterTextView.addRightBorder(.dark, 0)
-            letterTextView.addBottomBorder(.dark, 0)
+            letterTextView.addRightBorder(.dark, 1)
+            letterTextView.addBottomBorder(.dark, 1)
         }
         letterTextField.layoutSubviews()
     }

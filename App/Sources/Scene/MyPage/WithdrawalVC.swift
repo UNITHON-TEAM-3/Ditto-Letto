@@ -18,11 +18,10 @@ class WithdrawalVC: BaseVC {
         "콘텐츠에 불만이 있어요.",
         "이 외 다른 이유로 탈퇴하는 거예요."
     ])
-    private let selectTableView = UITableView().then {
+    private let selectTableView = ContentWrappingTableView().then {
         $0.register(WithdrawalCell.self, forCellReuseIdentifier: "WithdrawalCell")
         $0.rowHeight = 46
-        $0.separatorInset.left = 0
-        $0.separatorInset.right = 0
+        $0.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         $0.separatorColor = .color(.dittoLettoColor(.white))
         $0.allowsMultipleSelection = false
         $0.isScrollEnabled = false
@@ -64,8 +63,7 @@ class WithdrawalVC: BaseVC {
         정말 탈퇴하시겠어요?
         ㅇㅠ^ㅠㅇ
         """
-        contentView.setTextViewSpacing()
-    }
+        contentView.setTextViewSpacing()    }
 
     override func setLayout() {
         contentView.snp.makeConstraints {
@@ -73,8 +71,9 @@ class WithdrawalVC: BaseVC {
             $0.top.equalTo(view.snp.centerY).offset(-UIScreen.main.bounds.height * 0.35)
         }
         selectTableView.snp.makeConstraints {
-            $0.horizontalEdges.equalToSuperview().inset(UIScreen.main.bounds.width * 0.053)
-            $0.top.equalTo(contentView.snp.bottom).offset(48/*UIScreen.main.bounds.height * 0.072*/)
+            $0.top.equalTo(contentView.snp.bottom).offset(UIScreen.main.bounds.height * 0.094)
+            $0.width.equalToSuperview().multipliedBy(0.893)
+            $0.centerX.equalToSuperview()
         }
     }
 }
