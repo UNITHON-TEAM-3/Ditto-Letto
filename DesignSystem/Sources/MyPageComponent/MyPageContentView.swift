@@ -231,6 +231,7 @@ extension MyPageContentView {
                 constant: UIScreen.main.bounds.width * 0.06
             ),
             snsImageView.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width * 0.053),
+            snsImageView.heightAnchor.constraint(equalToConstant: 24),
             snsTextLabel.leftAnchor.constraint(
                 equalTo: snsImageView.rightAnchor,
                 constant: UIScreen.main.bounds.width * 0.055
@@ -246,11 +247,11 @@ extension MyPageContentView {
             bottomBorderView.topAnchor.constraint(equalTo: contentView.bottomAnchor),
             bottomBorderView.widthAnchor.constraint(equalTo: contentStackView.widthAnchor),
             bottomBorderView.heightAnchor.constraint(equalToConstant: 1),
-            bottomBorderView.bottomAnchor.constraint(equalTo: contentStackView.bottomAnchor),
+            bottomBorderView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
             rightBorderView.widthAnchor.constraint(equalToConstant: 1),
             rightBorderView.leftAnchor.constraint(equalTo: contentStackView.rightAnchor),
-            rightBorderView.topAnchor.constraint(equalTo: contentStackView.topAnchor),
-            rightBorderView.bottomAnchor.constraint(equalTo: contentStackView.bottomAnchor)
+            rightBorderView.topAnchor.constraint(equalTo: self.topAnchor),
+            rightBorderView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
         ])
     }
 
@@ -315,8 +316,8 @@ extension MyPageContentView {
             bottomBorderView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
             rightBorderView.widthAnchor.constraint(equalToConstant: 1),
             rightBorderView.leftAnchor.constraint(equalTo: contentStackView.rightAnchor),
-            rightBorderView.topAnchor.constraint(equalTo: contentStackView.topAnchor),
-            rightBorderView.bottomAnchor.constraint(equalTo: contentStackView.bottomAnchor)
+            rightBorderView.topAnchor.constraint(equalTo: self.topAnchor),
+            rightBorderView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
         ])
     }
 
@@ -350,8 +351,9 @@ extension MyPageContentView {
         NSLayoutConstraint.activate([
             contentStackView.topAnchor.constraint(equalTo: self.topAnchor),
             contentStackView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
-            contentStackView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            contentStackView.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width * 0.893),
+            contentStackView.leftAnchor.constraint(equalTo: self.leftAnchor),
+            contentStackView.rightAnchor.constraint(equalTo: self.rightAnchor),
+            headerView.topAnchor.constraint(equalTo: contentStackView.topAnchor),
             headerView.leftAnchor.constraint(equalTo: contentStackView.leftAnchor),
             headerView.rightAnchor.constraint(equalTo: contentStackView.rightAnchor),
             headerTitleLabel.topAnchor.constraint(
@@ -383,6 +385,7 @@ extension MyPageContentView {
             contentView.topAnchor.constraint(equalTo: headerView.bottomAnchor),
             contentView.leftAnchor.constraint(equalTo: headerView.leftAnchor),
             contentView.rightAnchor.constraint(equalTo: headerView.rightAnchor),
+            contentView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
             noticeTextView.topAnchor.constraint(
                 equalTo: contentView.topAnchor,
                 constant: UIScreen.main.bounds.height * 0.029
@@ -401,11 +404,12 @@ extension MyPageContentView {
             ),
             bottomBorderView.topAnchor.constraint(equalTo: contentView.bottomAnchor),
             bottomBorderView.widthAnchor.constraint(equalTo: contentStackView.widthAnchor),
-            bottomBorderView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.width * 0.002),
-            rightBorderView.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width * 0.002),
+            bottomBorderView.heightAnchor.constraint(equalToConstant: 1),
+//            bottomBorderView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
+            rightBorderView.widthAnchor.constraint(equalToConstant: 1),
             rightBorderView.leftAnchor.constraint(equalTo: contentStackView.rightAnchor),
-            rightBorderView.topAnchor.constraint(equalTo: headerView.topAnchor),
-            rightBorderView.bottomAnchor.constraint(equalTo: contentStackView.bottomAnchor)
+            rightBorderView.topAnchor.constraint(equalTo: self.topAnchor),
+            rightBorderView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
         ])
     }
 }
