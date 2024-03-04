@@ -6,7 +6,9 @@ import DesignSystem
 class WithdrawalVC: BaseVC {
     private let contentView = MyPageContentView(.notice)
     private let isFirstStepClear = BehaviorRelay<Bool>(value: false)
-    private let answerList = BehaviorRelay<[String]>(value: [ "아니요, 그냥 사용할게요.", "네, 탈퇴할래요." ])
+    private let answerList = BehaviorRelay<[String]>(value: [
+        "아니요, 그냥 사용할게요.", "네, 탈퇴할래요."
+    ])
     private let selectTableView = ContentWrappingTableView().then {
         $0.register(WithdrawalCell.self, forCellReuseIdentifier: "WithdrawalCell")
         $0.rowHeight = 46
@@ -33,31 +35,53 @@ class WithdrawalVC: BaseVC {
         answerList.bind(to: selectTableView.rx.items(
             cellIdentifier: "WithdrawalCell",
             cellType: WithdrawalCell.self
-        )) { [self] _, item, cell in
+        )) { _, item, cell in
             cell.text = item
 
-            if cell.text == "네, 탈퇴할래요." && cell.isSelected {
-                print("탈퇴 클릭")
-                answerList.accept([
-                    "편지 기록을 삭제하고 싶어요.",
-                    "사용 빈도가 낮아요.",
-                    "다른 비슷한 서비스를 사용할 거예요.",
-                    "이용이 불편하고 장애가 잦아요.",
-                    "콘텐츠에 불만이 있어요.",
-                    "이 외 다른 이유로 탈퇴하는 거예요."
-                ])
-                fillTheNotices(
-                    header: "탈퇴 중...",
-                    content: """
-                    아쉬워요! ㅠ.ㅠ
-                    탈퇴하시는 이유가 무엇인가요?
+            cell.cellOnTapped { [self] title in
+                if title == "네, 탈퇴할래요." {
+                    answerList.accept([
+                        "편지 기록을 삭제하고 싶어요.",
+                        "사용 빈도가 낮아요.",
+                        "다른 비슷한 서비스를 사용할 거예요.",
+                        "이용이 불편하고 장애가 잦아요.",
+                        "콘텐츠에 불만이 있어요.",
+                        "이 외 다른 이유로 탈퇴하는 거예요."
+                    ])
+                    fillTheNotices(
+                        header: "탈퇴 중...",
+                        content: """
+                        아쉬워요! ㅠ.ㅠ
+                        탈퇴하시는 이유가 무엇인가요?
 
-                    더 나은 서비스의 개선 목적으로 사용할게요.
-                    탈퇴 이유는 중복 체크가 가능해요.
-                    """
-                )
-                contentView.setNeedsLayout()
+                        더 나은 서비스의 개선 목적으로 사용할게요.
+                        탈퇴 이유는 중복 체크가 가능해요.
+                        """
+                    )
+                }
             }
+//            if cell.text == "네, 탈퇴할래요." && cell.isSelected {
+//                print("탈퇴 클릭")
+//                answerList.accept([
+//                    "편지 기록을 삭제하고 싶어요.",
+//                    "사용 빈도가 낮아요.",
+//                    "다른 비슷한 서비스를 사용할 거예요.",
+//                    "이용이 불편하고 장애가 잦아요.",
+//                    "콘텐츠에 불만이 있어요.",
+//                    "이 외 다른 이유로 탈퇴하는 거예요."
+//                ])
+//                fillTheNotices(
+//                    header: "탈퇴 중...",
+//                    content: """
+//                    아쉬워요! ㅠ.ㅠ
+//                    탈퇴하시는 이유가 무엇인가요?
+//
+//                    더 나은 서비스의 개선 목적으로 사용할게요.
+//                    탈퇴 이유는 중복 체크가 가능해요.
+//                    """
+//                )
+//                contentView.setNeedsLayout()
+//            }
         }.disposed(by: disposeBag)
         sendButton.rx.tap
             .subscribe(onNext: {
@@ -81,7 +105,7 @@ class WithdrawalVC: BaseVC {
 
     override func setLayout() {
         contentView.snp.makeConstraints {
-            $0.centerX.equalToSuperview()
+            $0.horizontalEdges.equalToSuperview().inset(20)
             $0.top.equalTo(view.snp.centerY).offset(-UIScreen.main.bounds.height * 0.35)
         }
         selectTableView.snp.makeConstraints {

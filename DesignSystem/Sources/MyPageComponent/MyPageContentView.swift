@@ -312,7 +312,7 @@ extension MyPageContentView {
             contentView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height * 0.074),
             bottomBorderView.topAnchor.constraint(equalTo: contentView.bottomAnchor),
             bottomBorderView.widthAnchor.constraint(equalTo: contentStackView.widthAnchor),
-            bottomBorderView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.width * 0.002),
+            bottomBorderView.heightAnchor.constraint(equalToConstant: 1),
             bottomBorderView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
             rightBorderView.widthAnchor.constraint(equalToConstant: 1),
             rightBorderView.leftAnchor.constraint(equalTo: contentStackView.rightAnchor),
@@ -385,7 +385,7 @@ extension MyPageContentView {
             contentView.topAnchor.constraint(equalTo: headerView.bottomAnchor),
             contentView.leftAnchor.constraint(equalTo: headerView.leftAnchor),
             contentView.rightAnchor.constraint(equalTo: headerView.rightAnchor),
-            contentView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
+//            contentView.bottomAnchor.constraint(equalTo: contentStackView.bottomAnchor),
             noticeTextView.topAnchor.constraint(
                 equalTo: contentView.topAnchor,
                 constant: UIScreen.main.bounds.height * 0.029
@@ -405,7 +405,7 @@ extension MyPageContentView {
             bottomBorderView.topAnchor.constraint(equalTo: contentView.bottomAnchor),
             bottomBorderView.widthAnchor.constraint(equalTo: contentStackView.widthAnchor),
             bottomBorderView.heightAnchor.constraint(equalToConstant: 1),
-//            bottomBorderView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
+            bottomBorderView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
             rightBorderView.widthAnchor.constraint(equalToConstant: 1),
             rightBorderView.leftAnchor.constraint(equalTo: contentStackView.rightAnchor),
             rightBorderView.topAnchor.constraint(equalTo: self.topAnchor),
