@@ -41,7 +41,7 @@ class MyAuthVC: BaseVC {
 
     override func setLayout() {
         myAuthView.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(100)
+            $0.top.equalTo(view.snp.centerY).offset(-UIScreen.main.bounds.height * 0.35)
             $0.horizontalEdges.equalToSuperview().inset(20)
         }
         withdrawalView.snp.makeConstraints {

@@ -18,7 +18,7 @@ class PolicyVC: BaseVC {
 
     override func setLayout() {
         contentView.snp.makeConstraints {
-            $0.centerX.equalTo(view.snp.centerX)
+            $0.horizontalEdges.equalToSuperview().inset(20)
             $0.top.equalTo(view.snp.centerY).offset(-UIScreen.main.bounds.height * 0.35)
         }
     }
