@@ -48,14 +48,6 @@ class WithdrawalVC: BaseVC {
 
             cell.cellOnTapped { [self] title in
                 if title == "네, 탈퇴할래요." {
-                    answerList.accept([
-                        "편지 기록을 삭제하고 싶어요.",
-                        "사용 빈도가 낮아요.",
-                        "다른 비슷한 서비스를 사용할 거예요.",
-                        "이용이 불편하고 장애가 잦아요.",
-                        "콘텐츠에 불만이 있어요.",
-                        "이 외 다른 이유로 탈퇴하는 거예요."
-                    ])
                     fillTheNotices(
                         header: "탈퇴 중...",
                         content: """
@@ -66,6 +58,14 @@ class WithdrawalVC: BaseVC {
                         탈퇴 이유는 중복 체크가 가능해요.
                         """
                     )
+                    answerList.accept([
+                        "편지 기록을 삭제하고 싶어요.",
+                        "사용 빈도가 낮아요.",
+                        "다른 비슷한 서비스를 사용할 거예요.",
+                        "이용이 불편하고 장애가 잦아요.",
+                        "콘텐츠에 불만이 있어요.",
+                        "이 외 다른 이유로 탈퇴하는 거예요."
+                    ])
                 }
             }
         }.disposed(by: disposeBag)

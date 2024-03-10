@@ -28,7 +28,8 @@ class MyPageVC: BaseVC {
         myInfoButton.rx.tap
             .subscribe(onNext: {
                 let next = MyAuthVC()
-                next.navigationController?.navigationBar.topItem?.title = "내 정보"
+//                next.navigationController?.navigationBar.topItem?.title = "내 정보"
+                next.title = "내 정보"
                 self.navigationController?.pushViewController(next, animated: true)
             }).disposed(by: disposeBag)
 //        inquiryButton.rx.tap
@@ -66,7 +67,6 @@ class MyPageVC: BaseVC {
     }
 
     override func setLayout() {
-        let width = UIScreen.main.bounds.width * (0.893 - 0.002)
         let height = UIScreen.main.bounds.height * 0.542 / 5
         let borderWidth = -UIScreen.main.bounds.width * 0.003 / 2
         contentView.snp.makeConstraints {
