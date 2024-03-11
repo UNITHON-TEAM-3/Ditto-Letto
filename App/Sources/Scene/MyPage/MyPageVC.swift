@@ -32,10 +32,14 @@ class MyPageVC: BaseVC {
                 next.title = "내 정보"
                 self.navigationController?.pushViewController(next, animated: true)
             }).disposed(by: disposeBag)
-//        inquiryButton.rx.tap
-//            .subscribe(onNext: {
-//                print("inquiry")
-//            }).disposed(by: disposeBag)
+        inquiryButton.rx.tap
+            .subscribe(onNext: {
+                if let url = URL(
+                    string: "https://docs.google.com/forms/d/e/1FAIpQLScwD6xogjftIrRXl2COHC7i3Mny3O_wsYlkHYyfUOe1_l9XUQ/viewform?usp=sharing"
+                ) {
+                    UIApplication.shared.open(url, options: [:])
+                }
+            }).disposed(by: disposeBag)
         termsButton.rx.tap
             .subscribe(onNext: {
                 let next = PolicyVC()
