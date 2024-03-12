@@ -34,9 +34,7 @@ class MyPageVC: BaseVC {
             }).disposed(by: disposeBag)
         inquiryButton.rx.tap
             .subscribe(onNext: {
-                if let url = URL(
-                    string: "https://docs.google.com/forms/d/e/1FAIpQLScwD6xogjftIrRXl2COHC7i3Mny3O_wsYlkHYyfUOe1_l9XUQ/viewform?usp=sharing"
-                ) {
+                if let url = URL(string: "https://forms.gle/WqSComn9WXsNzPqdA") {
                     UIApplication.shared.open(url, options: [:])
                 }
             }).disposed(by: disposeBag)
