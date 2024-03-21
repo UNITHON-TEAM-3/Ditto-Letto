@@ -71,7 +71,7 @@ class WithdrawalVC: BaseVC {
         }.disposed(by: disposeBag)
         sendButton.rx.tap
             .subscribe(onNext: {
-                let alert = AlertView(delegate: self, alertType: .yesNo)
+                let alert = AlertView(alertType: .yesNo)
                 self.present(alert, animated: true)
             }).disposed(by: disposeBag)
     }
@@ -87,6 +87,7 @@ class WithdrawalVC: BaseVC {
             ㅇㅠ^ㅠㅇ
             """
         )
+        self.navigationController?.navigationBar.topItem?.backButtonTitle = "탈퇴하기"
     }
 
     override func setLayout() {

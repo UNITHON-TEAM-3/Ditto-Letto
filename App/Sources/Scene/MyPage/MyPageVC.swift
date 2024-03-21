@@ -27,10 +27,7 @@ class MyPageVC: BaseVC {
     override func bind() {
         myInfoButton.rx.tap
             .subscribe(onNext: {
-                let next = MyAuthVC()
-//                next.navigationController?.navigationBar.topItem?.title = "내 정보"
-                next.title = "내 정보"
-                self.navigationController?.pushViewController(next, animated: true)
+                self.navigationController?.pushViewController(MyAuthVC(), animated: true)
             }).disposed(by: disposeBag)
         inquiryButton.rx.tap
             .subscribe(onNext: {
@@ -41,21 +38,22 @@ class MyPageVC: BaseVC {
         termsButton.rx.tap
             .subscribe(onNext: {
                 let next = PolicyVC()
-                next.navigationController?.navigationBar.topItem?.title = "이용약관"
+                next.type = "이용 약관"
                 self.navigationController?.pushViewController(next, animated: true)
             }).disposed(by: disposeBag)
         policyButton.rx.tap
             .subscribe(onNext: {
                 let next = PolicyVC()
-                next.navigationController?.navigationBar.topItem?.title = "개인정보처리방침"
+                next.type = "개인정보 처리 방침"
                 self.navigationController?.pushViewController(next, animated: true)
             }).disposed(by: disposeBag)
         signOutButton.rx.tap
             .subscribe(onNext: {
-                let alert = AlertView(delegate: self, alertType: .yesNo)
-                alert.titleLabel.text = "로그아웃 하시겠어요?"
-                alert.messageLabel.text = "접속 중인 기기에서 로그아웃 됩니다."
-                self.present(alert, animated: true)
+                let alert = AlertView(alertType: .yesNo)
+                alert.alertTitle = "로그아웃 하시겠어요?"
+                alert.alertContent = "접속 중인 기기에서 로그아웃 됩니다."
+                self.modalPresentationStyle = .fullScreen
+                self.present(alert, animated: false)
             }).disposed(by: disposeBag)
     }
 
@@ -63,8 +61,8 @@ class MyPageVC: BaseVC {
         contentView.isUserInteractionEnabled = true
         myInfoButton.text = "내 정보"
         inquiryButton.text = "문의하기"
-        termsButton.text = "이용약관"
-        policyButton.text = "개인정보처리방침"
+        termsButton.text = "이용 약관"
+        policyButton.text = "개인정보 처리 방침"
         signOutButton.text = "로그아웃"
     }
 
@@ -105,9 +103,12 @@ class MyPageVC: BaseVC {
 
 extension MyPageVC: AlertDelegate {
     func exit() {
-        self.dismiss(animated: true)
+        self.dismiss(animated: false)
     }
     func yes() {
-        self.dismiss(animated: true)
+        UserDefaults.standard.removeObject(forKey: "accessToken")
+        UserDefaults.standard.removeObject(forKey: "refreshToken")
+        self.modalPresentationStyle = .fullScreen
+        self.present(LoginVC(), animated: false)
     }
 }

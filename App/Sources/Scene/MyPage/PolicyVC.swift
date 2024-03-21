@@ -4,6 +4,7 @@ import RxCocoa
 import DesignSystem
 
 class PolicyVC: BaseVC {
+    var type = ""
     private let contentView = MyPageContentView(.header)
 
     override func addView() {
@@ -14,6 +15,14 @@ class PolicyVC: BaseVC {
     }
 
     override func configureVC() {
+        switch type {
+        case "이용 약관":
+            self.navigationController?.navigationBar.topItem?.backButtonTitle = type
+        case "개인정보 처리 방침":
+            self.navigationController?.navigationBar.topItem?.backButtonTitle = type
+        default:
+            print("no type")
+        }
     }
 
     override func setLayout() {

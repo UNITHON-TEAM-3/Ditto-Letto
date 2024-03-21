@@ -28,6 +28,7 @@ class MyAuthVC: BaseVC {
     override func configureVC() {
         myAuthView.authImage = .Image.kakaoLogo
         myAuthView.labelText = "ch12345@naver.com"
+        self.navigationController?.navigationBar.topItem?.backButtonTitle = "내 정보"
     }
 
     override func bind() {

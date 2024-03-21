@@ -5,7 +5,7 @@ public class WithdrawalCell: UITableViewCell {
         get { backgroundButton.titleLabel?.text ?? "" }
         set { backgroundButton.setTitle(newValue, for: .normal)}
     }
-    public var onTapped: ((String) -> Void)?
+    private var onTapped: ((String) -> Void)?
 
     private let backgroundButton: UIButton = {
         $0.setBackgroundColor(.color(.dittoLettoColor(.third)), for: .normal)

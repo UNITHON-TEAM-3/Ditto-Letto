@@ -9,7 +9,11 @@ class BaseNC: UINavigationController {
 
     private var backButtonAppearance: UIBarButtonItemAppearance {
         let backButtonAppearance = UIBarButtonItemAppearance()
-        backButtonAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.clear]
+        backButtonAppearance.normal.titleTextAttributes = [
+            NSAttributedString.Key.foregroundColor: UIColor.color(.dittoLettoColor(.dark)),
+            NSAttributedString.Key.font: UIFont.ramche(.body)
+        ]
+        backButtonAppearance.normal.titlePositionAdjustment = UIOffset(horizontal: 30, vertical: 0)
         return backButtonAppearance
     }
 
@@ -28,10 +32,10 @@ class BaseNC: UINavigationController {
         let appearance = UINavigationBarAppearance()
         let appearance2 = UINavigationBarAppearance()
         navigationBar.tintColor = .color(.dittoLettoColor(.dark))
-        navigationController?.navigationBar.titleTextAttributes = [
+        navigationBar.topItem?.backBarButtonItem?.setTitleTextAttributes([
             NSAttributedString.Key.foregroundColor: UIColor.color(.dittoLettoColor(.dark)),
             NSAttributedString.Key.font: UIFont.ramche(.body)
-        ]
+        ], for: .normal)
         appearance.setBackIndicatorImage(backButtonImage, transitionMaskImage: backButtonImage)
         appearance2.setBackIndicatorImage(backButtonImage, transitionMaskImage: backButtonImage)
         appearance.backgroundColor = .clear
@@ -43,6 +47,6 @@ class BaseNC: UINavigationController {
         navigationBar.standardAppearance = appearance2
         navigationController?.setNeedsStatusBarAppearanceUpdate()
         navigationBar.scrollEdgeAppearance = appearance
-        self.navigationController?.navigationBar.backItem?.title = nil
+        navigationController?.navigationBar.topItem?.backButtonTitle = ""
     }
 }
