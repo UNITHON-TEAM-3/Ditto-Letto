@@ -71,7 +71,7 @@ class WithdrawalVC: BaseVC {
         }.disposed(by: disposeBag)
         sendButton.rx.tap
             .subscribe(onNext: {
-                let alert = AlertView(alertType: .yesNo)
+                let alert = AlertView(delegate: self, alertType: .yesNo)
                 self.present(alert, animated: true)
             }).disposed(by: disposeBag)
     }

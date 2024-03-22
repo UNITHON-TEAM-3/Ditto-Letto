@@ -72,10 +72,12 @@ public final class AlertView: UIViewController {
         return $0
     }(UIView())
 
-    public init(alertType: AlertType) {
+    public init(delegate: AlertDelegate?, alertType: AlertType) {
         super.init(nibName: nil, bundle: nil)
         self.alertType = alertType
+        self.delegate = delegate
         view.backgroundColor = .black.withAlphaComponent(0.3)
+        self.modalPresentationStyle = .overFullScreen
         addView()
         setLayout()
 

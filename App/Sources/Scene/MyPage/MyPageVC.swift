@@ -48,12 +48,11 @@ class MyPageVC: BaseVC {
                 self.navigationController?.pushViewController(next, animated: true)
             }).disposed(by: disposeBag)
         signOutButton.rx.tap
-            .subscribe(onNext: {
-                let alert = AlertView(alertType: .yesNo)
+            .subscribe(onNext: { [weak self] _ in
+                let alert = AlertView(delegate: self, alertType: .yesNo)
                 alert.alertTitle = "로그아웃 하시겠어요?"
                 alert.alertContent = "접속 중인 기기에서 로그아웃 됩니다."
-                self.modalPresentationStyle = .fullScreen
-                self.present(alert, animated: false)
+                self?.present(alert, animated: false)
             }).disposed(by: disposeBag)
     }
 
