@@ -107,7 +107,10 @@ extension MyPageVC: AlertDelegate {
     func yes() {
         UserDefaults.standard.removeObject(forKey: "accessToken")
         UserDefaults.standard.removeObject(forKey: "refreshToken")
-        self.modalPresentationStyle = .fullScreen
-        self.present(LoginVC(), animated: false)
+        Token.accessToken = nil
+        Token.refreshToken = nil
+        let next = LoginVC()
+        next.modalPresentationStyle = .fullScreen
+        self.present(next, animated: false)
     }
 }
