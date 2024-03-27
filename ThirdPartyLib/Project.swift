@@ -5,6 +5,7 @@ let project = Project.dynamicFramework(
     name: "ThirdPartyLib",
     packages: [
         .RxSwift,
+        .RxGesture,
         .Moya,
         .Then,
         .SnapKit,
@@ -15,6 +16,7 @@ let project = Project.dynamicFramework(
     dependencies: [
         .SPM.RxSwift,
         .SPM.RxCocoa,
+        .SPM.RxGesture,
         .SPM.RxMoya,
         .SPM.Then,
         .SPM.SnapKit,
