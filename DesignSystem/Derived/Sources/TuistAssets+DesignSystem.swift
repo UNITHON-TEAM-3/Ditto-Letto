@@ -21,7 +21,7 @@
 // swiftlint:disable identifier_name line_length nesting type_body_length type_name
 public enum DesignSystemAsset {
   public enum Color {
-    public static let bg = DesignSystemColors(name: "bg")
+  public static let bg = DesignSystemColors(name: "bg")
     public static let dark = DesignSystemColors(name: "dark")
     public static let gray1 = DesignSystemColors(name: "gray1")
     public static let gray2 = DesignSystemColors(name: "gray2")
@@ -30,13 +30,14 @@ public enum DesignSystemAsset {
     public static let white = DesignSystemColors(name: "white")
   }
   public enum Image {
-    public static let generalImage = DesignSystemImages(name: "GeneralImage")
+  public static let generalImage = DesignSystemImages(name: "GeneralImage")
     public static let privateImage = DesignSystemImages(name: "PrivateImage")
     public static let profileImage = DesignSystemImages(name: "ProfileImage")
     public static let airplane = DesignSystemImages(name: "airplane")
     public static let airplaneIcon = DesignSystemImages(name: "airplaneIcon")
     public static let appleLogo = DesignSystemImages(name: "appleLogo")
     public static let backChevron = DesignSystemImages(name: "backChevron")
+    public static let badIcon = DesignSystemImages(name: "badIcon")
     public static let bike = DesignSystemImages(name: "bike")
     public static let bikeIcon = DesignSystemImages(name: "bikeIcon")
     public static let car = DesignSystemImages(name: "car")
@@ -47,6 +48,7 @@ public enum DesignSystemAsset {
     public static let emptyFolder = DesignSystemImages(name: "emptyFolder")
     public static let first = DesignSystemImages(name: "first")
     public static let fourth = DesignSystemImages(name: "fourth")
+    public static let goodIcon = DesignSystemImages(name: "goodIcon")
     public static let heartGray = DesignSystemImages(name: "heart_gray")
     public static let heartPink = DesignSystemImages(name: "heart_pink")
     public static let homeOff = DesignSystemImages(name: "home_off")
@@ -58,6 +60,7 @@ public enum DesignSystemAsset {
     public static let launchImage = DesignSystemImages(name: "launchImage")
     public static let loginImage = DesignSystemImages(name: "loginImage")
     public static let message = DesignSystemImages(name: "message")
+    public static let normalIcon = DesignSystemImages(name: "normalIcon")
     public static let pen = DesignSystemImages(name: "pen")
     public static let personOff = DesignSystemImages(name: "person_off")
     public static let personOn = DesignSystemImages(name: "person_on")
@@ -66,7 +69,12 @@ public enum DesignSystemAsset {
     public static let replyButton = DesignSystemImages(name: "replyButton")
     public static let running = DesignSystemImages(name: "running")
     public static let runningIcon = DesignSystemImages(name: "runningIcon")
+    public static let sadIcon = DesignSystemImages(name: "sadIcon")
     public static let second = DesignSystemImages(name: "second")
+    public static let selectedBad = DesignSystemImages(name: "selectedBad")
+    public static let selectedGood = DesignSystemImages(name: "selectedGood")
+    public static let selectedNormal = DesignSystemImages(name: "selectedNormal")
+    public static let selectedSad = DesignSystemImages(name: "selectedSad")
     public static let send = DesignSystemImages(name: "send")
     public static let state01 = DesignSystemImages(name: "state01")
     public static let state02 = DesignSystemImages(name: "state02")

@@ -12,6 +12,7 @@ public extension TargetDependency.SPM {
     static let SnapKit = TargetDependency.package(product: "SnapKit")
     static let Kingfisher = TargetDependency.package(product: "Kingfisher")
     static let KakaoSDK = TargetDependency.package(product: "KakaoSDK")
+    static let RxGesture = TargetDependency.package(product: "RxGesture")
 }
 
 public extension Package {
@@ -38,5 +39,9 @@ public extension Package {
     static let KakaoSDK = Package.remote(
         url: "https://github.com/kakao/kakao-ios-sdk",
         requirement: .upToNextMinor(from: "2.11.0")
+    )
+    static let RxGesture = Package.remote(
+        url: "https://github.com/RxSwiftCommunity/RxGesture.git",
+        requirement: .upToNextMajor(from: "4.0.3")
     )
 }

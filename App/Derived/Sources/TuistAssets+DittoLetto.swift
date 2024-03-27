@@ -20,6 +20,12 @@
 
 // swiftlint:disable identifier_name line_length nesting type_body_length type_name
 public enum DittoLettoAsset {
+  public enum Assets {
+  }
+  public enum Color {
+  }
+  public enum Image {
+  }
 }
 // swiftlint:enable identifier_name line_length nesting type_body_length type_name
 

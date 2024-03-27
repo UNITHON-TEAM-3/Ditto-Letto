@@ -6,12 +6,6 @@ import RxCocoa
 import DesignSystem
 
 extension UIView {
-    // UIView Tap RxGesture 대신 사용
-    var tapObservable: Observable<Void> {
-        return rx.methodInvoked(#selector(UIView.touchesEnded(_:with:)))
-            .map { _ in }
-    }
-
     func setSeparatorView() {
         self.backgroundColor = .color(.dittoLettoColor(.main))
         self.layer.borderColor = UIColor.color(.dittoLettoColor(.dark)).cgColor
@@ -93,7 +87,82 @@ extension UIView {
         }
         return backView
     }
-    // swiftlint:enable function_body_length
+
+    func makeShadowView() {
+        self.layer.shadowColor = UIColor.black.cgColor
+        self.layer.shadowOpacity = 0.2
+        self.layer.shadowOffset = CGSize(width: 0, height: 2)
+        self.layer.shadowRadius = 4
+    }
+}
+
+extension UITextField {
+    // swiftlint:disable function_body_length
+    func setTextField(_ isPrivate: Bool) {
+        let profile = UIImageView().then {
+            $0.image = .Image.profileImage
+            $0.tag = 100
+        }
+        let privateImage = UIImageView().then {
+            $0.image = .Image.privateImage
+            $0.tag = 111
+        }
+        let generalImage = UIImageView().then {
+            $0.image = .Image.generalImage
+            $0.tag = 222
+        }
+        if isPrivate {
+            self.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 78, height: 76))
+            self.leftViewMode = .always
+
+            [
+                profile,
+                privateImage
+            ].forEach { self.addSubview($0) }
+
+            profile.snp.makeConstraints {
+                $0.width.height.equalTo(50)
+                $0.left.equalToSuperview().inset(15)
+                $0.centerY.equalToSuperview()
+            }
+            privateImage.snp.makeConstraints {
+                $0.width.equalTo(68)
+                $0.height.equalTo(50)
+                $0.right.equalToSuperview().inset(13)
+                $0.centerY.equalToSuperview()
+            }
+            generalImage.removeFromSuperview()
+
+            self.backgroundColor = .color(.dittoLettoColor(.dark))
+            self.attributedPlaceholder = NSAttributedString(string: "번호를 입력해주세요.", attributes: [
+                .foregroundColor: UIColor.color(.dittoLettoColor(.gray2)),
+                .font: UIFont.ramche(.body)
+            ])
+            self.font = .ramche(.body)
+            self.textColor = .color(.dittoLettoColor(.white))
+            self.rightView = UIView(frame: CGRect(x: 0, y: 0, width: 68, height: 50))
+            self.rightViewMode = .always
+        } else {
+            self.addSubview(generalImage)
+            generalImage.snp.makeConstraints {
+                $0.centerY.equalToSuperview()
+                $0.right.equalToSuperview().inset(17)
+                $0.width.equalTo(61)
+                $0.height.equalTo(44)
+            }
+            self.viewWithTag(100)?.removeFromSuperview()
+            self.viewWithTag(111)?.removeFromSuperview()
+            self.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 22, height: 25))
+            self.leftViewMode = ViewMode.always
+            self.backgroundColor = .white
+            self.attributedPlaceholder = NSAttributedString(string: "번호를 입력해주세요.", attributes: [
+                .foregroundColor: UIColor.color(.dittoLettoColor(.gray2)),
+                .font: UIFont.yoondongju(.body)
+            ])
+            self.font = .yoondongju(.body)
+            self.textColor = .black
+        }
+    }
 }
 
 extension UILabel {

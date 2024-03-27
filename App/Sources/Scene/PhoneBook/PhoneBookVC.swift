@@ -3,6 +3,7 @@ import DesignSystem
 import SnapKit
 import RxSwift
 import RxCocoa
+import RxGesture
 
 class PhoneBookVC: BaseVC {
     private let viewModel = PhoneBookVM()
@@ -13,7 +14,7 @@ class PhoneBookVC: BaseVC {
         $0.layer.shadowOffset = CGSize(width: 0, height: 2)
         $0.layer.shadowRadius = 4
         return $0
-    }(PhoneBookInfoView())
+    }(PhoneBookInfoView(type: .normal))
     private let phoneBookView = PhoneBookView()
     private let emptyView = HomeEmptyView(
         text: """
@@ -66,12 +67,18 @@ class PhoneBookVC: BaseVC {
     // MARK: - Bind
     override func bind() {
         let input = PhoneBookVM.Input(
-            tableViewModelSelected: phoneBookView.tableView.rx.itemSelected.asObservable(),
-            tableHeaderViewTapped: phoneBookTableHeaderView.tapObservable
+            tableViewModelSelected: phoneBookView.tableView.rx.itemSelected.asObservable()
         )
         let output = viewModel.transform(input)
         phoneBookInfoView.pencilButton.rx.tap
             .bind {
+            }.disposed(by: disposeBag)
+        phoneBookTableHeaderView.rx.tapGesture()
+            .when(.recognized)
+            .bind { [weak self] _ in
+                let addOrModifySomeoneVM = AddOrModifySomeoneVM(type: .add)
+                let addVC = AddOrModifySomeoneVC(type: .add, viewModel: addOrModifySomeoneVM)
+                self?.navigationController?.pushViewController(addVC, animated: true)
             }.disposed(by: disposeBag)
         phoneBookView.tableView.rx.contentOffset
             .observe(on: MainScheduler.instance)
@@ -117,8 +124,12 @@ extension PhoneBookVC: BottomSheetDelegate {
         return
     }
     func modify() {
+        let modiVM = AddOrModifySomeoneVM(type: .modify)
+        let modiVC = AddOrModifySomeoneVC(type: .modify, viewModel: modiVM)
+        self.navigationController?.pushViewController(modiVC, animated: true)
     }
     func delete() {
+        return
     }
     func number(num: String) {
         return
