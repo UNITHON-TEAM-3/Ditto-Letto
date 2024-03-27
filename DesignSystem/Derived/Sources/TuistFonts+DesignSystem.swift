@@ -24,7 +24,7 @@ public enum DesignSystemFontFamily {
     public static let all: [DesignSystemFontConvertible] = [regular]
   }
   public enum YoonDongJu2 {
-    public static let regular = DesignSystemFontConvertible(name: "YOON-DONG-JU2", family: "YOON-DONG-JU2", path: "독립서체_윤동주_서시_GS.otf")
+    public static let regular = DesignSystemFontConvertible(name: "YOON-DONG-JU2", family: "YOON-DONG-JU2", path: "prelude_Yoon_Dong_ju.otf")
     public static let all: [DesignSystemFontConvertible] = [regular]
   }
   public static let allCustomFonts: [DesignSystemFontConvertible] = [Ramche.all, YoonDongJu2.all].flatMap { $0 }

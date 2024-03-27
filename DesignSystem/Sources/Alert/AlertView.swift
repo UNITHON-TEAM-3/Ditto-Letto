@@ -5,14 +5,25 @@ public enum AlertType {
     case yesNo
 }
 
-public protocol AlertDelegate {
+public protocol AlertDelegate: AnyObject {
     func exit()
     func yes()
 }
 
 public final class AlertView: UIViewController {
-    var delegate: AlertDelegate?
+    weak var delegate: AlertDelegate?
     public var alertType: AlertType = .confirm
+    public var alertTitle: String {
+        get { titleLabel.text ?? "" }
+        set { titleLabel.text = newValue }
+    }
+    public var alertContent: String {
+        get { messageLabel.text ?? "" }
+        set {
+            messageLabel.text = newValue
+            messageLabel.setTracking()
+        }
+    }
     private let pinkCircle = Circle(.bg, 0.5, 3)
     private let blueCircle = Circle(.third, 0.5, 3)
     private let yellowCircle = Circle(.main, 0.5, 3)
@@ -24,7 +35,7 @@ public final class AlertView: UIViewController {
         $0.backgroundColor = .color(.dittoLettoColor(.white))
         return $0
     }(UIView())
-    public let titleLabel: UILabel = {
+    private let titleLabel: UILabel = {
         $0.numberOfLines = 0
         $0.font = .ramche(.body)
         $0.textColor = .color(.dittoLettoColor(.dark))
@@ -32,7 +43,7 @@ public final class AlertView: UIViewController {
         $0.backgroundColor = .clear
         return $0
     }(UILabel())
-    public let messageLabel: UILabel = {
+    private let messageLabel: UILabel = {
         $0.numberOfLines = 0
         $0.font = .ramche(.footnote)
         $0.textColor = .color(.dittoLettoColor(.dark))
@@ -60,12 +71,22 @@ public final class AlertView: UIViewController {
         $0.backgroundColor = .color(.dittoLettoColor(.gray2))
         return $0
     }(UIView())
-    public override func viewDidLoad() {
-        super.viewDidLoad()
+
+    public init(delegate: AlertDelegate?, alertType: AlertType) {
+        super.init(nibName: nil, bundle: nil)
+        self.alertType = alertType
+        self.delegate = delegate
         view.backgroundColor = .black.withAlphaComponent(0.3)
+        self.modalPresentationStyle = .overFullScreen
         addView()
         setLayout()
+
     }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     func addView() {
         view.addSubview(alertBackView)
         [
@@ -78,16 +99,15 @@ public final class AlertView: UIViewController {
             blueCircle,
             yellowCircle
         ].forEach { headerView.addSubview($0) }
+
         switch alertType {
         case .confirm:
             setUpConfirm()
-            delegate?.exit()
         case .yesNo:
             setUpYesNo()
-            delegate?.yes()
-            delegate?.exit()
         }
     }
+
     func setLayout() {
         pinkCircle.translatesAutoresizingMaskIntoConstraints = false
         blueCircle.translatesAutoresizingMaskIntoConstraints = false
@@ -123,11 +143,12 @@ public final class AlertView: UIViewController {
             titleLabel.leftAnchor.constraint(equalTo: alertBackView.leftAnchor, constant: self.view.frame.width * 0.09),
             titleLabel.rightAnchor.constraint(
                 equalTo: alertBackView.rightAnchor,
-                constant: (-1) * self.view.frame.width * 0.09
+                constant: -self.view.frame.width * 0.09
             ),
             titleLabel.topAnchor.constraint(equalTo: headerView.bottomAnchor, constant: 20)
         ])
     }
+
     func setUpConfirm() {
         confirmButton.setTitle("확인", for: .normal)
 
@@ -145,7 +166,12 @@ public final class AlertView: UIViewController {
             confirmButton.topAnchor.constraint(equalTo: horizontalLine.bottomAnchor, constant: 10),
             confirmButton.bottomAnchor.constraint(equalTo: alertBackView.bottomAnchor, constant: -10)
         ])
+
+        confirmButton.addAction(UIAction { [weak self] _ in
+            self?.delegate?.yes()
+        }, for: .allTouchEvents)
     }
+
     func setUpYesNo() {
         confirmButton.setTitle("네", for: .normal)
         cancelButton.setTitle("아니오", for: .normal)
@@ -169,11 +195,11 @@ public final class AlertView: UIViewController {
             messageLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 10),
             messageLabel.leftAnchor.constraint(
                 equalTo: alertBackView.leftAnchor,
-                constant: self.view.frame.width * 0.122
+                constant: 27
             ),
             messageLabel.rightAnchor.constraint(
                 equalTo: alertBackView.rightAnchor,
-                constant: (-1) * self.view.frame.width * 0.122
+                constant: -27
             ),
 
             horizontalLine.widthAnchor.constraint(equalToConstant: self.view.frame.width * 0.72),
@@ -185,28 +211,34 @@ public final class AlertView: UIViewController {
             verticalLine.topAnchor.constraint(equalTo: horizontalLine.bottomAnchor),
             verticalLine.bottomAnchor.constraint(equalTo: alertBackView.bottomAnchor),
 
-            confirmButton.centerXAnchor.constraint(
-                equalTo: alertBackView.centerXAnchor,
-                constant: (-1) * self.view.frame.width * 0.75 * 0.25
-            ),
+            confirmButton.leftAnchor.constraint(equalTo: alertBackView.leftAnchor),
+            confirmButton.rightAnchor.constraint(equalTo: verticalLine.leftAnchor),
             confirmButton.topAnchor.constraint(equalTo: horizontalLine.bottomAnchor, constant: 10),
             confirmButton.bottomAnchor.constraint(equalTo: alertBackView.bottomAnchor, constant: -10),
 
-            cancelButton.centerXAnchor.constraint(
-                equalTo: alertBackView.centerXAnchor,
-                constant: self.view.frame.width * 0.75 * 0.25
-            ),
+            cancelButton.leftAnchor.constraint(equalTo: verticalLine.rightAnchor),
+            cancelButton.rightAnchor.constraint(equalTo: alertBackView.rightAnchor),
             cancelButton.topAnchor.constraint(equalTo: horizontalLine.bottomAnchor, constant: 10),
             cancelButton.bottomAnchor.constraint(equalTo: alertBackView.bottomAnchor, constant: -10)
         ])
+
+        confirmButton.addAction(UIAction { [weak self] _ in
+            self?.delegate?.yes()
+            print("Yes")
+        }, for: .allTouchEvents)
+
+        cancelButton.addAction(UIAction { [weak self] _ in
+            self?.delegate?.exit()
+            print("Exit")
+        }, for: .allTouchEvents)
     }
 }
 
 public extension UILabel {
     func setTracking() {
-        let attrString = NSMutableAttributedString(string: self.text!)
+        let attrString = NSMutableAttributedString(string: self.text ?? "")
         let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.lineSpacing = 4
+        paragraphStyle.lineSpacing = 8
         paragraphStyle.alignment = .center
         attrString.addAttribute(
             NSAttributedString.Key.paragraphStyle,

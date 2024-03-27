@@ -4,12 +4,16 @@ import DesignSystem
 class BaseNC: UINavigationController {
     private var backButtonImage: UIImage? {
         return .Image.backChevron
-            .withAlignmentRectInsets(UIEdgeInsets(top: 0.0, left: 30, bottom: 0.0, right: 0.0))
+            .withAlignmentRectInsets(UIEdgeInsets(top: 0.0, left: -18, bottom: 0.0, right: 0))
     }
 
     private var backButtonAppearance: UIBarButtonItemAppearance {
         let backButtonAppearance = UIBarButtonItemAppearance()
-        backButtonAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.clear]
+        backButtonAppearance.normal.titleTextAttributes = [
+            NSAttributedString.Key.foregroundColor: UIColor.color(.dittoLettoColor(.dark)),
+            NSAttributedString.Key.font: UIFont.ramche(.body)
+        ]
+        backButtonAppearance.normal.titlePositionAdjustment = UIOffset(horizontal: 30, vertical: 0)
         return backButtonAppearance
     }
 
@@ -25,21 +29,24 @@ class BaseNC: UINavigationController {
     }
 
     func setNavigationBarAppearance() {
-        backButtonImage?.draw(in: CGRect(x: 40, y: 0, width: 8, height: 16))
         let appearance = UINavigationBarAppearance()
         let appearance2 = UINavigationBarAppearance()
-        navigationBar.tintColor = .clear
+        navigationBar.tintColor = .color(.dittoLettoColor(.dark))
+        navigationBar.topItem?.backBarButtonItem?.setTitleTextAttributes([
+            NSAttributedString.Key.foregroundColor: UIColor.color(.dittoLettoColor(.dark)),
+            NSAttributedString.Key.font: UIFont.ramche(.body)
+        ], for: .normal)
         appearance.setBackIndicatorImage(backButtonImage, transitionMaskImage: backButtonImage)
         appearance2.setBackIndicatorImage(backButtonImage, transitionMaskImage: backButtonImage)
         appearance.backgroundColor = .clear
 
         appearance.configureWithTransparentBackground()
-        appearance2.configureWithDefaultBackground()
+        appearance2.configureWithTransparentBackground()
         appearance.backButtonAppearance = backButtonAppearance
         appearance2.backButtonAppearance = backButtonAppearance
         navigationBar.standardAppearance = appearance2
         navigationController?.setNeedsStatusBarAppearanceUpdate()
         navigationBar.scrollEdgeAppearance = appearance
-        self.navigationController?.navigationBar.backItem?.title = nil
+        navigationController?.navigationBar.topItem?.backButtonTitle = ""
     }
 }

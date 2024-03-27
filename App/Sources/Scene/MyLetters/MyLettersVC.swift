@@ -101,6 +101,5 @@ class MyLetterVC: BaseVC {
 }
 extension MyLetterVC: HomeTableViewCellDelegate {
     func replyButtonTap() {
-        
     }
 }

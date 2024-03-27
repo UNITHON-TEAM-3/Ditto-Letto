@@ -40,7 +40,7 @@ class PhoneBookView: UIView {
         [
             backgroundNoteView,
             springView1,
-            springView2, 
+            springView2,
             springView3,
             springView4,
             springView5,

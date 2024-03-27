@@ -25,7 +25,7 @@ class HomeTableViewCell: BaseTC {
     private let transportationState = UIImageView()
     private let replyButton: UIButton = {
         $0.setImage(.Image.replyButton, for: .normal)
-        $0.addTarget(self, action: #selector(replyButtonTap), for: .touchUpInside)
+        $0.addTarget(HomeTableViewCell.self, action: #selector(replyButtonTap), for: .touchUpInside)
         return $0
     }(UIButton())
     var type: HomeCellType? {

@@ -72,7 +72,6 @@ class PhoneBookVC: BaseVC {
         let output = viewModel.transform(input)
         phoneBookInfoView.pencilButton.rx.tap
             .bind {
-                
             }.disposed(by: disposeBag)
         output.moveToAddOrModiView
             .bind { [weak self] addVC in

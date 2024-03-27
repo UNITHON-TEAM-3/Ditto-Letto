@@ -41,7 +41,6 @@ class PhoneBookVM: BaseVM {
         Observable
             .combineLatest(input.tableViewModelSelected, output.phoneBookData)
             .subscribe { indexPath, dataList in
-                
             }.disposed(by: disposeBag)
         return output
     }

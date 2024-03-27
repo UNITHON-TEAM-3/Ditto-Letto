@@ -45,7 +45,7 @@ class LoginVM: BaseVM {
                 print(error)
                 return
             }
-            UserApi.shared.me() { [weak self] (user, error) in
+            UserApi.shared.me { [weak self] (_, error) in
                 if let error = error {
                     print(error)
                     return
@@ -71,7 +71,7 @@ class LoginVM: BaseVM {
                 print(error)
                 return
             }
-            UserApi.shared.me() { [weak self] (user, error) in
+            UserApi.shared.me { [weak self] (_, error) in
                 if let error = error {
                     print(error)
                     return

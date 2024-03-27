@@ -9,7 +9,6 @@ let project = Project.dynamicFramework(
         .Then,
         .SnapKit,
         .Kingfisher,
-        .Lottie,
         .KakaoSDK
     ],
     deploymentTarget: .iOS(targetVersion: "15.0", devices: [.iphone]),
@@ -20,7 +19,6 @@ let project = Project.dynamicFramework(
         .SPM.Then,
         .SPM.SnapKit,
         .SPM.Kingfisher,
-        .SPM.Lottie,
         .SPM.KakaoSDK
     ]
 )

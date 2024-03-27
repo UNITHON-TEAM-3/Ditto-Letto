@@ -62,7 +62,6 @@ class LetterStorageVM: BaseVM {
         Observable
             .combineLatest(input.tableViewModelSelected, output.letterStorageData)
             .subscribe { indexPath, dataList in
-                
                 // 19_1 상세 편지 화면으로 이동
             }.disposed(by: disposeBag)
         return output

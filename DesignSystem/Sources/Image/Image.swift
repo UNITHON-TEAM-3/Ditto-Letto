@@ -60,5 +60,8 @@ public extension UIImage {
         public static let selectedBadIcon = DesignSystemAsset.Image.selectedBad.image
         public static let sadIcon = DesignSystemAsset.Image.sadIcon.image
         public static let selectedSadIcon = DesignSystemAsset.Image.selectedSad.image
+        public static let cursor = DesignSystemAsset.Image.cursor.image
+        public static let appleLogo = DesignSystemAsset.Image.appleLogo.image
+        public static let kakaoLogo = DesignSystemAsset.Image.kakaoLogo.image
     }
 }

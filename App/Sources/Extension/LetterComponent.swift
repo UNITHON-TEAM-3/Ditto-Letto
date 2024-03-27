@@ -11,11 +11,13 @@ extension UIView {
         return rx.methodInvoked(#selector(UIView.touchesEnded(_:with:)))
             .map { _ in }
     }
+
     func setSeparatorView() {
         self.backgroundColor = .color(.dittoLettoColor(.main))
         self.layer.borderColor = UIColor.color(.dittoLettoColor(.dark)).cgColor
-        self.layer.borderWidth = 1.0
+        self.layer.borderWidth = 1
     }
+
     func makeSpringView() -> UIView {
         let springView: UIView = {
             $0.backgroundColor = UIColor.black
@@ -34,6 +36,8 @@ extension UIView {
         }
         return springView
     }
+
+    // swiftlint:disable function_body_length
     func makePhoneBookIndicatorBackView() -> UIView {
         let backView: UIView = {
             $0.backgroundColor = .color(.dittoLettoColor(.gray1))
@@ -89,6 +93,7 @@ extension UIView {
         }
         return backView
     }
+
     func makeShadowView() {
         self.layer.shadowColor = UIColor.black.cgColor
         self.layer.shadowOpacity = 0.2
@@ -163,35 +168,6 @@ extension UITextField {
             self.font = .yoondongju(.body)
             self.textColor = .black
         }
-    }
-    // swiftlint:enable function_body_length
-}
-
-extension UITextView {
-    func setTextView(_ isPrivate: Bool) {
-        if isPrivate {
-            self.font = .ramche(.headline)
-        } else {
-            self.font = .ramche(.headline)
-        }
-    }
-
-    func setLineAndLetterSpacing() {
-        let style = NSMutableParagraphStyle()
-        style.lineSpacing = 5
-        let attributedString = NSMutableAttributedString(string: self.text)
-        attributedString.addAttribute(
-            NSAttributedString.Key.kern,
-            value: CGFloat(0),
-            range: NSRange(location: 0, length: attributedString.length)
-        )
-        attributedString.addAttribute(
-            NSAttributedString.Key.paragraphStyle,
-            value: style,
-            range: NSRange(location: 0, length: attributedString.length)
-        )
-        self.attributedText = attributedString
-        self.textColor = .color(.dittoLettoColor(.gray2))
     }
 }
 

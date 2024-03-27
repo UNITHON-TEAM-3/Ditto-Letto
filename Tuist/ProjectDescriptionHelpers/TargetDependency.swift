@@ -11,7 +11,6 @@ public extension TargetDependency.SPM {
     static let Then = TargetDependency.package(product: "Then")
     static let SnapKit = TargetDependency.package(product: "SnapKit")
     static let Kingfisher = TargetDependency.package(product: "Kingfisher")
-    static let Lottie = TargetDependency.package(product: "Lottie")
     static let KakaoSDK = TargetDependency.package(product: "KakaoSDK")
 }
 
@@ -35,10 +34,6 @@ public extension Package {
     static let Kingfisher = Package.remote(
         url: "https://github.com/onevcat/Kingfisher",
         requirement: .upToNextMajor(from: "7.2.4")
-    )
-    static let Lottie = Package.remote(
-        url: "https://github.com/airbnb/lottie-spm.git",
-        requirement: .upToNextMajor(from: "4.3.1")
     )
     static let KakaoSDK = Package.remote(
         url: "https://github.com/kakao/kakao-ios-sdk",
