@@ -3,6 +3,7 @@ import DesignSystem
 import SnapKit
 import RxSwift
 import RxCocoa
+import RxGesture
 
 class PhoneBookVC: BaseVC {
     private let viewModel = PhoneBookVM()
@@ -66,19 +67,18 @@ class PhoneBookVC: BaseVC {
     // MARK: - Bind
     override func bind() {
         let input = PhoneBookVM.Input(
-            tableViewModelSelected: phoneBookView.tableView.rx.itemSelected.asObservable(),
-            tableHeaderViewTapped: phoneBookTableHeaderView.tapObservable
+            tableViewModelSelected: phoneBookView.tableView.rx.itemSelected.asObservable()
         )
         let output = viewModel.transform(input)
         phoneBookInfoView.pencilButton.rx.tap
             .bind {
             }.disposed(by: disposeBag)
-        output.moveToAddOrModiView
-            .bind { [weak self] addVC in
-                // 변경 예정
-                guard let self = self,
-                      let addVC = addVC else { return }
-                self.navigationController?.pushViewController(addVC, animated: true)
+        phoneBookTableHeaderView.rx.tapGesture()
+            .when(.recognized)
+            .bind { [weak self] _ in
+                let addOrModifySomeoneVM = AddOrModifySomeoneVM(type: .add)
+                let addVC = AddOrModifySomeoneVC(type: .add, viewModel: addOrModifySomeoneVM)
+                self?.navigationController?.pushViewController(addVC, animated: true)
             }.disposed(by: disposeBag)
         phoneBookView.tableView.rx.contentOffset
             .observe(on: MainScheduler.instance)

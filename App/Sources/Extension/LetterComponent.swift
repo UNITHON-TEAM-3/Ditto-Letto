@@ -6,12 +6,6 @@ import RxCocoa
 import DesignSystem
 
 extension UIView {
-    // UIView Tap RxGesture 대신 사용
-    var tapObservable: Observable<Void> {
-        return rx.methodInvoked(#selector(UIView.touchesEnded(_:with:)))
-            .map { _ in }
-    }
-
     func setSeparatorView() {
         self.backgroundColor = .color(.dittoLettoColor(.main))
         self.layer.borderColor = UIColor.color(.dittoLettoColor(.dark)).cgColor

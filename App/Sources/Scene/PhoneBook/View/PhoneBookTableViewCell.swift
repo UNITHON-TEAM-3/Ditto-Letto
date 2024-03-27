@@ -32,7 +32,7 @@ class PhoneBookTableViewCell: BaseTC {
     }(UILabel())
     private let settingButton: UIButton = {
         $0.setImage(UIImage(asset: DesignSystemAsset.Image.threeDot), for: .normal)
-        $0.addTarget(PhoneBookTableViewCell.self, action: #selector(settingButtonTap), for: .touchUpInside)
+        $0.addTarget(self, action: #selector(settingButtonTap), for: .touchUpInside)
         return $0
     }(UIButton())
     // MARK: - Lifecycle

@@ -8,7 +8,6 @@ class PhoneBookVM: BaseVM {
     // MARK: - In/Out
     struct Input {
         let tableViewModelSelected: Observable<IndexPath>
-        let tableHeaderViewTapped: Observable<Void>
     }
 
     struct Output {
@@ -32,12 +31,6 @@ class PhoneBookVM: BaseVM {
     func transform(_ input: Input) -> Output {
         let api = Service()
         let output = Output()
-        input.tableHeaderViewTapped
-            .bind { _ in
-                // 향후 Coordinator로 연결할거라 임시 output 바인딩
-                let addVC = AddOrModifySomeoneVC(type: .add, viewModel: AddOrModifySomeoneVM(type: .add))
-                output.moveToAddOrModiView.accept(addVC)
-            }.disposed(by: disposeBag)
         Observable
             .combineLatest(input.tableViewModelSelected, output.phoneBookData)
             .subscribe { indexPath, dataList in
