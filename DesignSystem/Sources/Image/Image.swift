@@ -52,5 +52,8 @@ public extension UIImage {
         public static let cancel = DesignSystemAsset.Image.x.image
         public static let replyButton = DesignSystemAsset.Image.replyButton.image
         public static let trashCan = DesignSystemAsset.Image.trashCan.image
+        public static let cursor = DesignSystemAsset.Image.cursor.image
+        public static let appleLogo = DesignSystemAsset.Image.appleLogo.image
+        public static let kakaoLogo = DesignSystemAsset.Image.kakaoLogo.image
     }
 }

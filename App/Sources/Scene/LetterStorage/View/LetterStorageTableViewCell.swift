@@ -32,7 +32,7 @@ class LetterStorageTableViewCell: BaseTC {
     // MARK: - Set UI
     override func addView() {
         [
-            titleLabel, 
+            titleLabel,
             transportationImageView,
             dateLabel,
             deleteButton

@@ -68,6 +68,7 @@ class PhoneBookInfoView: UIView {
             backgroundView.addSubview($0)
         }
     }
+// swiftlint:disable function_body_length
     private func setLayout() {
         backgroundView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
@@ -123,3 +124,4 @@ class PhoneBookInfoView: UIView {
         }
     }
 }
+// swiftlint:enable function_body_length

@@ -33,12 +33,10 @@ class PhoneBookVM: BaseVM {
         let output = Output()
         input.tableHeaderViewTapped
             .bind { _ in
-                
             }.disposed(by: disposeBag)
         Observable
             .combineLatest(input.tableViewModelSelected, output.phoneBookData)
             .subscribe { indexPath, dataList in
-                
             }.disposed(by: disposeBag)
         return output
     }
